@@ -1,10 +1,18 @@
 <template>
-  <div id="app">
-    <p>test english</p>
-    <h1>test title</h1>
-    <p>測試中文字</p>
+  <div>
+    <the-navigation></the-navigation>
+    <router-view></router-view>
   </div>
 </template>
+
+<script>
+import TheNavigation from "@/components/TheNavigation.vue";
+
+export default {
+  name: "App",
+  components: { TheNavigation },
+};
+</script>
 
 <style lang="scss">
 @import "../node_modules/modern-normalize/modern-normalize.css";
@@ -15,7 +23,7 @@
   --color-gray-2: #757575;
   --color-bg-dark-1: #191919;
   --color-bg-dark-2: #303030;
-  --color-bg-white-1: #f2f2f2;
+  --color-bg-gray-1: #f2f2f2;
 }
 
 * {
@@ -23,5 +31,15 @@
   margin: 0;
   padding: 0;
   line-height: 1.5;
+  list-style: none;
+  text-decoration: none;
+}
+
+a {
+  color: #000;
+}
+
+img {
+  max-width: 100%;
 }
 </style>
