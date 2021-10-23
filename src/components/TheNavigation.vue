@@ -26,10 +26,11 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 1.6rem;
   background-color: #fff;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
-  padding: 20px 30px;
-  height: 100px;
+  padding: 2rem 3rem;
+  height: 10rem;
   overflow: hidden;
 
   .logo-box {
@@ -39,8 +40,8 @@ export default {
     cursor: pointer;
 
     img {
-      margin-right: 10px;
-      width: 300px;
+      margin-right: 1rem;
+      max-width: 30rem;
       object-fit: cover;
       object-position: center;
     }
@@ -52,8 +53,8 @@ export default {
     align-items: center;
 
     > li {
-      padding: 10px 20px;
-      margin-right: 10px;
+      padding: 1rem 2rem;
+      margin-right: 1rem;
 
       &:last-child {
         margin-right: 0;

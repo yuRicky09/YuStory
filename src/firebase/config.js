@@ -1,3 +1,8 @@
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/storage";
+import "firebase/auth";
+
 const firebaseConfig = {
   apiKey: `${process.env.VUE_APP_FIREBASE}`,
   authDomain: "yu-story.firebaseapp.com",
@@ -7,3 +12,12 @@ const firebaseConfig = {
   appId: "1:362985153097:web:68d3fe72a5603f2437d598",
   measurementId: "G-2PCR4WS2PF",
 };
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+const storage = firebase.storage();
+const auth = firebase.auth();
+const timestamp = firebase.firestore.FieldValue.serverTimestamp;
+
+export default { db, storage, auth, timestamp };

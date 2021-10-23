@@ -23,9 +23,10 @@ export default {
 .welcome-box {
   display: flex;
   flex-direction: column;
-  height: 70vh;
+  min-height: calc(100vh - 10rem);
+  font-size: 1.6rem;
 
-  @media (min-width: 768px) {
+  @media (min-width: 48em) {
     flex-direction: row;
   }
   .welcome-img {
@@ -43,7 +44,7 @@ export default {
     background-color: var(--color-bg-dark-2);
     color: #fff;
 
-    @media (min-width: 768px) {
+    @media (min-width: 48em) {
     }
 
     div {
@@ -54,20 +55,20 @@ export default {
       align-items: center;
 
       h2 {
-        font-size: 48px;
-        margin: 20px;
+        font-size: 4.8rem;
+        margin: 2rem;
       }
 
       p {
-        margin: 20px;
+        margin: 2rem;
       }
 
       a {
         color: inherit;
         display: block;
-        margin: 20px;
+        margin: 2rem;
         align-self: flex-end;
-        padding-right: 100px;
+        padding-right: 10rem;
       }
     }
   }
