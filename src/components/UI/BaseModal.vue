@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="show" class="layout" @click="$emit('close-modal')"></div>
+    <div v-if="show" class="backdrop" @click="$emit('close-modal')"></div>
     <transition name="fade-in">
       <div v-if="show" class="message-box">
         <base-card>
@@ -23,69 +23,63 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.layout {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.15);
-}
-
 .message-box {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
+  top: 30vh;
+  left: 10%;
+  width: 80%;
+  z-index: 20;
+
+  @media (min-width: $bp-lg) {
+    top: 30vh;
+    left: 30%;
+    width: 40%;
+    z-index: 20;
+  }
 
   .content {
-    width: 50rem;
-    min-height: 30rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
     h2 {
-      width: 100%;
-      flex: 1 0 0;
+      background-color: var(--color-bg-dark-3);
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: var(--color-bg-dark-3);
       color: #fff;
+      padding: 1.5rem 0;
     }
 
     p {
-      width: 100%;
-      flex: 3 0 0;
+      background-color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #fff;
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-weight: 600;
+      padding: 7rem 0;
+
+      @media (min-width: $bp-lg) {
+        font-size: 2.5rem;
+      }
     }
   }
 }
 
-.fade-in-enter,
-.fade-in-leave-to {
-  transform: scale(0.95) translate(-50%, -50%);
-  opacity: 0;
+.fade-in-enter-active {
+  animation: fade-in 0.5s linear;
 }
 
-.fade-in-enter-to,
-.fade-in-leave {
-  transform: scale(1);
-  opacity: 1;
-}
-
-.fade-in-enter-active,
 .fade-in-leave-active {
-  transition: all 0.5s ease;
+  animation: fade-in 0.5s linear reverse;
+}
+
+@keyframes fade-in {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 </style>

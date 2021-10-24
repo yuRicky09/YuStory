@@ -3,21 +3,36 @@
     <div class="nav-box">
       <div>
         <router-link class="logo-box" :to="{ name: 'Home' }">
-          <img src="@/assets/logo.png" alt="logo-img" />
+          <img src="@/assets/img/logo.png" alt="logo-img" />
         </router-link>
       </div>
       <ul class="menu">
         <li><router-link :to="{ name: 'Home' }">首頁</router-link></li>
-        <li><router-link :to="{ name: 'Login' }">登入</router-link></li>
-        <li><router-link :to="{ name: 'Register' }">註冊</router-link></li>
+        <li v-if="currentUser">
+          <router-link :to="{ name: 'Home' }">歡迎{{ userName }}</router-link>
+        </li>
+        <li v-if="!currentUser">
+          <router-link :to="{ name: 'Login' }">登入</router-link>
+        </li>
+        <li v-if="!currentUser">
+          <router-link :to="{ name: 'Register' }">註冊</router-link>
+        </li>
       </ul>
     </div>
   </nav>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "TheNavigation",
+  computed: {
+    ...mapState("auth", {
+      currentUser: (state) => state.currentUser,
+      userName: (state) => state.userName,
+    }),
+  },
 };
 </script>
 

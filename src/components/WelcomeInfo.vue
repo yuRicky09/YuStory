@@ -1,13 +1,13 @@
 <template>
   <div class="welcome-box">
     <div class="welcome-img">
-      <img src="@/assets/welcome.jpg" alt="welcome-img" />
+      <img src="@/assets/img/welcome.jpg" alt="welcome-img" />
     </div>
     <div class="welcome-content">
       <div>
         <h2>WELCOME!</h2>
         <p>快來與他人分享自己的特殊回憶吧</p>
-        <router-link to="#">前往註冊</router-link>
+        <router-link :to="{ name: 'Register' }">前往註冊</router-link>
       </div>
     </div>
   </div>
@@ -26,7 +26,7 @@ export default {
   min-height: calc(100vh - 10rem);
   font-size: 1.6rem;
 
-  @media (min-width: 48em) {
+  @media (min-width: $bp-md) {
     flex-direction: row;
   }
   .welcome-img {
@@ -44,7 +44,7 @@ export default {
     background-color: var(--color-bg-dark-2);
     color: #fff;
 
-    @media (min-width: 48em) {
+    @media (min-width: $bp-md) {
     }
 
     div {

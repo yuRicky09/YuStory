@@ -78,6 +78,7 @@
               <small>{{ errors[0] }}</small>
             </div>
           </ValidationProvider>
+          <div v-if="errorMsg">{{ errorMsg }}</div>
           <div class="action">
             <button>註冊</button>
           </div>
@@ -89,11 +90,13 @@
       @close-modal="closeModal"
       :show="show"
     ></base-modal>
+    <base-spinner v-if="isLoading"></base-spinner>
   </div>
 </template>
 
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
+import { mapState } from "vuex";
 
 export default {
   name: "Register",
@@ -104,18 +107,32 @@ export default {
       password: null,
       userName: null,
       confirmation: null,
-      show: true,
+      show: false,
+      errorMsg: null,
     };
   },
+  computed: {
+    ...mapState("auth", {
+      isLoading: (state) => state.isLoading,
+    }),
+  },
   methods: {
-    sumbitRegisterData() {
-      const registerData = {
-        email: this.email,
-        password: this.password,
-        userName: this.userName,
-      };
+    async sumbitRegisterData() {
+      try {
+        const registerData = {
+          userEmail: this.email,
+          userPassword: this.password,
+          userName: this.userName,
+        };
 
-      console.log(registerData);
+        await this.$store.dispatch("auth/userRegister", registerData);
+        this.show = true;
+        setTimeout(() => {
+          this.$router.push({ name: "Home" });
+        }, 2000);
+      } catch (err) {
+        this.errorMsg = err;
+      }
     },
     closeModal() {
       this.show = false;
