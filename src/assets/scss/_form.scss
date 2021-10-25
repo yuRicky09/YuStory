@@ -1,0 +1,51 @@
+.form-container {
+  max-width: 60rem;
+  margin: auto;
+  font-size: 1.5rem;
+
+  form {
+    padding: 2rem 3rem;
+
+    .form-title {
+      display: flex;
+      flex-direction: column;
+      margin: 0.5rem 0 3rem;
+
+      span {
+        align-self: flex-end;
+
+        a {
+          color: #5dade2;
+          font-weight: 700;
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+      }
+
+      h2 {
+        align-self: center;
+      }
+    }
+  }
+
+  .input-box {
+    margin: 2rem 0;
+
+    input.error {
+      border: 2px solid #e74c4cef;
+    }
+
+    small {
+      color: #e74c4cef;
+    }
+  }
+
+  .action {
+    margin: 3rem 0 1rem;
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: center;
+  }
+}

@@ -10,11 +10,12 @@ import BaseSpinner from "@/components/UI/BaseSpinner.vue";
 
 import "@/validation.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faGoogle, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import "@/assets/scss/main.scss";
 
-library.add(faUser);
+library.add(faUserCircle, faGoogle, faGithub);
 
 Vue.config.productionTip = false;
 

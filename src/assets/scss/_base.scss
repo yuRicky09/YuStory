@@ -24,9 +24,9 @@ a {
   color: #000;
 }
 
-img {
-  max-width: 100%;
-}
+// img {
+//   max-width: 100%;
+// }
 
 .container {
   max-width: 1440px;
@@ -79,4 +79,8 @@ button {
   bottom: 0;
   background-color: var(--color-layout);
   z-index: 10;
+}
+
+.error {
+  color: #e74c4cef;
 }

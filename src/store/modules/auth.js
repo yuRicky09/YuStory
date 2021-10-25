@@ -1,4 +1,4 @@
-import { auth, db } from "@/firebase/config";
+import { auth, db, googleProvider } from "@/firebase/config";
 
 const state = function() {
   return {
@@ -55,6 +55,27 @@ const actions = {
       .get();
     const userData = res.data();
     commit("setUserData", userData);
+  },
+
+  async userLogin({ commit }, userData) {
+    try {
+      commit("changeLoadingState", true);
+      const res = await auth.singInWithEmailAndPassword(
+        userData.userEmail,
+        userData.userPassword
+      );
+      commit("changeLoadingState", false);
+      return res;
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  },
+  async signInWithGoogle() {
+    try {
+      await auth.signInWithPopup(googleProvider);
+    } catch (err) {
+      throw new Error(err.message);
+    }
   },
 };
 
