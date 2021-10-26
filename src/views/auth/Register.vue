@@ -79,7 +79,7 @@
                 <small>{{ errors[0] }}</small>
               </div>
             </ValidationProvider>
-            <div v-if="errorMsg">{{ errorMsg }}</div>
+            <div v-if="errorMsg" class="error-msg">{{ errorMsg }}</div>
             <div class="action">
               <button>註冊</button>
             </div>

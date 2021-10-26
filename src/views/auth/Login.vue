@@ -12,11 +12,11 @@
               >
               <div class="icon-box" @click="signInWithGoogle">
                 <font-awesome-icon :icon="['fab', 'google']" class="icon" />
-                <span>Sign in with Google</span>
+                <span>使用Google帳戶登入</span>
               </div>
               <div class="icon-box">
                 <font-awesome-icon :icon="['fab', 'github']" class="icon" />
-                <span>Sign in with Github</span>
+                <span>使用Github帳戶登入</span>
               </div>
               <h2>登入 YUSTORY</h2>
             </div>
@@ -39,7 +39,7 @@
             </ValidationProvider>
             <ValidationProvider
               name="密碼"
-              rules="required|min:6|confirmed:confirmation"
+              rules="required|min:6"
               v-slot="{ errors, failed }"
             >
               <div class="input-box">
@@ -54,7 +54,7 @@
                 <small>{{ errors[0] }}</small>
               </div>
             </ValidationProvider>
-            <div v-if="errorMsg">{{ errorMsg }}</div>
+            <div v-if="errorMsg" class="error-msg">{{ errorMsg }}</div>
             <div class="action">
               <button>登入</button>
             </div>

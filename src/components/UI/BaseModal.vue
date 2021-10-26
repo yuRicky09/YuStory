@@ -8,7 +8,7 @@
             <h2>訊息</h2>
             <p>{{ message }}</p>
           </div>
-          <slot></slot>
+          <slot name="action"></slot>
         </base-card>
       </div>
     </transition>
@@ -64,11 +64,11 @@ export default {
 }
 
 .fade-in-enter-active {
-  animation: fade-in 0.5s linear;
+  animation: fade-in 0.3s ease-out;
 }
 
 .fade-in-leave-active {
-  animation: fade-in 0.5s linear reverse;
+  animation: fade-in 0.3s ease-out reverse;
 }
 
 @keyframes fade-in {

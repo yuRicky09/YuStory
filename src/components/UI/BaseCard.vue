@@ -12,7 +12,6 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
-  padding: 2rem 1rem;
   background-color: #fff;
   box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.05);
   border-radius: 5px;

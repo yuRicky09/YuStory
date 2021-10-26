@@ -48,19 +48,10 @@ const actions = {
     }
   },
 
-  async getUserData({ commit }, userId) {
-    const res = await db
-      .collection("users")
-      .doc(userId)
-      .get();
-    const userData = res.data();
-    commit("setUserData", userData);
-  },
-
   async userLogin({ commit }, userData) {
     try {
       commit("changeLoadingState", true);
-      const res = await auth.singInWithEmailAndPassword(
+      const res = await auth.signInWithEmailAndPassword(
         userData.userEmail,
         userData.userPassword
       );
@@ -69,6 +60,24 @@ const actions = {
     } catch (err) {
       throw new Error(err.message);
     }
+  },
+
+  async userLogout({ commit }) {
+    try {
+      await auth.signOut();
+    } catch (err) {
+      throw Error(err.message);
+    }
+
+    commit("clearUserData");
+  },
+  async getUserData({ commit }, userId) {
+    const res = await db
+      .collection("users")
+      .doc(userId)
+      .get();
+    const userData = res.data();
+    commit("setUserData", userData);
   },
   async signInWithGoogle() {
     try {
@@ -89,7 +98,14 @@ const mutations = {
     state.userName = userData.userName;
     state.userId = userData.userId;
   },
-  changeLodingState(state, newLoadingState) {
+  clearUserData(state) {
+    console.log(state);
+    state.userEmail = null;
+    state.userPassword = null;
+    state.userName = null;
+    state.userId = null;
+  },
+  changeLoadingState(state, newLoadingState) {
     state.isLoading = newLoadingState;
   },
 };
