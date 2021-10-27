@@ -130,6 +130,7 @@ export default {
         await this.$store.dispatch("auth/userRegister", registerData);
         this.show = true;
         setTimeout(() => {
+          this.show = false;
           this.$router.replace({ name: "Home" });
         }, 2000);
       } catch (err) {

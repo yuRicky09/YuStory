@@ -9,7 +9,6 @@ import {
   faBookmark,
   faListUl,
   faBook,
-  faPlus,
   faSearch,
   faPencilAlt,
 } from "@fortawesome/free-solid-svg-icons";
@@ -32,7 +31,6 @@ library.add(
   faBookmark,
   faListUl,
   faBook,
-  faPlus,
   faSearch,
   faPencilAlt
 );

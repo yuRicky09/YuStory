@@ -58,6 +58,7 @@ const actions = {
       commit("changeLoadingState", false);
       return res;
     } catch (err) {
+      commit("changeLoadingState", false);
       throw new Error(err.message);
     }
   },
@@ -71,17 +72,30 @@ const actions = {
 
     commit("clearUserData");
   },
-  async getUserData({ commit }, userId) {
+  async getUserData({ commit }, uid) {
     const res = await db
       .collection("users")
-      .doc(userId)
+      .doc(uid)
       .get();
-    const userData = res.data();
+    const userData = { ...res.data(), userId: uid };
     commit("setUserData", userData);
   },
-  async signInWithGoogle() {
+  async signInWithGoogle({ commit }) {
     try {
-      await auth.signInWithPopup(googleProvider);
+      commit("changeLoadingState", true);
+      const { user } = await auth.signInWithPopup(googleProvider);
+
+      // 將第三方 google所提供的user資料存到firestore
+      const { email, displayName, photoURL } = user.providerData[0];
+      await db
+        .collection("users")
+        .doc(user.uid)
+        .set({
+          userEmail: email,
+          userName: displayName,
+          userProfileImg: photoURL,
+        });
+      commit("changeLoadingState", false);
     } catch (err) {
       throw new Error(err.message);
     }
@@ -97,9 +111,9 @@ const mutations = {
     state.userPassword = userData.userPassword;
     state.userName = userData.userName;
     state.userId = userData.userId;
+    state.userProfileImg = userData.userProfileImg;
   },
   clearUserData(state) {
-    console.log(state);
     state.userEmail = null;
     state.userPassword = null;
     state.userName = null;

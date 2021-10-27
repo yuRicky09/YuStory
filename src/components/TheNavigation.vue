@@ -3,12 +3,12 @@
     <div class="nav-box">
       <div>
         <router-link class="logo-box" :to="{ name: 'Home' }">
-          <img src="@/assets/img/logo.png" alt="logo-img" />
+          <img src="@/assets/img/logo.png" class="logo-img" alt="logo-img" />
         </router-link>
       </div>
       <nav>
         <ul class="menu">
-          <li><router-link to="#">所有故事</router-link></li>
+          <li><router-link to="#">Stories</router-link></li>
           <li v-if="currentUser">
             <div
               class="user-center-backdrop"
@@ -23,8 +23,15 @@
                 :icon="['fa', 'user-circle']"
                 size="2x"
                 class="user-icon"
+                v-if="!userProfileImg"
               />
-              <span>{{ userName }}</span>
+              <img
+                class="user-avatar-img"
+                v-else
+                :src="userProfileImg"
+                alt="user-avatar"
+              />
+              <span v-if="!userProfileImg">{{ userName }}</span>
               <!-- user center interface -->
               <div class="user-center" v-show="userCenterIsOpen" @click.stop="">
                 <div class="user-center-header">
@@ -32,7 +39,14 @@
                     <font-awesome-icon
                       :icon="['fa', 'user-circle']"
                       size="3x"
+                      v-if="!userProfileImg"
                     ></font-awesome-icon>
+                    <img
+                      class="user-avatar-img-big"
+                      v-else
+                      :src="userProfileImg"
+                      alt="user-avatar"
+                    />
                   </div>
                   <div class="user-info">
                     <span>{{ userName }}</span>
@@ -46,7 +60,7 @@
                         ><font-awesome-icon
                           :icon="['fa', 'user-edit']"
                           fixed-width
-                        /><span>編輯會員</span></router-link
+                        /><span>個人中心</span></router-link
                       >
                     </li>
                     <li>
@@ -81,20 +95,6 @@
                         /><span>登出</span>
                       </div>
                     </li>
-                    <base-modal
-                      :show="showModal"
-                      message="確定要登出嗎?"
-                      @close-modal="closeModal"
-                    >
-                      <template #action>
-                        <div class="modal-action">
-                          <button @click="userLogout">確定</button>
-                          <button class="ghost" @click="closeModal">
-                            取消
-                          </button>
-                        </div>
-                      </template>
-                    </base-modal>
                   </ul>
                 </div>
               </div>
@@ -114,54 +114,105 @@
       </div>
 
       <!-- mobile-menu -->
-      <div class="backdrop" v-show="menuIsOpen"></div>
+      <div
+        class="backdrop"
+        v-show="menuIsOpen"
+        @click="menuIsOpen = false"
+      ></div>
       <transition name="fade-right">
         <ul class="mobile-menu" v-show="menuIsOpen" @click="closeMenu($event)">
-          <li @click="menuIsOpen = false">
+          <div class="mobile-menu-header">
+            <div>
+              <font-awesome-icon
+                :icon="['fa', 'user-circle']"
+                size="3x"
+                v-if="!userProfileImg"
+              ></font-awesome-icon>
+              <img
+                class="mobile-user-avatar"
+                v-else
+                :src="userProfileImg"
+                alt="user-avatar"
+              />
+            </div>
+            <div class="mobile-user-info">
+              <span>{{ userName }}</span>
+              <span>{{ userEmail }}</span>
+            </div>
+          </div>
+          <li class="mobile-link">
+            <router-link :to="{ name: 'UserHome' }"
+              ><font-awesome-icon :icon="['fa', 'user-edit']" fixed-width />
+              <span>個人中心</span></router-link
+            >
+          </li>
+          <li class="mobile-link">
             <router-link :to="{ name: 'Home' }"
               ><font-awesome-icon :icon="['fa', 'home']" fixed-width />
               <span>首頁</span></router-link
             >
           </li>
-          <li>
+          <li class="mobile-link">
             <router-link :to="{ name: 'Login' }"
               ><font-awesome-icon :icon="['fa', 'sign-in-alt']" fixed-width />
               <span>登入</span></router-link
             >
           </li>
-          <li>
+          <li class="mobile-link">
             <router-link to="#"
               ><font-awesome-icon :icon="['fa', 'bookmark']" fixed-width />
               <span>收藏</span></router-link
             >
           </li>
-          <li>
+          <li class="mobile-link">
             <router-link to="#"
               ><font-awesome-icon :icon="['fa', 'list-ul']" fixed-width />
               <span>所有故事</span></router-link
             >
           </li>
-          <li>
+          <li class="mobile-link">
             <router-link to="#"
               ><font-awesome-icon :icon="['fa', 'book']" fixed-width />
               <span>我的故事</span></router-link
             >
           </li>
-          <li>
+          <li class="mobile-link">
             <router-link to="#"
               ><font-awesome-icon :icon="['fa', 'pencil-alt']" fixed-width />
               <span>撰寫故事</span></router-link
             >
           </li>
-          <li class="logout">
-            <router-link :to="{ name: 'Register' }"
-              ><font-awesome-icon :icon="['fa', 'sign-out-alt']" fixed-width />
-              <span>登出</span></router-link
-            >
+          <li
+            class="logout"
+            @click="
+              menuIsOpen = false;
+              showModal = true;
+            "
+          >
+            <div>
+              <font-awesome-icon :icon="['fa', 'sign-out-alt']" fixed-width />
+              <span>登出</span>
+            </div>
           </li>
         </ul>
       </transition>
     </div>
+
+    <!-- logout modal -->
+    <base-modal
+      :show="showModal"
+      message="確定要登出嗎?"
+      @close-modal="closeModal"
+    >
+      <template #action>
+        <div class="modal-action">
+          <button @click="userLogout">確定</button>
+          <button class="ghost" @click="closeModal">
+            取消
+          </button>
+        </div>
+      </template>
+    </base-modal>
   </header>
 </template>
 
@@ -182,6 +233,7 @@ export default {
       currentUser: (state) => state.currentUser,
       userName: (state) => state.userName,
       userEmail: (state) => state.userEmail,
+      userProfileImg: (state) => state.userProfileImg,
     }),
   },
   methods: {
@@ -195,13 +247,20 @@ export default {
       }
     },
     closeMenu(e) {
-      if (!e.target.classList.contains("mobile-menu")) this.menuIsOpen = false;
+      if (e.target.closest(".mobile-link")) this.menuIsOpen = false;
     },
     closeModal() {
       this.showModal = false;
     },
-    userLogout() {
-      this.$store.dispatch("auth/userLogout");
+    async userLogout() {
+      try {
+        this.showModal = false;
+        this.userCenterIsOpen = false;
+        await this.$store.dispatch("auth/userLogout");
+        this.$router.push({ name: "Login" });
+      } catch (err) {
+        console.log(err.message);
+      }
     },
   },
   created() {
@@ -229,7 +288,7 @@ export default {
       opacity: 0.8;
     }
 
-    img {
+    .logo-img {
       width: 15rem;
       height: 5rem;
       position: relative;
@@ -264,6 +323,10 @@ export default {
       &:last-child {
         margin-right: 0;
       }
+
+      > a {
+        font-weight: bold;
+      }
     }
   }
 
@@ -276,6 +339,19 @@ export default {
 
     .user-icon {
       margin-right: 1rem;
+    }
+
+    .user-avatar-img,
+    .user-avatar-img-big {
+      width: 4.5rem;
+      height: auto;
+      border-radius: 50%;
+      margin-right: 1.5rem;
+    }
+
+    .user-avatar-img-big {
+      width: 6rem;
+      margin-right: 0;
     }
 
     .user-center {
@@ -295,6 +371,7 @@ export default {
         align-items: center;
         padding: 2rem 1rem;
         border-bottom: 1px solid var(--color-bg-gray-1);
+        cursor: initial;
 
         .user-info {
           display: flex;
@@ -316,7 +393,8 @@ export default {
           &:hover {
             background-color: rgba(0, 0, 0, 0.05);
           }
-          a {
+          > a,
+          > div {
             display: block;
             svg {
               margin-right: 1.5rem;
@@ -337,6 +415,7 @@ export default {
   }
 }
 
+// mobile menu
 .hamburger-box {
   padding: 1.5rem 0;
   cursor: pointer;
@@ -396,6 +475,34 @@ export default {
   display: flex;
   flex-direction: column;
 
+  .mobile-menu-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    padding: 2rem 0;
+
+    .mobile-user-avatar {
+      width: 7rem;
+      border-radius: 50%;
+    }
+
+    .mobile-user-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-wrap: break-word;
+
+      span {
+        width: 25rem;
+        text-align: center;
+        overflow-wrap: break-word;
+      }
+    }
+  }
+
   li {
     color: #fff;
     display: flex;
@@ -421,6 +528,8 @@ export default {
   }
 
   li.logout {
+    cursor: pointer;
+    padding: 2.5rem 0;
     border-top: 1px solid gray;
     margin-top: auto;
   }

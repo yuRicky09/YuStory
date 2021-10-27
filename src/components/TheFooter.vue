@@ -29,7 +29,7 @@
           <li>
             <router-link to="#"
               ><font-awesome-icon
-                :icon="['fa', 'plus']"
+                :icon="['fa', 'pencil-alt']"
                 fixed-width
               />撰寫故事</router-link
             >

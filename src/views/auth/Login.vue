@@ -102,6 +102,7 @@ export default {
         await this.$store.dispatch("auth/userLogin", userData);
         this.show = true;
         setTimeout(() => {
+          this.show = false;
           this.$router.replace({ name: "Home" });
         }, 2000);
       } catch (err) {
@@ -109,7 +110,12 @@ export default {
       }
     },
     async signInWithGoogle() {
-      await this.$store.dispatch("auth/signInWithGoogle");
+      try {
+        await this.$store.dispatch("auth/signInWithGoogle");
+        this.$router.replace({ name: "Home" });
+      } catch (err) {
+        this.errorMsg = err.message;
+      }
     },
     closeModal() {
       this.show = false;
