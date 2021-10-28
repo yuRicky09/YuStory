@@ -12,6 +12,7 @@ html {
   list-style: none;
   text-decoration: none;
   color: inherit;
+  font-size: inherit;
 }
 
 *::after,
@@ -26,7 +27,8 @@ html {
   margin: auto;
 }
 
-input {
+input,
+textarea {
   width: 100%;
   padding: 10px 15px 10px 25px;
   border: 2px solid #e2e2e2;
@@ -34,12 +36,14 @@ input {
   font-size: 1.6rem;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
   outline: none;
   border: 2px solid #727171;
 }
 
-button {
+button,
+.button {
   padding: 12px 30px;
   border: none;
   border-radius: 25px;

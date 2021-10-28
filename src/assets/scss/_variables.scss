@@ -5,9 +5,11 @@
   --color-bg-gray-1: #757575;
   --color-bg-white-1: #ada4a4;
   --color-layout: rgba(0, 0, 0, 0.15);
+  --color-border: rgba(0, 0, 0, 0.05);
 }
 
 $bp-iphone-sm: 21em; //334px
+$bp-iphone-ten: 23em; //375px
 $bp-sm: 40em; // 640px
 $bp-md: 48em; // 768px
 $bp-lg: 64em; // 1024px

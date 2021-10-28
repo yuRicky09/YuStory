@@ -30,25 +30,33 @@ const routes = [
     },
   },
   {
-    path: "/user/home",
-    name: "UserHome",
-    component: () => import("@/views/user/UserHome.vue"),
+    path: "/settings",
+    name: "Settings",
+    component: () => import("@/views/user/Settings.vue"),
     meta: {
-      title: "個人中心|YUSTORY",
+      title: "帳戶設定|YUSTORY",
     },
     children: [
       {
-        path: "edit",
-        name: "EditUser",
-        component: () => import("@/views/user/EditUser.vue"),
+        path: "profile",
+        name: "Profile",
+        component: () => import("@/views/user/Profile.vue"),
+        meta: {
+          title: "帳戶首頁|YUSTORY",
+        },
+      },
+      {
+        path: "edit-account",
+        name: "EditAccount",
+        component: () => import("@/views/user/EditAccount.vue"),
         meta: {
           title: "編輯帳號|YUSTORY",
         },
       },
       {
-        path: "avatar",
-        name: "UserAvatar",
-        component: () => import("@/views/user/UserAvatar.vue"),
+        path: "edit-avatar",
+        name: "EditAvatar",
+        component: () => import("@/views/user/EditAvatar.vue"),
         meta: {
           title: "編輯頭貼|YUSTORY",
         },

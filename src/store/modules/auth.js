@@ -13,7 +13,11 @@ const state = function() {
   };
 };
 
-const getters = {};
+const getters = {
+  getUserName(state) {
+    return state.userName;
+  },
+};
 
 const actions = {
   async userRegister({ commit }, registerData) {
@@ -66,11 +70,10 @@ const actions = {
   async userLogout({ commit }) {
     try {
       await auth.signOut();
+      commit("clearUserData");
     } catch (err) {
       throw Error(err.message);
     }
-
-    commit("clearUserData");
   },
   async getUserData({ commit }, uid) {
     const res = await db
@@ -97,7 +100,30 @@ const actions = {
         });
       commit("changeLoadingState", false);
     } catch (err) {
+      commit("changeLoadingState", false);
       throw new Error(err.message);
+    }
+  },
+  async updateUserInfo({ commit, state }, userNewInfo) {
+    const user = auth.currentUser;
+    try {
+      commit("changeLoadingState", true);
+      await user.updateProfile({
+        displayName: userNewInfo.userName,
+      });
+      await db
+        .collection("users")
+        .doc(state.userId)
+        .update({
+          userName: userNewInfo.userName,
+          userBio: userNewInfo.userBio,
+        });
+
+      commit("updateUserInfo", userNewInfo);
+      commit("changeLoadingState", false);
+    } catch (err) {
+      commit("changeLoadingState", false);
+      throw Error(err.message);
     }
   },
 };
@@ -112,15 +138,22 @@ const mutations = {
     state.userName = userData.userName;
     state.userId = userData.userId;
     state.userProfileImg = userData.userProfileImg;
+    state.userBio = userData.userBio;
   },
   clearUserData(state) {
     state.userEmail = null;
     state.userPassword = null;
     state.userName = null;
     state.userId = null;
+    state.userProfileImg = null;
+    state.userBio = null;
   },
   changeLoadingState(state, newLoadingState) {
     state.isLoading = newLoadingState;
+  },
+  updateUserInfo(state, userNewInfo) {
+    state.userName = userNewInfo.userName;
+    state.userBio = userNewInfo.userBio;
   },
 };
 

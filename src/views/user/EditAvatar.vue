@@ -1,10 +1,10 @@
 <template>
-  <div></div>
+  <div>編輯頭貼</div>
 </template>
 
 <script>
 export default {
-  name: "UserHome",
+  name: "UserAvatar",
 };
 </script>
 

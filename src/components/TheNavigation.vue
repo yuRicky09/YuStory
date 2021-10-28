@@ -54,16 +54,16 @@
                   </div>
                 </div>
                 <div class="user-center-action">
-                  <ul>
-                    <li>
-                      <router-link to="#"
+                  <ul @click="closeUserCenter">
+                    <li class="user-center-link">
+                      <router-link :to="{ name: 'Profile' }"
                         ><font-awesome-icon
                           :icon="['fa', 'user-edit']"
                           fixed-width
-                        /><span>個人中心</span></router-link
+                        /><span>帳戶設定</span></router-link
                       >
                     </li>
-                    <li>
+                    <li class="user-center-link">
                       <router-link to="#"
                         ><font-awesome-icon
                           :icon="['fa', 'pencil-alt']"
@@ -71,7 +71,7 @@
                         /><span>撰寫故事</span></router-link
                       >
                     </li>
-                    <li>
+                    <li class="user-center-link">
                       <router-link to="#"
                         ><font-awesome-icon
                           :icon="['fa', 'book']"
@@ -79,7 +79,7 @@
                         /><span>我的故事</span></router-link
                       >
                     </li>
-                    <li>
+                    <li class="user-center-link">
                       <router-link to="#"
                         ><font-awesome-icon
                           :icon="['fa', 'bookmark']"
@@ -109,11 +109,10 @@
         </ul>
       </nav>
 
+      <!-- mobile-menu -->
       <div class="hamburger-box" @click="toggleHamburgerMenu">
         <div class="hamburger" :class="{ active: menuIsOpen }"></div>
       </div>
-
-      <!-- mobile-menu -->
       <div
         class="backdrop"
         v-show="menuIsOpen"
@@ -141,9 +140,9 @@
             </div>
           </div>
           <li class="mobile-link">
-            <router-link :to="{ name: 'UserHome' }"
+            <router-link :to="{ name: 'Profile' }"
               ><font-awesome-icon :icon="['fa', 'user-edit']" fixed-width />
-              <span>個人中心</span></router-link
+              <span>帳戶設定</span></router-link
             >
           </li>
           <li class="mobile-link">
@@ -248,6 +247,9 @@ export default {
     },
     closeMenu(e) {
       if (e.target.closest(".mobile-link")) this.menuIsOpen = false;
+    },
+    closeUserCenter(e) {
+      if (e.target.closest(".user-center-link")) this.userCenterIsOpen = false;
     },
     closeModal() {
       this.showModal = false;
@@ -388,13 +390,12 @@ export default {
       .user-center-action {
         padding: 2rem 0;
         li {
-          padding: 1rem 2rem;
-
           &:hover {
             background-color: rgba(0, 0, 0, 0.05);
           }
           > a,
           > div {
+            padding: 1rem 2rem;
             display: block;
             svg {
               margin-right: 1.5rem;
