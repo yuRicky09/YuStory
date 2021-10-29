@@ -18,7 +18,7 @@
             >
               <div class="input-box" :class="{ error: failed }">
                 <label for="userName">用戶名</label>
-                <input type="text" v-model.trim="userName" />
+                <input type="text" v-model="userName" />
                 <small>{{ errors[0] }}</small>
               </div>
             </ValidationProvider>
@@ -38,14 +38,14 @@
         </ValidationObserver>
       </base-card>
     </div>
-    <base-spinner v-if="isLoading"></base-spinner>
+    <base-spinner v-if="initLoading || isLoading"></base-spinner>
     <base-modal
       :show="show"
       message="帳號資訊更新成功"
       @close-modal="closeModal"
     >
       <template #action>
-        <button @click="closeModal" class="action">確定</button>
+        <button @click="closeModal">確定</button>
       </template>
     </base-modal>
   </div>
@@ -54,6 +54,7 @@
 <script>
 import { mapState } from "vuex";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
+import { db, auth } from "@/firebase/config";
 
 export default {
   name: "EditAccount",
@@ -63,6 +64,7 @@ export default {
       errorMsg: null,
       userName: null,
       userBio: null,
+      initLoading: null,
     };
   },
   components: { ValidationProvider, ValidationObserver },
@@ -89,6 +91,22 @@ export default {
     closeModal() {
       this.show = false;
     },
+    async getUserNameAndBio() {
+      const user = auth.currentUser;
+      const res = await db
+        .collection("users")
+        .doc(user.uid)
+        .get();
+      const { userName, userBio } = res.data();
+      this.userName = userName;
+      this.userBio = userBio;
+    },
+  },
+  // 組件創建完畢時先fetch此用戶在db的name bio資料，再賦值給date中雙向綁定的userName與userBio屬性，當用戶更新資料並按保存時，才再同步更新此用戶vuex與db的資料。
+  async created() {
+    this.initLoading = true;
+    await this.getUserNameAndBio();
+    this.initLoading = false;
   },
 };
 </script>
@@ -103,11 +121,6 @@ export default {
 
   .form-container {
     padding: 4rem 0;
-  }
-
-  .action {
-    text-align: center;
-    padding: 2rem;
   }
 }
 </style>

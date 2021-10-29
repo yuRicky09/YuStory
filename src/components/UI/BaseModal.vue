@@ -1,14 +1,16 @@
 <template>
   <div>
     <div v-if="show" class="backdrop" @click="$emit('close-modal')"></div>
-    <transition name="fade-in">
+    <transition name="zoom-in">
       <div v-if="show" class="message-box">
         <base-card>
           <div class="content">
             <h2>訊息</h2>
             <p>{{ message }}</p>
           </div>
-          <slot name="action"></slot>
+          <div class="modal-action">
+            <slot name="action"></slot>
+          </div>
         </base-card>
       </div>
     </transition>
@@ -61,25 +63,18 @@ export default {
       }
     }
   }
-}
 
-.fade-in-enter-active {
-  animation: fade-in 0.3s ease-out;
-}
-
-.fade-in-leave-active {
-  animation: fade-in 0.3s ease-out reverse;
-}
-
-@keyframes fade-in {
-  from {
-    transform: scale(0.95);
-    opacity: 0;
+  .modal-action {
+    text-align: center;
+    margin: 2rem 0;
   }
+}
 
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+.zoom-in-enter-active {
+  animation: zoom-in 0.3s ease-out;
+}
+
+.zoom-in-leave-active {
+  animation: zoom-in 0.3s ease-out reverse;
 }
 </style>

@@ -12,6 +12,7 @@ import {
   faSearch,
   faPencilAlt,
   faCamera,
+  faLongArrowAltRight,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faGoogle,
@@ -34,7 +35,8 @@ library.add(
   faBook,
   faSearch,
   faPencilAlt,
-  faCamera
+  faCamera,
+  faLongArrowAltRight
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

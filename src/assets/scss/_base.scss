@@ -86,3 +86,16 @@ button.ghost {
 .error-msg {
   color: #e74c4cef;
 }
+
+// auth's view pages style
+.auth-wrapper {
+  padding: 8rem 0;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.1)
+    ),
+    url("../../assets/img/register-bg.jpg");
+  background-position: center;
+  background-size: cover;
+}

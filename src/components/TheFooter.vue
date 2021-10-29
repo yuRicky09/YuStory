@@ -11,7 +11,7 @@
       <div class="right-side">
         <ul>
           <li>
-            <router-link to="#"
+            <router-link :to="{ name: 'Home' }"
               ><font-awesome-icon
                 :icon="['fa', 'home']"
                 fixed-width

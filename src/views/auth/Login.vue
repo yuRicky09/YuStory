@@ -1,5 +1,5 @@
 <template>
-  <div class="login-wrapper">
+  <div class="auth-wrapper">
     <div class="form-container">
       <base-card>
         <ValidationObserver v-slot="{ handleSubmit }">
@@ -58,6 +58,9 @@
             <div class="action">
               <button>登入</button>
             </div>
+            <router-link class="forgot-link" :to="{ name: 'ForgotPassword' }"
+              ><span>忘記密碼?</span></router-link
+            >
           </form>
         </ValidationObserver>
       </base-card>
@@ -125,18 +128,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login-wrapper {
-  padding: 8rem 0;
-  background-image: linear-gradient(
-      to right bottom,
-      rgba(0, 0, 0, 0.3),
-      rgba(0, 0, 0, 0.1)
-    ),
-    url("../../assets/img/register-bg.jpg");
-  background-position: center;
-  background-size: cover;
-}
-
 .icon-box {
   align-self: center;
   cursor: pointer;
@@ -171,5 +162,14 @@ export default {
     font-size: 1.6rem;
     flex-direction: row;
   }
+}
+
+.forgot-link {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #5dade2;
+  text-align: end;
+  padding: 1rem;
 }
 </style>

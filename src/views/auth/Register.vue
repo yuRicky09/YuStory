@@ -1,5 +1,5 @@
 <template>
-  <div class="register-wrapper">
+  <div class="auth-wrapper">
     <div class="form-container">
       <base-card>
         <ValidationObserver v-slot="{ handleSubmit }">
@@ -145,18 +145,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.register-wrapper {
-  padding: 8rem 0;
-  background-image: linear-gradient(
-      to right bottom,
-      rgba(0, 0, 0, 0.3),
-      rgba(0, 0, 0, 0.1)
-    ),
-    url("../../assets/img/register-bg.jpg");
-  background-position: center;
-  background-size: cover;
-}
-
 .link-to-login {
   margin-bottom: 1rem;
 }

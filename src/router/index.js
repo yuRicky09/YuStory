@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import { auth } from "@/firebase/config";
 import Home from "@/views/Home.vue";
 
 Vue.use(VueRouter);
@@ -11,6 +12,7 @@ const routes = [
     component: Home,
     meta: {
       title: "YUSTORY",
+      requireAuth: false,
     },
   },
   {
@@ -19,6 +21,7 @@ const routes = [
     component: () => import("@/views/auth/Login.vue"),
     meta: {
       title: "登入|YUSTORY",
+      requireAuth: false,
     },
   },
   {
@@ -27,6 +30,16 @@ const routes = [
     component: () => import("@/views/auth/Register.vue"),
     meta: {
       title: "註冊|YUSTORY",
+      requireAuth: false,
+    },
+  },
+  {
+    path: "/forgot/passwrod",
+    name: "ForgotPassword",
+    component: () => import("@/views/auth/ForgotPassword.vue"),
+    meta: {
+      title: "忘記密碼|YUSTORY",
+      requireAuth: false,
     },
   },
   {
@@ -35,6 +48,7 @@ const routes = [
     component: () => import("@/views/user/Settings.vue"),
     meta: {
       title: "帳戶設定|YUSTORY",
+      requireAuth: true,
     },
     children: [
       {
@@ -43,6 +57,7 @@ const routes = [
         component: () => import("@/views/user/Profile.vue"),
         meta: {
           title: "帳戶首頁|YUSTORY",
+          requireAuth: true,
         },
       },
       {
@@ -51,6 +66,7 @@ const routes = [
         component: () => import("@/views/user/EditAccount.vue"),
         meta: {
           title: "編輯帳號|YUSTORY",
+          requireAuth: true,
         },
       },
       {
@@ -59,6 +75,7 @@ const routes = [
         component: () => import("@/views/user/EditAvatar.vue"),
         meta: {
           title: "編輯頭貼|YUSTORY",
+          requireAuth: true,
         },
       },
     ],
@@ -69,6 +86,21 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const user = auth.currentUser;
+  if (to.name === "Home") {
+    next();
+  } else if (!user && to.meta.requireAuth) {
+    next({ name: "Home" });
+  } else if (!user && !to.meta.requireAuth) {
+    next();
+  } else if (user && !to.meta.requireAuth) {
+    next({ name: "Home" });
+  } else if (user && to.meta.requireAuth) {
+    next();
+  }
 });
 
 router.afterEach((to) => {

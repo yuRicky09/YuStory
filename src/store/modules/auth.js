@@ -1,4 +1,4 @@
-import { auth, db, googleProvider } from "@/firebase/config";
+import { auth, db, googleProvider, storage } from "@/firebase/config";
 
 const state = function() {
   return {
@@ -13,11 +13,7 @@ const state = function() {
   };
 };
 
-const getters = {
-  getUserName(state) {
-    return state.userName;
-  },
-};
+const getters = {};
 
 const actions = {
   async userRegister({ commit }, registerData) {
@@ -47,7 +43,7 @@ const actions = {
       commit("changeLodingState", false);
       return res;
     } catch (err) {
-      commit("changeLodingState", false);
+      commit("changeLoadingState", false);
       throw new Error(err.message);
     }
   },
@@ -72,7 +68,17 @@ const actions = {
       await auth.signOut();
       commit("clearUserData");
     } catch (err) {
-      throw Error(err.message);
+      throw new Error(err.message);
+    }
+  },
+  async resetPassword({ commit }, userEmail) {
+    try {
+      commit("changeLoadingState", true);
+      await auth.sendPasswordResetEmail(userEmail);
+      commit("changeLoadingState", false);
+    } catch (err) {
+      commit("changeLoadingState", false);
+      throw new Error(err.message);
     }
   },
   async getUserData({ commit }, uid) {
@@ -123,7 +129,31 @@ const actions = {
       commit("changeLoadingState", false);
     } catch (err) {
       commit("changeLoadingState", false);
-      throw Error(err.message);
+      throw new Error(err.message);
+    }
+  },
+  async updateProfileImg({ commit, state }, avatar) {
+    try {
+      commit("changeLoadingState", true);
+
+      const storageRef = storage.ref();
+      const uploadPath = `profile/${state.userId}/avatar`;
+      const uploadRef = storageRef.child(uploadPath);
+      await uploadRef.put(avatar);
+      const userProfileImg = await uploadRef.getDownloadURL();
+
+      await db
+        .collection("users")
+        .doc(state.userId)
+        .update({
+          userProfileImg,
+        });
+
+      commit("changeLoadingState", false);
+      commit("updateProfileImg", userProfileImg);
+    } catch (err) {
+      commit("changeLoadingState", false);
+      throw new Error(err.message);
     }
   },
 };
@@ -154,6 +184,9 @@ const mutations = {
   updateUserInfo(state, userNewInfo) {
     state.userName = userNewInfo.userName;
     state.userBio = userNewInfo.userBio;
+  },
+  updateProfileImg(state, userProfileImg) {
+    state.userProfileImg = userProfileImg;
   },
 };
 

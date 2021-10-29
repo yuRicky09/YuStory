@@ -104,7 +104,9 @@
             <router-link :to="{ name: 'Login' }">登入</router-link>
           </li>
           <li v-if="!currentUser">
-            <router-link :to="{ name: 'Register' }">註冊</router-link>
+            <router-link class="register-nav" :to="{ name: 'Register' }"
+              >註冊</router-link
+            >
           </li>
         </ul>
       </nav>
@@ -204,12 +206,10 @@
       @close-modal="closeModal"
     >
       <template #action>
-        <div class="modal-action">
-          <button @click="userLogout">確定</button>
-          <button class="ghost" @click="closeModal">
-            取消
-          </button>
-        </div>
+        <button class="action-btn" @click="userLogout">確定</button>
+        <button class="action-btn ghost" @click="closeModal">
+          取消
+        </button>
       </template>
     </base-modal>
   </header>
@@ -328,6 +328,18 @@ export default {
 
       > a {
         font-weight: bold;
+      }
+    }
+
+    .register-nav {
+      display: inline-block;
+      padding: 1rem 1.5rem;
+      border-radius: 3px;
+      color: #fff;
+      background-color: var(--color-bg-dark-3);
+
+      &:hover {
+        opacity: 0.8;
       }
     }
   }
@@ -536,31 +548,19 @@ export default {
   }
 }
 
-.fade-right-enter,
-.fade-right-leave-to {
-  transform: translateX(-25rem);
+.fade-right-enter-active {
+  animation: fade-right-menu 0.3s ease-out;
 }
 
-.fade-right-enter-to,
-.fade-right-leave {
-  transform: translateX(0rem);
-}
-
-.fade-right-enter-active,
 .fade-right-leave-active {
-  transition: all 0.3s ease-out;
+  animation: fade-right-menu 0.3s ease-out reverse;
 }
 
 ::selection {
   user-select: none;
 }
 
-.modal-action {
-  text-align: center;
-  padding: 2rem 0;
-
-  button {
-    margin: 0 1rem;
-  }
+.action-btn {
+  margin: 0 1rem;
 }
 </style>
