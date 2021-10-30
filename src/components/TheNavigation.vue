@@ -1,14 +1,18 @@
 <template>
   <header>
-    <div class="nav-box">
+    <div class="nav-box" :class="{ sticky: sticky }">
       <div>
         <router-link class="logo-box" :to="{ name: 'Home' }">
-          <img src="@/assets/img/logo.png" class="logo-img" alt="logo-img" />
+          <img
+            src="@/assets/img/logo_transparent.png"
+            class="logo-img"
+            alt="logo-img"
+          />
         </router-link>
       </div>
       <nav>
         <ul class="menu">
-          <li><router-link to="#">Stories</router-link></li>
+          <li><router-link to="#" class="regular-nav">Stories</router-link></li>
           <li v-if="currentUser">
             <div
               class="user-center-backdrop"
@@ -101,7 +105,9 @@
             </div>
           </li>
           <li v-if="!currentUser">
-            <router-link :to="{ name: 'Login' }">登入</router-link>
+            <router-link class="regular-nav" :to="{ name: 'Login' }"
+              >登入</router-link
+            >
           </li>
           <li v-if="!currentUser">
             <router-link class="register-nav" :to="{ name: 'Register' }"
@@ -198,7 +204,7 @@
         </ul>
       </transition>
     </div>
-
+    <div class="hold-space"></div>
     <!-- logout modal -->
     <base-modal
       :show="showModal"
@@ -225,6 +231,7 @@ export default {
       menuIsOpen: false,
       userCenterIsOpen: false,
       showModal: false,
+      sticky: false,
     };
   },
   computed: {
@@ -244,6 +251,9 @@ export default {
       if (window.innerWidth > 640) {
         this.menuIsOpen = false;
       }
+    },
+    stickyNavBar() {
+      window.pageYOffset > 150 ? (this.sticky = true) : (this.sticky = false);
     },
     closeMenu(e) {
       if (e.target.closest(".mobile-link")) this.menuIsOpen = false;
@@ -267,6 +277,7 @@ export default {
   },
   created() {
     window.onresize = this.windowSizeChange;
+    window.onscroll = this.stickyNavBar;
   },
 };
 </script>
@@ -274,6 +285,7 @@ export default {
 <style lang="scss" scoped>
 .nav-box {
   display: flex;
+  position: relative;
   justify-content: space-between;
   align-items: center;
   font-size: 1.6rem;
@@ -281,6 +293,7 @@ export default {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
   padding: 2rem 3rem;
   height: 10rem;
+  transition: all 0.3s ease-out;
 
   .logo-box {
     display: block;
@@ -328,6 +341,26 @@ export default {
 
       > a {
         font-weight: bold;
+      }
+    }
+
+    .regular-nav {
+      position: relative;
+
+      &::before {
+        position: absolute;
+        content: "";
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #000;
+        transform: scale(0);
+        transition: all 0.2s ease-in;
+      }
+
+      &:hover::before {
+        transform: scale(1);
       }
     }
 
@@ -426,6 +459,18 @@ export default {
     height: 100%;
     z-index: 20;
   }
+}
+
+.nav-box.sticky {
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  height: 8rem;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.nav-box.sticky + .hold-space {
+  padding-top: 105px;
 }
 
 // mobile menu
