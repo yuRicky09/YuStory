@@ -11,8 +11,24 @@
         v-model="title"
       />
       <div class="story-cover">
-        <button>上傳封面</button>
-        <button>預覽封面</button>
+        <div>
+          <label for="upload-cover" class="button cover-botton">上傳封面</label>
+          <input
+            type="file"
+            id="upload-cover"
+            accept="image/png, image/jpeg"
+            @change="handleCoverChange"
+          />
+          <span class="button cover-botton" @click="showCover = true"
+            >預覽封面</span
+          >
+        </div>
+        <small class="story-cover-name">封面檔名:{{ storyCoverName }}</small>
+        <cover-preview
+          v-if="showCover"
+          :storyCoverURL="storyCoverURL"
+          @close-cover="showCover = false"
+        ></cover-preview>
       </div>
     </div>
     <div class="editor-wrapper">
@@ -23,6 +39,7 @@
         :useCustomImageHandler="useCustomImageHandler"
         :editor-toolbar="customToolBar"
         @image-added="handleImageAdded"
+        @image-removed="handleImageRemoved"
         ref="editor"
       ></vue-editor>
     </div>
@@ -79,6 +96,8 @@
 
 <script>
 import BaseBadge from "@/components/UI/BaseBadge.vue";
+import CoverPreview from "@/components/story/CoverPreview.vue";
+import { nanoid } from "nanoid";
 import { VueEditor, Quill } from "vue2-editor";
 // 引入Quill module
 import { ImageDrop } from "quill-image-drop-module";
@@ -94,13 +113,18 @@ Quill.register("modules/imageResize", ImageResize);
 
 export default {
   name: "CreateStory",
-  components: { VueEditor, BaseBadge },
+  components: { VueEditor, BaseBadge, CoverPreview },
   data() {
     return {
       title: null,
       tag: null,
       tags: [],
       tagWarnMessage: "",
+      storyCoverFile: null,
+      storyCoverName: null,
+      storyCoverURL: null,
+      showCover: false,
+
       // editor初始設定
       content: "開始撰寫故事......",
       useCustomImageHandler: true,
@@ -145,15 +169,28 @@ export default {
       ],
     };
   },
+  computed: {
+    userId() {
+      return this.$store.state.auth.userId;
+    },
+  },
   methods: {
+    handleCoverChange(e) {
+      this.storyCoverFile = e.target.files[0];
+      this.storyCoverName = this.storyCoverFile.name;
+      this.storyCoverURL = URL.createObjectURL(this.storyCoverFile);
+    },
     async handleImageAdded(file, Editor, cursorLocation, resetUploader) {
       const storageRef = storage.ref();
-      const path = `story/cover`;
+      const path = `story/${this.userId}/${nanoid()}`;
       const uploadPath = storageRef.child(path);
       await uploadPath.put(file);
       const downloadURL = await uploadPath.getDownloadURL();
       Editor.insertEmbed(cursorLocation, "image", downloadURL);
       resetUploader();
+    },
+    async handleImageRemoved(file) {
+      console.log(file);
     },
     editorInit() {
       const toolbar = this.$refs.editor.$el.children[0];
@@ -192,7 +229,6 @@ export default {
       });
     },
   },
-  computed: {},
   mounted() {
     this.editorInit();
   },
@@ -259,8 +295,29 @@ export default {
     }
 
     .story-cover {
-      button {
-        margin: 0.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      @media (min-width: $bp-xl) {
+        flex-direction: row;
+      }
+      .cover-botton {
+        display: inline-block;
+        margin: 0.5rem;
+      }
+
+      input {
+        display: none;
+      }
+
+      .story-cover-name {
+        width: 25rem;
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
     }
   }
