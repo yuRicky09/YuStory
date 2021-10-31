@@ -68,7 +68,7 @@
                       >
                     </li>
                     <li class="user-center-link">
-                      <router-link to="#"
+                      <router-link :to="{ name: 'CreateStory' }"
                         ><font-awesome-icon
                           :icon="['fa', 'pencil-alt']"
                           fixed-width

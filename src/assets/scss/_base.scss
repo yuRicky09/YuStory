@@ -55,11 +55,11 @@ button,
   &:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     opacity: 0.9;
-    transform: translateY(-2px) scale(1.05);
+    transform: translateY(-2px) scale(1.03);
   }
 
   &:active {
-    transform: translateY(0) scale(0.95);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -84,7 +84,7 @@ button.ghost {
 }
 
 .error-msg {
-  color: #e74c4cef;
+  color: var(--color-error);
 }
 
 // auth's view pages style

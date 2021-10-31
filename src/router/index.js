@@ -80,6 +80,15 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/story/create",
+    name: "CreateStory",
+    component: () => import("@/views/story/CreateStory.vue"),
+    meta: {
+      title: "撰寫故事|YUSTORY",
+      requireAuth: true,
+    },
+  },
 ];
 
 const router = new VueRouter({
