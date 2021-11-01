@@ -276,6 +276,8 @@ export default {
 
 <style lang="scss" scoped>
 .container {
+  max-width: 1440px;
+  margin: auto;
   font-size: 1.4rem;
 
   @media (min-width: $bp-md) {

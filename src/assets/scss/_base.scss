@@ -13,6 +13,7 @@ html {
   text-decoration: none;
   color: inherit;
   font-size: inherit;
+  word-break: break-all;
 }
 
 *::after,
@@ -20,11 +21,6 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-.container {
-  max-width: 1440px;
-  margin: auto;
 }
 
 input,
@@ -85,6 +81,16 @@ button.ghost {
 
 .error-msg {
   color: var(--color-error);
+}
+
+img {
+  max-width: 100%;
+}
+
+.story-content {
+  img {
+    max-width: 100% !important;
+  }
 }
 
 // auth's view pages style

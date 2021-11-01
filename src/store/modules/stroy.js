@@ -9,6 +9,8 @@ const state = function() {
     storyTags: [],
     storyImg: [],
     storyCreatedAt: null,
+    currentStory: {},
+    currentAuthor: null,
     isLoading: false,
   };
 };
@@ -99,6 +101,35 @@ const actions = {
       throw Error(err.message);
     }
   },
+  async fetchCurrentStory({ dispatch, commit }, id) {
+    try {
+      const res = await db
+        .collection("stories")
+        .doc(id)
+        .get();
+
+      const currentStory = res.data();
+      dispatch("getStoryAuthor", currentStory.userId);
+      console.log(currentStory);
+      commit("setCurrentPost", currentStory);
+    } catch (err) {
+      console.log(err.message);
+      throw new Error(err.message);
+    }
+  },
+  async getStoryAuthor({ commit }, userId) {
+    try {
+      const res = await db
+        .collection("users")
+        .doc(userId)
+        .get();
+      const user = res.data();
+      commit("setCurrentAuthor", user);
+    } catch (err) {
+      console.log(err.message);
+      throw new Error(err.message);
+    }
+  },
 };
 
 const mutations = {
@@ -122,6 +153,12 @@ const mutations = {
     state.storyHTML = storyHTML;
     state.storyTags = storyTags;
     state.storyCreatedAt = createdAt;
+  },
+  setCurrentPost(state, currentStory) {
+    state.currentStory = currentStory;
+  },
+  setCurrentAuthor(state, currentAuthor) {
+    state.currentAuthor = currentAuthor;
   },
 };
 

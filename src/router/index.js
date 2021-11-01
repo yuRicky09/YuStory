@@ -96,6 +96,7 @@ const routes = [
     meta: {
       requireAuth: true,
     },
+    props: true,
   },
 ];
 
