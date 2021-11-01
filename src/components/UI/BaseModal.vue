@@ -30,13 +30,11 @@ export default {
   top: 30vh;
   left: 10%;
   width: 80%;
-  z-index: 20;
+  z-index: 200;
 
   @media (min-width: $bp-lg) {
-    top: 30vh;
     left: 30%;
     width: 40%;
-    z-index: 20;
   }
 
   .content {

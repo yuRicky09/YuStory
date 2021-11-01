@@ -2,6 +2,7 @@
   <div class="container">
     <div class="page-title">
       <h2>Write a story</h2>
+      <span v-if="errorMsg" class="error-msg">{{ errorMsg }}</span>
     </div>
     <div class="story-header">
       <input
@@ -83,7 +84,7 @@
             >預覽</span
           >
         </button>
-        <button>
+        <button @click="publishStory">
           <font-awesome-icon
             :icon="['fa', 'file-upload']"
             class="action-icon"
@@ -91,13 +92,21 @@
         </button>
       </div>
     </div>
+    <base-modal
+      :message="modalErrorMsg"
+      :show="show"
+      @close-modal="show = false"
+    >
+      <template #action>
+        <button @click="show = false">確定</button>
+      </template>
+    </base-modal>
   </div>
 </template>
 
 <script>
 import BaseBadge from "@/components/UI/BaseBadge.vue";
 import CoverPreview from "@/components/story/CoverPreview.vue";
-import { nanoid } from "nanoid";
 import { VueEditor, Quill } from "vue2-editor";
 // 引入Quill module
 import { ImageDrop } from "quill-image-drop-module";
@@ -105,8 +114,6 @@ import ImageResize from "quill-image-resize-vue";
 // 語法高亮配置
 import hljs from "highlight.js";
 import "highlight.js/styles/monokai-sublime.css";
-
-import { storage } from "@/firebase/config";
 
 Quill.register("modules/imageDrop", ImageDrop);
 Quill.register("modules/imageResize", ImageResize);
@@ -124,6 +131,9 @@ export default {
       storyCoverName: null,
       storyCoverURL: null,
       showCover: false,
+      errorMsg: null,
+      show: false,
+      modalErrorMsg: null,
 
       // editor初始設定
       content: "開始撰寫故事......",
@@ -175,23 +185,6 @@ export default {
     },
   },
   methods: {
-    handleCoverChange(e) {
-      this.storyCoverFile = e.target.files[0];
-      this.storyCoverName = this.storyCoverFile.name;
-      this.storyCoverURL = URL.createObjectURL(this.storyCoverFile);
-    },
-    async handleImageAdded(file, Editor, cursorLocation, resetUploader) {
-      const storageRef = storage.ref();
-      const path = `story/${this.userId}/${nanoid()}`;
-      const uploadPath = storageRef.child(path);
-      await uploadPath.put(file);
-      const downloadURL = await uploadPath.getDownloadURL();
-      Editor.insertEmbed(cursorLocation, "image", downloadURL);
-      resetUploader();
-    },
-    async handleImageRemoved(file) {
-      console.log(file);
-    },
     editorInit() {
       const toolbar = this.$refs.editor.$el.children[0];
       const allBtn = toolbar.querySelectorAll("button");
@@ -207,6 +200,29 @@ export default {
         btn.setAttribute("title", this.tooltips[index]);
       });
     },
+    // 圖片處理
+    handleCoverChange(e) {
+      this.storyCoverFile = e.target.files[0];
+      this.storyCoverName = this.storyCoverFile.name;
+      this.storyCoverURL = URL.createObjectURL(this.storyCoverFile);
+    },
+    async handleImageAdded(file, Editor, cursorLocation, resetUploader) {
+      try {
+        this.errorMsg = null;
+        this.$store.dispatch("story/addStoryImg", {
+          file,
+          Editor,
+          cursorLocation,
+          resetUploader,
+        });
+      } catch (err) {
+        this.errorMsg = err.message;
+      }
+    },
+    async handleImageRemoved(file) {
+      this.$store.dispatch("story/removeImg", file);
+    },
+    // 標籤處理
     addTag() {
       if (this.tags.length >= 3) {
         this.tagWarnMessage = "標籤已超過3個";
@@ -227,6 +243,29 @@ export default {
       this.tags = this.tags.filter((tag) => {
         return tag !== deleteTag;
       });
+    },
+    // 故事發佈、備份等處理
+    async publishStory() {
+      try {
+        if (!this.storyCoverFile) {
+          this.modalErrorMsg = "請選擇故事封面";
+          this.show = true;
+        } else if (!this.title || !this.content) {
+          this.modalErrorMsg = "請確切填寫故事標題與內容，標題與內容不得為空";
+          this.show = true;
+        } else {
+          const storyId = await this.$store.dispatch("story/publishStory", {
+            storyCoverFile: this.storyCoverFile,
+            storyTitle: this.title,
+            storyHTML: this.content,
+            storyTags: this.tags,
+          });
+
+          this.$router.push({ name: "Story", params: { id: storyId } });
+        }
+      } catch (err) {
+        this.errorMsg = err;
+      }
     },
   },
   mounted() {
@@ -252,6 +291,9 @@ export default {
   .page-title {
     font-size: 3.2rem;
     margin: 2rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .story-header {

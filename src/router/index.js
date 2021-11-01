@@ -89,6 +89,14 @@ const routes = [
       requireAuth: true,
     },
   },
+  {
+    path: "/story/:id",
+    name: "Story",
+    component: () => import("@/views/story/Story.vue"),
+    meta: {
+      requireAuth: true,
+    },
+  },
 ];
 
 const router = new VueRouter({
