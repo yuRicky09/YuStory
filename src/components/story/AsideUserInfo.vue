@@ -1,5 +1,5 @@
 <template>
-  <section class="asideUserInfo">
+  <section class="asideUserInfo" :class="{ show: showAsideUserInfo }">
     <div class="user-info">
       <img :src="currentAuthor.userProfileImg" alt="user-avatar" />
       <h4>{{ currentAuthor.userName }}</h4>
@@ -14,13 +14,41 @@
 export default {
   name: "AsideUserInfo",
   props: ["currentAuthor"],
+  data() {
+    return {
+      showAsideUserInfo: false,
+    };
+  },
+  computed: {
+    topToHeaderDistance() {
+      return this.$store.state.story.topToHeaderDistance;
+    },
+  },
+  methods: {
+    // 當滾動距離大於頂端到文章標題底部時秀出用戶側邊資訊欄。
+    toggleAsideUserInfoClass() {
+      if (this.topToHeaderDistance) {
+        window.pageYOffset > this.topToHeaderDistance
+          ? (this.showAsideUserInfo = true)
+          : (this.showAsideUserInfo = false);
+      }
+    },
+  },
+  mounted() {
+    window.addEventListener("scroll", this.toggleAsideUserInfoClass);
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.toggleAsideUserInfoClass);
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .asideUserInfo {
   position: sticky;
-  top: 0;
+  top: 15rem;
+  opacity: 0;
+  transition: all 0.5s ease-in;
 
   .user-info {
     display: flex;
@@ -50,5 +78,9 @@ export default {
       color: var(--color-bg-gray-1);
     }
   }
+}
+
+.asideUserInfo.show {
+  opacity: 1;
 }
 </style>

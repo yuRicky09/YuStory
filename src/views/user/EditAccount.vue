@@ -38,7 +38,7 @@
         </ValidationObserver>
       </base-card>
     </div>
-    <base-spinner v-if="initLoading || isLoading"></base-spinner>
+    <base-spinner v-if="isLoading"></base-spinner>
     <base-modal
       :show="show"
       message="帳號資訊更新成功"
@@ -64,14 +64,13 @@ export default {
       errorMsg: null,
       userName: null,
       userBio: null,
-      initLoading: null,
+      isLoading: null,
     };
   },
   components: { ValidationProvider, ValidationObserver },
   computed: {
     ...mapState("auth", {
       userEmail: (state) => state.userEmail,
-      isLoading: (state) => state.isLoading,
     }),
   },
   methods: {
@@ -102,11 +101,12 @@ export default {
       this.userBio = userBio;
     },
   },
-  // 組件創建完畢時先fetch此用戶在db的name bio資料，再賦值給date中雙向綁定的userName與userBio屬性，當用戶更新資料並按保存時，才再同步更新此用戶vuex與db的資料。
+  // 為了保存未更新前的資料，選擇先fetch此用戶在db的name與bio資料，再賦值給date中雙向綁定的userName與userBio屬性。
+  // 當用戶按下保存後才再度更新db與vuex，之後用戶的資料都透過vuex存取。
   async created() {
-    this.initLoading = true;
+    this.isLoading = true;
     await this.getUserNameAndBio();
-    this.initLoading = false;
+    this.isLoading = false;
   },
 };
 </script>

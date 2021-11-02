@@ -1,5 +1,5 @@
 <template>
-  <section class="story-header">
+  <section class="story-header" ref="storyHeader">
     <div>
       <h2 class="story-title">{{ title }}</h2>
       <div class="title-content">
@@ -31,6 +31,11 @@ export default {
       moment.locale("zh-cn");
       return moment(timestamp).format("lll");
     },
+  },
+  mounted() {
+    const topToHeaderDistance =
+      this.$refs.storyHeader.offsetHeight + this.$refs.storyHeader.offsetTop;
+    this.$store.commit("story/setTopToHeaderDistance", topToHeaderDistance);
   },
 };
 </script>

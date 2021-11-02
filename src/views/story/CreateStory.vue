@@ -269,6 +269,7 @@ export default {
     },
   },
   mounted() {
+    // 要抓取到真實DOM的話，必須等真實DOM掛載完畢的mounted階段才能獲取。
     this.editorInit();
   },
 };
