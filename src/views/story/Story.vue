@@ -1,22 +1,24 @@
 <template>
   <div class="container">
-    <article class="story-wrapper">
-      <div class="top">
+    <div class="left-side">
+      <aside-user-info :currentAuthor="currentAuthor"></aside-user-info>
+    </div>
+    <div class="right-side">
+      <article>
         <story-header
-          v-if="currentAuthor"
           :currentAuthor="currentAuthor"
           :title="currentStory.storyTitle"
           :createdAt="currentStory.createdAt"
         ></story-header>
-        <story-content :storyHTML="currentStory.storyHTML"></story-content>
-        <aside-user-info></aside-user-info>
+        <div ref="contentStartLine">
+          <story-content :storyHTML="currentStory.storyHTML"></story-content>
+        </div>
+      </article>
+      <section>這邊會是尾部 點讚 收藏</section>
+      <div>
+        <section>顯示留言</section>
+        <section>留言組件</section>
       </div>
-      <section class="story-content"></section>
-    </article>
-    <section>這邊會是尾部 點讚 收藏</section>
-    <div>
-      <section>顯示留言</section>
-      <section>留言組件</section>
     </div>
   </div>
 </template>
@@ -34,6 +36,7 @@ export default {
   data() {
     return {
       showEditor: false,
+      scrollHeight: null,
     };
   },
   computed: {
@@ -48,8 +51,9 @@ export default {
     },
   },
   async created() {
-    this.fetchCurrentStoryAndAuthor();
+    await this.fetchCurrentStoryAndAuthor();
   },
+  mounted() {},
 };
 </script>
 
@@ -60,12 +64,32 @@ export default {
   margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   font-size: 1.4rem;
 
   @media (min-width: $bp-md) {
     font-size: 1.6rem;
+  }
+
+  @media (min-width: $bp-lg) {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .left-side {
+    display: none;
+    position: relative;
+
+    @media (min-width: $bp-lg) {
+      display: block;
+      flex-basis: 18%;
+    }
+  }
+
+  .right-side {
+    @media (min-width: $bp-lg) {
+      display: block;
+      flex-basis: 80rem;
+    }
   }
 }
 </style>
