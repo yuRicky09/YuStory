@@ -44,7 +44,7 @@ export default {
     font-size: 3.4rem;
     margin: 1.5rem 0;
 
-    @media (min-width: $bp-lg) {
+    @media (min-width: $bp-md) {
       font-size: 5rem;
       margin: 2.5rem 0;
     }

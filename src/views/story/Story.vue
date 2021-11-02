@@ -8,7 +8,7 @@
           :title="currentStory.storyTitle"
           :createdAt="currentStory.createdAt"
         ></story-header>
-        <story-content :currentStory="currentStory"></story-content>
+        <story-content :storyHTML="currentStory.storyHTML"></story-content>
         <aside-user-info></aside-user-info>
       </div>
       <section class="story-content"></section>

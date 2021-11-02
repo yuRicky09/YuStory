@@ -21,7 +21,7 @@ const routes = [
     component: () => import("@/views/auth/Login.vue"),
     meta: {
       title: "登入|YUSTORY",
-      requireAuth: false,
+      requireLogin: false,
     },
   },
   {
@@ -30,7 +30,7 @@ const routes = [
     component: () => import("@/views/auth/Register.vue"),
     meta: {
       title: "註冊|YUSTORY",
-      requireAuth: false,
+      requireLogin: false,
     },
   },
   {
@@ -39,7 +39,7 @@ const routes = [
     component: () => import("@/views/auth/ForgotPassword.vue"),
     meta: {
       title: "忘記密碼|YUSTORY",
-      requireAuth: false,
+      requireLogin: false,
     },
   },
   {
@@ -48,7 +48,7 @@ const routes = [
     component: () => import("@/views/user/Settings.vue"),
     meta: {
       title: "帳戶設定|YUSTORY",
-      requireAuth: true,
+      requireLogin: true,
     },
     children: [
       {
@@ -57,7 +57,7 @@ const routes = [
         component: () => import("@/views/user/Profile.vue"),
         meta: {
           title: "帳戶首頁|YUSTORY",
-          requireAuth: true,
+          requireLogin: true,
         },
       },
       {
@@ -66,7 +66,7 @@ const routes = [
         component: () => import("@/views/user/EditAccount.vue"),
         meta: {
           title: "編輯帳號|YUSTORY",
-          requireAuth: true,
+          requireLogin: true,
         },
       },
       {
@@ -75,7 +75,7 @@ const routes = [
         component: () => import("@/views/user/EditAvatar.vue"),
         meta: {
           title: "編輯頭貼|YUSTORY",
-          requireAuth: true,
+          requireLogin: true,
         },
       },
     ],
@@ -86,7 +86,7 @@ const routes = [
     component: () => import("@/views/story/CreateStory.vue"),
     meta: {
       title: "撰寫故事|YUSTORY",
-      requireAuth: true,
+      requireLogin: true,
     },
   },
   {
@@ -94,9 +94,18 @@ const routes = [
     name: "Story",
     component: () => import("@/views/story/Story.vue"),
     meta: {
-      requireAuth: true,
+      requireAuth: false,
     },
     props: true,
+  },
+  {
+    path: "/stories",
+    name: "Stories",
+    component: () => import("@/views/story/Stories.vue"),
+    meta: {
+      title: "所有故事|YUSTORY",
+      requireAuth: false,
+    },
   },
 ];
 
@@ -115,16 +124,12 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const user = auth.currentUser;
-  if (to.name === "Home") {
+  if (!to.meta.requireAuth && to.meta.requireAuth !== undefined) {
     next();
-  } else if (!user && to.meta.requireAuth) {
-    next({ name: "Home" });
-  } else if (!user && !to.meta.requireAuth) {
-    next();
-  } else if (user && !to.meta.requireAuth) {
-    next({ name: "Home" });
-  } else if (user && to.meta.requireAuth) {
-    next();
+  } else if (to.meta.requireLogin) {
+    user ? next() : next({ name: "Home" });
+  } else if (!to.meta.requireLogin) {
+    user ? next({ name: "Home" }) : next();
   }
 });
 

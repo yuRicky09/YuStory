@@ -19,7 +19,7 @@
             >
           </li>
           <li>
-            <router-link to="#"
+            <router-link :to="{ name: 'Stories' }"
               ><font-awesome-icon
                 :icon="['fa', 'list-ul']"
                 fixed-width
@@ -27,7 +27,7 @@
             >
           </li>
           <li>
-            <router-link to="#"
+            <router-link :to="{ name: 'CreateStory' }"
               ><font-awesome-icon
                 :icon="['fa', 'pencil-alt']"
                 fixed-width

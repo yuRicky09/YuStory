@@ -12,7 +12,11 @@
       </div>
       <nav>
         <ul class="menu">
-          <li><router-link to="#" class="regular-nav">Stories</router-link></li>
+          <li>
+            <router-link :to="{ name: 'Stories' }" class="regular-nav"
+              >Stories</router-link
+            >
+          </li>
           <li v-if="currentUser">
             <div
               class="user-center-backdrop"
@@ -147,7 +151,7 @@
               <span>{{ userEmail }}</span>
             </div>
           </div>
-          <li class="mobile-link">
+          <li class="mobile-link" v-if="currentUser">
             <router-link :to="{ name: 'Profile' }"
               ><font-awesome-icon :icon="['fa', 'user-edit']" fixed-width />
               <span>帳戶設定</span></router-link
@@ -159,7 +163,7 @@
               <span>首頁</span></router-link
             >
           </li>
-          <li class="mobile-link">
+          <li class="mobile-link" v-if="!currentUser">
             <router-link :to="{ name: 'Login' }"
               ><font-awesome-icon :icon="['fa', 'sign-in-alt']" fixed-width />
               <span>登入</span></router-link
@@ -172,7 +176,7 @@
             >
           </li>
           <li class="mobile-link">
-            <router-link to="#"
+            <router-link :to="{ name: 'Stories' }"
               ><font-awesome-icon :icon="['fa', 'list-ul']" fixed-width />
               <span>所有故事</span></router-link
             >
@@ -184,12 +188,13 @@
             >
           </li>
           <li class="mobile-link">
-            <router-link to="#"
+            <router-link :to="{ name: 'CreateStory' }"
               ><font-awesome-icon :icon="['fa', 'pencil-alt']" fixed-width />
               <span>撰寫故事</span></router-link
             >
           </li>
           <li
+            v-if="currentUser"
             class="logout"
             @click="
               menuIsOpen = false;
@@ -524,7 +529,7 @@ export default {
 
 .mobile-menu {
   position: fixed;
-  z-index: 20;
+  z-index: 120;
   top: 0;
   left: 0;
   height: 100%;
