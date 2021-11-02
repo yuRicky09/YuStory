@@ -11,6 +11,7 @@ const state = function() {
     storyCreatedAt: null,
     isLoading: false,
     topToHeaderDistance: null,
+    stories: [],
   };
 };
 
@@ -100,6 +101,17 @@ const actions = {
       throw Error(err.message);
     }
   },
+  async getAllStories({ commit }) {
+    const storiesRef = db.collection("stories").orderBy("createdAt", "desc");
+    storiesRef.onSnapshot((snap) => {
+      const stories = [];
+      snap.docs.forEach((doc) => {
+        const story = { ...doc.data(), id: doc.id };
+        stories.push(story);
+      });
+      commit("setAllStories", stories);
+    });
+  },
 };
 
 const mutations = {
@@ -126,6 +138,9 @@ const mutations = {
   },
   setTopToHeaderDistance(state, topToHeaderDistance) {
     state.topToHeaderDistance = topToHeaderDistance;
+  },
+  setAllStories(state, stories) {
+    state.stories = stories;
   },
 };
 

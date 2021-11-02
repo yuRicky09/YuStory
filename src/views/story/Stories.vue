@@ -1,8 +1,12 @@
 <template>
-  <div>
+  <div class="container">
     <main>
-      <article>
-        <story-intro-rect></story-intro-rect>
+      <article v-if="stories">
+        <story-intro-rect
+          v-for="story in stories"
+          :story="story"
+          :key="story.id"
+        ></story-intro-rect>
       </article>
     </main>
     <aside></aside>
@@ -15,7 +19,16 @@ import StoryIntroRect from "@/components/story/StoryIntroRect.vue";
 export default {
   name: "Stories",
   components: { StoryIntroRect },
+  computed: {
+    stories() {
+      return this.$store.state.story.stories;
+    },
+  },
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.container {
+  max-width: 144rem;
+}
+</style>

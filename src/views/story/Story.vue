@@ -84,7 +84,6 @@ export default {
     const userId = await this.fetchCurrentStory();
     this.fetchCurrentAuthor(userId);
   },
-  mounted() {},
 };
 </script>
 

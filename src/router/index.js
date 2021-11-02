@@ -20,7 +20,7 @@ const routes = [
     name: "Login",
     component: () => import("@/views/auth/Login.vue"),
     meta: {
-      title: "登入|YUSTORY",
+      title: "登入 | YUSTORY",
       requireLogin: false,
     },
   },
@@ -29,7 +29,7 @@ const routes = [
     name: "Register",
     component: () => import("@/views/auth/Register.vue"),
     meta: {
-      title: "註冊|YUSTORY",
+      title: "註冊 | YUSTORY",
       requireLogin: false,
     },
   },
@@ -38,7 +38,7 @@ const routes = [
     name: "ForgotPassword",
     component: () => import("@/views/auth/ForgotPassword.vue"),
     meta: {
-      title: "忘記密碼|YUSTORY",
+      title: "忘記密碼 | YUSTORY",
       requireLogin: false,
     },
   },
@@ -47,7 +47,7 @@ const routes = [
     name: "Settings",
     component: () => import("@/views/user/Settings.vue"),
     meta: {
-      title: "帳戶設定|YUSTORY",
+      title: "帳戶設定 | YUSTORY",
       requireLogin: true,
     },
     children: [
@@ -56,7 +56,7 @@ const routes = [
         name: "Profile",
         component: () => import("@/views/user/Profile.vue"),
         meta: {
-          title: "帳戶首頁|YUSTORY",
+          title: "帳戶首頁 | YUSTORY",
           requireLogin: true,
         },
       },
@@ -65,7 +65,7 @@ const routes = [
         name: "EditAccount",
         component: () => import("@/views/user/EditAccount.vue"),
         meta: {
-          title: "編輯帳號|YUSTORY",
+          title: "編輯帳號 | YUSTORY",
           requireLogin: true,
         },
       },
@@ -74,7 +74,7 @@ const routes = [
         name: "EditAvatar",
         component: () => import("@/views/user/EditAvatar.vue"),
         meta: {
-          title: "編輯頭貼|YUSTORY",
+          title: "編輯頭貼 | YUSTORY",
           requireLogin: true,
         },
       },
@@ -85,7 +85,7 @@ const routes = [
     name: "CreateStory",
     component: () => import("@/views/story/CreateStory.vue"),
     meta: {
-      title: "撰寫故事|YUSTORY",
+      title: "撰寫故事 | YUSTORY",
       requireLogin: true,
     },
   },
@@ -103,7 +103,7 @@ const routes = [
     name: "Stories",
     component: () => import("@/views/story/Stories.vue"),
     meta: {
-      title: "所有故事|YUSTORY",
+      title: "STORIES | YUSTORY",
       requireAuth: false,
     },
   },

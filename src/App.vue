@@ -9,12 +9,14 @@
 <script>
 import TheNavigation from "@/components/TheNavigation.vue";
 import TheFooter from "@/components/TheFooter.vue";
-import { auth } from "./firebase/config";
+import { auth } from "@/firebase/config";
 
 export default {
   name: "App",
   components: { TheNavigation, TheFooter },
   created() {
+    this.$store.dispatch("story/getAllStories");
+
     // 有任何auth state change都將觸發(包括註冊 null => new user)
     auth.onAuthStateChanged((user) => {
       this.$store.commit("auth/getCurrentUser", user);
