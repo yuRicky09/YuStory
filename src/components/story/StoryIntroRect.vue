@@ -1,7 +1,7 @@
 <template>
   <section>
-    <div><img :src="story.storyCover.coverDownloadURL" /></div>
-    <div>{{ story.storyTitle }}</div>
+    <div><img :src="story.cover.coverDownloadURL" /></div>
+    <div>{{ story.title }}</div>
   </section>
 </template>
 

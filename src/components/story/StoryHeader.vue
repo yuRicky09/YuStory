@@ -6,10 +6,10 @@
         <div class="user-info">
           <img
             class="user-avatar"
-            :src="currentAuthor.userProfileImg"
+            :src="currentAuthor.profileImg"
             alt="user-avatar"
           />
-          <p>{{ currentAuthor.userName }}</p>
+          <p>{{ currentAuthor.name }}</p>
         </div>
         <div class="created-time">
           <span>{{ createdTime }}</span>

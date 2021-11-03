@@ -79,12 +79,12 @@ const actions = {
       const createdAt = timestamp();
 
       const docRef = await db.collection("stories").add({
-        storyTitle,
-        storyCover,
-        storyHTML,
-        storyTags,
+        title: storyTitle,
+        cover: storyCover,
+        HTML: storyHTML,
+        tags: storyTags,
+        img: storyImg,
         userId,
-        storyImg,
         createdAt,
       });
 

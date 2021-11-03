@@ -1,11 +1,11 @@
 <template>
   <section class="asideUserInfo" :class="{ show: showAsideUserInfo }">
     <div class="user-info">
-      <img :src="currentAuthor.userProfileImg" alt="user-avatar" />
-      <h4>{{ currentAuthor.userName }}</h4>
+      <img :src="currentAuthor.profileImg" alt="user-avatar" />
+      <h4>{{ currentAuthor.name }}</h4>
     </div>
     <div class="user-bio">
-      <p>{{ currentAuthor.userBio }}</p>
+      <p>{{ currentAuthor.bio }}</p>
     </div>
   </section>
 </template>

@@ -1,23 +1,17 @@
 <template>
   <div class="container">
     <div class="left-side">
-      <aside-user-info
-        :currentAuthor="currentAuthor"
-        v-if="currentAuthor"
-      ></aside-user-info>
-    </div>
-    <div class="right-side">
       <article>
         <story-header
           v-if="currentAuthor && currentStory"
           :currentAuthor="currentAuthor"
-          :title="currentStory.storyTitle"
+          :title="currentStory.title"
           :createdAt="currentStory.createdAt"
         ></story-header>
         <div ref="contentStartLine">
           <story-content
             v-if="currentStory"
-            :storyHTML="currentStory.storyHTML"
+            :storyHTML="currentStory.HTML"
           ></story-content>
         </div>
       </article>
@@ -26,6 +20,12 @@
         <section>顯示留言</section>
         <section>留言組件</section>
       </div>
+    </div>
+    <div class="right-side">
+      <aside-user-info
+        :currentAuthor="currentAuthor"
+        v-if="currentAuthor"
+      ></aside-user-info>
     </div>
   </div>
 </template>
@@ -108,19 +108,19 @@ export default {
   }
 
   .left-side {
+    @media (min-width: $bp-lg) {
+      display: block;
+      flex-basis: 80rem;
+    }
+  }
+
+  .right-side {
     display: none;
     position: relative;
 
     @media (min-width: $bp-lg) {
       display: block;
       flex-basis: 18%;
-    }
-  }
-
-  .right-side {
-    @media (min-width: $bp-lg) {
-      display: block;
-      flex-basis: 80rem;
     }
   }
 }
