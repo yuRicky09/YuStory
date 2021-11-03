@@ -1,10 +1,12 @@
 <template>
   <div class="container">
     <main class="left-side">
+      <h2>Stories</h2>
       <article class="story-list" v-if="stories">
         <story-intro-rect
           v-for="story in stories"
           :story="story"
+          :id="story.id"
           :key="story.id"
         ></story-intro-rect>
       </article>
@@ -31,9 +33,10 @@ export default {
 .container {
   max-width: 144rem;
   margin: auto;
+  font-size: 1.4rem;
 
   .left-side {
-    max-width: 75rem;
+    max-width: 77rem;
   }
 
   .right-side {

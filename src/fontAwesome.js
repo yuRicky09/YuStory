@@ -6,7 +6,7 @@ import {
   faHome,
   faSignInAlt,
   faSignOutAlt,
-  faBookmark,
+  faBookmark as fasBookmark,
   faListUl,
   faBook,
   faSearch,
@@ -18,12 +18,14 @@ import {
   faEye,
   faFileUpload,
   faTimes,
+  faEllipsisV,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faGoogle,
   faGithub,
   faGithubSquare,
 } from "@fortawesome/free-brands-svg-icons";
+import { faBookmark as farBookmark } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(
@@ -35,7 +37,8 @@ library.add(
   faHome,
   faSignInAlt,
   faSignOutAlt,
-  faBookmark,
+  fasBookmark,
+  farBookmark,
   faListUl,
   faBook,
   faSearch,
@@ -46,7 +49,8 @@ library.add(
   faSave,
   faFileUpload,
   faEye,
-  faTimes
+  faTimes,
+  faEllipsisV
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

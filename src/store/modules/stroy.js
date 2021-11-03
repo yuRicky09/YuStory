@@ -6,6 +6,7 @@ const state = function() {
     storyCover: null,
     storyTitle: null,
     storyHTML: null,
+    storyBreif: null,
     storyTags: [],
     storyImg: [],
     storyCreatedAt: null,
@@ -66,7 +67,7 @@ const actions = {
   },
   async publishStory(
     { state, rootState, dispatch, commit },
-    { storyCoverFile, storyTitle, storyHTML, storyTags }
+    { storyCoverFile, storyTitle, storyHTML, storyTags, storyBreif }
   ) {
     try {
       commit("changeLoadingState", true);
@@ -74,6 +75,8 @@ const actions = {
       await dispatch("addStoryCover", storyCoverFile);
 
       const userId = rootState.auth.userId;
+      const userName = rootState.auth.userName;
+      const userProfileImg = rootState.auth.userProfileImg;
       const storyCover = state.storyCover;
       const storyImg = state.storyImg;
       const createdAt = timestamp();
@@ -83,8 +86,11 @@ const actions = {
         cover: storyCover,
         HTML: storyHTML,
         tags: storyTags,
+        brief: storyBreif,
         img: storyImg,
         userId,
+        userName,
+        userProfileImg,
         createdAt,
       });
 
@@ -92,6 +98,7 @@ const actions = {
         storyTitle,
         storyHTML,
         storyTags,
+        storyBreif,
         createdAt,
       });
       commit("changeLoadingState", false);
@@ -130,10 +137,14 @@ const mutations = {
     state.storyCover = storyCover;
   },
   //! 備份的話應該是需要在本地也存比較好，發佈的時候要不要存在思考看看，這邊先暫且本地也存起來。
-  setPublishStory(state, { storyTitle, storyHTML, storyTags, createdAt }) {
+  setPublishStory(
+    state,
+    { storyTitle, storyHTML, storyTags, storyBreif, createdAt }
+  ) {
     state.storyTitle = storyTitle;
     state.storyHTML = storyHTML;
     state.storyTags = storyTags;
+    state.storyBreif = storyBreif;
     state.storyCreatedAt = createdAt;
   },
   setTopToHeaderDistance(state, topToHeaderDistance) {

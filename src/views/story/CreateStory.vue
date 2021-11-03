@@ -64,12 +64,13 @@
             {{ tagWarnMessage }}
           </div>
           <li>
-            <base-badge
-              v-for="tag in tags"
-              :key="tag"
-              :tagName="tag"
-              @delete-tag="deleteTag"
-            ></base-badge>
+            <base-tag v-for="tag in tags" :key="tag" :tagName="tag">
+              <font-awesome-icon
+                :icon="['fa', 'times']"
+                @click="deleteTag(tag)"
+                class="tag-icon"
+              />
+            </base-tag>
           </li>
         </ul>
       </div>
@@ -105,7 +106,7 @@
 </template>
 
 <script>
-import BaseBadge from "@/components/UI/BaseBadge.vue";
+import BaseTag from "@/components/UI/BaseTag.vue";
 import CoverPreview from "@/components/story/CoverPreview.vue";
 import { VueEditor, Quill } from "vue2-editor";
 // 引入Quill module
@@ -120,7 +121,7 @@ Quill.register("modules/imageResize", ImageResize);
 
 export default {
   name: "CreateStory",
-  components: { VueEditor, BaseBadge, CoverPreview },
+  components: { VueEditor, BaseTag, CoverPreview },
   data() {
     return {
       title: null,
@@ -254,11 +255,17 @@ export default {
           this.modalErrorMsg = "請確切填寫故事標題與內容，標題與內容不得為空";
           this.show = true;
         } else {
+          // 擷取文章前六十字當簡介
+          const brief = this.$refs.editor.$el.innerText
+            .replace(/\n/g, " ")
+            .slice(0, 60);
+
           const storyId = await this.$store.dispatch("story/publishStory", {
             storyCoverFile: this.storyCoverFile,
             storyTitle: this.title,
             storyHTML: this.content,
             storyTags: this.tags,
+            storyBrief: brief,
           });
 
           this.$router.push({ name: "Story", params: { id: storyId } });
@@ -266,6 +273,9 @@ export default {
       } catch (err) {
         this.errorMsg = err;
       }
+    },
+    textChange(e) {
+      console.log(e);
     },
   },
   mounted() {
@@ -412,6 +422,10 @@ export default {
 
     .tags-list {
       position: relative;
+
+      .tag-icon {
+        cursor: pointer;
+      }
 
       .tags-warn {
         position: absolute;
