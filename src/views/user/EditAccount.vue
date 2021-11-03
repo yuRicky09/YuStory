@@ -96,9 +96,9 @@ export default {
         .collection("users")
         .doc(user.uid)
         .get();
-      const { userName, userBio } = res.data();
-      this.userName = userName;
-      this.userBio = userBio;
+      const { name, bio } = res.data();
+      this.userName = name;
+      this.userBio = bio;
     },
   },
   // 為了保存未更新前的資料，選擇先fetch此用戶在db的name與bio資料，再賦值給date中雙向綁定的userName與userBio屬性。

@@ -88,7 +88,6 @@ export default {
   methods: {
     handleFileChange(e) {
       const selectedFIle = e.target.files[0];
-      console.log(selectedFIle);
 
       this.selectedFileURL = URL.createObjectURL(selectedFIle);
     },
@@ -98,7 +97,6 @@ export default {
     async updateAvatar() {
       const { canvas } = this.$refs.cropper.getResult();
       if (canvas) {
-        console.dir(canvas);
         canvas.toBlob(async (blob) => {
           await this.$store.dispatch("auth/updateProfileImg", blob);
           this.selectedFileURL = null;

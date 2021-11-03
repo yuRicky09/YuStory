@@ -18,7 +18,7 @@ const getters = {};
 const actions = {
   async userRegister({ commit }, registerData) {
     try {
-      commit("changeLodingState", true);
+      commit("changeLoadingState", true);
       // 創建帳戶並將user資訊存入firestore
       const res = await auth.createUserWithEmailAndPassword(
         registerData.userEmail,
@@ -35,12 +35,12 @@ const actions = {
         .collection("users")
         .doc(userId)
         .set({
-          userName: registerData.userName,
-          userEmail: registerData.userEmail,
-          userPassword: registerData.userPassword,
+          name: registerData.userName,
+          email: registerData.userEmail,
+          password: registerData.userPassword,
         });
 
-      commit("changeLodingState", false);
+      commit("changeLoadingState", false);
       return res;
     } catch (err) {
       commit("changeLoadingState", false);
@@ -100,9 +100,9 @@ const actions = {
         .collection("users")
         .doc(user.uid)
         .set({
-          userEmail: email,
-          userName: displayName,
-          userProfileImg: photoURL,
+          email: email,
+          name: displayName,
+          profileImg: photoURL,
         });
       commit("changeLoadingState", false);
     } catch (err) {
@@ -121,8 +121,8 @@ const actions = {
         .collection("users")
         .doc(state.userId)
         .update({
-          userName: userNewInfo.userName,
-          userBio: userNewInfo.userBio,
+          name: userNewInfo.userName,
+          bio: userNewInfo.userBio,
         });
 
       commit("updateUserInfo", userNewInfo);
@@ -146,7 +146,7 @@ const actions = {
         .collection("users")
         .doc(state.userId)
         .update({
-          userProfileImg,
+          profileImg: userProfileImg,
         });
 
       commit("changeLoadingState", false);
@@ -163,12 +163,12 @@ const mutations = {
     state.currentUser = user;
   },
   setUserData(state, userData) {
-    state.userEmail = userData.userEmail;
-    state.userPassword = userData.userPassword;
-    state.userName = userData.userName;
+    state.userEmail = userData.email;
+    state.userPassword = userData.password;
+    state.userName = userData.name;
     state.userId = userData.userId;
-    state.userProfileImg = userData.userProfileImg;
-    state.userBio = userData.userBio;
+    state.userProfileImg = userData.profileImg;
+    state.userBio = userData.bio;
   },
   clearUserData(state) {
     state.userEmail = null;

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <main>
-      <article v-if="stories">
+    <main class="left-side">
+      <article class="story-list" v-if="stories">
         <story-intro-rect
           v-for="story in stories"
           :story="story"
@@ -9,7 +9,7 @@
         ></story-intro-rect>
       </article>
     </main>
-    <aside></aside>
+    <aside class="right-side"></aside>
   </div>
 </template>
 
@@ -30,5 +30,19 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 144rem;
+  margin: auto;
+
+  .left-side {
+    max-width: 75rem;
+  }
+
+  .right-side {
+    display: none;
+
+    @media (min-width: $bp-lg) {
+      display: block;
+      max-width: 35rem;
+    }
+  }
 }
 </style>
