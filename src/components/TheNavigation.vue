@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="nav-box" :class="{ sticky: sticky }">
-      <div>
+      <h1>
         <router-link class="logo-box" :to="{ name: 'Home' }">
           <img
             src="@/assets/img/logo_transparent.png"
@@ -9,7 +9,7 @@
             alt="logo-img"
           />
         </router-link>
-      </div>
+      </h1>
       <nav>
         <ul class="menu">
           <li>

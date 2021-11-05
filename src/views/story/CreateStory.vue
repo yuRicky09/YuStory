@@ -25,32 +25,11 @@
         ref="editor"
       ></vue-editor>
     </div>
-    <div class="cover-preview-area">
-      <div>
-        <p class="note" v-if="pendingCovers.length > 0">請選擇故事封面圖片:</p>
-        <div v-show="pendingCovers.length > 0">
-          <swiper ref="mySwiper" class="swiper" :options="swiperOption">
-            <swiper-slide v-for="cover in pendingCovers" :key="cover">
-              <img :src="cover" alt="cover" />
-            </swiper-slide>
-            <template #button-prev>
-              <div @click="swiper.slidePrev()" class="button-prev">
-                <font-awesome-icon
-                  :icon="['fa', 'arrow-left']"
-                ></font-awesome-icon>
-              </div>
-            </template>
-            <template #button-next>
-              <div @click="swiper.slideNext()" class="button-next">
-                <font-awesome-icon
-                  :icon="['fa', 'arrow-right']"
-                ></font-awesome-icon>
-              </div>
-            </template>
-          </swiper>
-        </div>
-      </div>
-    </div>
+    <the-carousel
+      v-if="pendingCovers.length > 0"
+      :pendingCovers="pendingCovers"
+      @cover-active-index="handleCoverActiveIndex"
+    ></the-carousel>
     <div>
       <div class="story-tags">
         <div>
@@ -82,12 +61,12 @@
         </ul>
       </div>
       <div class="story-action">
-        <button class="ghost">
+        <button class="ghost" @click="saveDraft">
           <font-awesome-icon :icon="['fa', 'save']" class="action-icon" /><span
             >備份</span
           >
         </button>
-        <button class="ghost">
+        <button class="ghost" @click="showPreview = true">
           <font-awesome-icon :icon="['fa', 'eye']" class="action-icon" /><span
             >預覽</span
           >
@@ -100,6 +79,12 @@
         </button>
       </div>
     </div>
+    <!-- story preview -->
+    <story-preview
+      :showPreview="showPreview"
+      :storyHTML="content"
+      @close-story-preview="showPreview = false"
+    ></story-preview>
     <base-modal
       :message="modalErrorMsg"
       :show="show"
@@ -109,19 +94,20 @@
         <button @click="show = false">確定</button>
       </template>
     </base-modal>
+    <base-spinner v-if="isLoading"></base-spinner>
   </div>
 </template>
 
 <script>
 import BaseTag from "@/components/UI/BaseTag.vue";
+import TheCarousel from "@/components/TheCarousel";
+import StoryPreview from "@/components/story/StoryPreview.vue";
 import { VueEditor, Quill } from "vue2-editor";
 import { ImageDrop } from "quill-image-drop-module";
 import ImageResize from "quill-image-resize-vue";
 // 語法高亮配置
 import hljs from "highlight.js";
 import "highlight.js/styles/monokai-sublime.css";
-import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import "swiper/swiper-bundle.min.css";
 
 Quill.register("modules/imageDrop", ImageDrop);
 Quill.register("modules/imageResize", ImageResize);
@@ -131,27 +117,24 @@ export default {
   components: {
     VueEditor,
     BaseTag,
-    Swiper,
-    SwiperSlide,
+    TheCarousel,
+    StoryPreview,
   },
   data() {
     return {
       title: null,
       tag: null,
       tags: [],
+      docId: null,
       tagWarnMessage: "",
       showCover: false,
       errorMsg: null,
       show: false,
       modalErrorMsg: null,
-      swiperOption: {
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-      },
-      coverActiveIndex: null,
+      coverActiveIndex: 0,
       pendingCovers: [],
+      storyCover: null,
+      showPreview: false,
       // editor初始設定
       content: "",
       useCustomImageHandler: true,
@@ -200,8 +183,8 @@ export default {
     userId() {
       return this.$store.state.auth.userId;
     },
-    swiper() {
-      return this.$refs.mySwiper.$swiper;
+    isLoading() {
+      return this.$store.state.story.isLoading;
     },
   },
   methods: {
@@ -274,12 +257,17 @@ export default {
           // 擷取文章前六十字當簡介
           const brief = this.$refs.editor.$el.innerText
             .replace(/\n/g, " ")
-            .slice(0, 60);
+            .slice(0, 90);
+
+          if (this.pendingCovers.length > 0) {
+            this.storyCover = this.pendingCovers[this.coverActiveIndex];
+          }
 
           const storyId = await this.$store.dispatch("story/publishStory", {
             storyTitle: this.title,
             storyHTML: this.content,
             storyTags: this.tags,
+            storyCover: this.storyCover,
             storyBrief: brief,
           });
 
@@ -289,14 +277,30 @@ export default {
         this.errorMsg = err;
       }
     },
+    handleCoverActiveIndex(index) {
+      this.coverActiveIndex = index;
+    },
+    async saveDraft() {
+      const id = await this.$store.dispatch("story/saveDraft", {
+        storyTitle: this.title,
+        storyHTML: this.content,
+        storyTags: this.tags,
+        docId: this.docId,
+      });
+      this.docId = id;
+    },
   },
   mounted() {
     // 要抓取到真實DOM的話，必須等真實DOM掛載完畢的mounted階段才能獲取。
     this.editorInit();
-    this.swiper.on("activeIndexChange", (swiper) => {
-      this.coverActiveIndex = swiper.activeIndex;
-      console.log(swiper.activeIndex);
-    });
+  },
+  beforeRouteLeave(_, _2, next) {
+    const res = confirm(
+      "確定要離開嗎?\n未備份的情況下離開，內容將不會被保存。"
+    );
+    if (res) {
+      next();
+    }
   },
 };
 </script>
@@ -367,54 +371,6 @@ export default {
     height: 38rem;
     @media (min-width: $bp-md) {
       height: 48rem;
-    }
-  }
-
-  .cover-preview-area {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin: 1rem 0;
-    text-align: center;
-
-    .note {
-      padding: 0.5rem 0;
-      color: #000;
-    }
-
-    .swiper {
-      width: 24rem;
-      height: 18rem;
-      border-radius: 5px;
-
-      img {
-        width: 24rem;
-        height: 18rem;
-        object-fit: cover;
-        object-position: center center;
-      }
-
-      .button-prev,
-      .button-next {
-        position: absolute;
-        top: 50%;
-        z-index: 10;
-        background-color: #222;
-        padding: 0.5rem;
-        opacity: 0.6;
-        transform: translateY(-50%);
-
-        svg {
-          color: #fff;
-          opacity: 0.8;
-          font-size: 2rem;
-          cursor: pointer;
-        }
-      }
-
-      .button-next {
-        right: 0;
-      }
     }
   }
 

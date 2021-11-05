@@ -46,9 +46,9 @@ export default {
 <style lang="scss" scoped>
 .asideUserInfo {
   position: sticky;
-  top: 15rem;
+  top: 13rem;
   opacity: 0;
-  transition: all 0.5s ease-in;
+  transition: all 0.3s ease-out;
 
   .user-info {
     display: flex;

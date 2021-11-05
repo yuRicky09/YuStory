@@ -8,10 +8,14 @@
             <span>{{ story.userName }}</span>
           </div>
           <router-link
-            :to="{ name: 'Story', params: { id: id } }"
+            :to="{
+              name: 'Story',
+              params: { id: id },
+              meta: { title: story.title },
+            }"
             class="story-content"
           >
-            <div class="title">{{ story.title }}</div>
+            <h3 class="title">{{ story.title }}</h3>
             <div class="brief">{{ story.brief }}</div>
           </router-link>
           <div class="story-footer">
@@ -45,7 +49,7 @@
           :to="{ name: 'Story', params: { id: id } }"
           class="story-cover"
         >
-          <img :src="story.cover.coverDownloadURL" />
+          <img :src="story.cover" />
         </router-link>
       </div>
     </base-card>
@@ -229,26 +233,33 @@ export default {
 
     @media (min-width: $bp-iphone-ten) {
       display: block;
-      width: 12rem;
-    }
-
-    @media (min-width: $bp-sm) {
-      width: 18rem;
     }
 
     @media (min-width: $bp-md) {
       align-self: stretch;
-      width: 24rem;
     }
 
     img {
       display: block;
-      width: 100%;
-      height: 100%;
       object-fit: cover;
-      object-position: center;
+      object-position: center center;
       transition: transform 0.3s ease-out;
       user-select: none;
+
+      @media (min-width: $bp-iphone-ten) {
+        width: 12rem;
+        height: 6rem;
+      }
+
+      @media (min-width: $bp-sm) {
+        width: 18rem;
+        height: 12rem;
+      }
+
+      @media (min-width: $bp-md) {
+        width: 24rem;
+        height: 18rem;
+      }
     }
   }
 }

@@ -38,19 +38,6 @@ const actions = {
       throw Error(err.message);
     }
   },
-  async addStoryCover({ rootState, commit }, storyCoverFile) {
-    try {
-      const userId = rootState.auth.userId;
-      const storageRef = storage.ref();
-      const coverUploadPath = `story/${userId}/cover/${nanoid()}`;
-      const coverUploadRef = storageRef.child(coverUploadPath);
-      await coverUploadRef.put(storyCoverFile);
-      const coverDownloadURL = await coverUploadRef.getDownloadURL();
-      commit("addStoryCover", { coverUploadPath, coverDownloadURL });
-    } catch (err) {
-      throw Error(err.message);
-    }
-  },
   async removeImg({ state, commit }, file) {
     try {
       const storageRef = storage.ref();
@@ -67,34 +54,17 @@ const actions = {
     }
   },
   async publishStory(
-    { state, rootState, dispatch, commit },
-    { storyCoverFile, storyTitle, storyHTML, storyTags, storyBrief }
+    { state, rootState, commit },
+    { storyTitle, storyHTML, storyTags, storyBrief, storyCover }
   ) {
     try {
       commit("changeLoadingState", true);
 
-      await dispatch("addStoryCover", storyCoverFile);
-
       const userId = rootState.auth.userId;
       const userName = rootState.auth.userName;
       const userProfileImg = rootState.auth.userProfileImg;
-      const storyCover = state.storyCover;
       const storyImg = state.storyImg;
       const createdAt = timestamp();
-
-      const data = {
-        title: storyTitle,
-        cover: storyCover,
-        HTML: storyHTML,
-        tags: storyTags,
-        brief: storyBrief,
-        img: storyImg,
-        userId,
-        userName,
-        userProfileImg,
-        createdAt,
-      };
-      console.log(data);
 
       const docRef = await db.collection("stories").add({
         title: storyTitle,
@@ -114,6 +84,7 @@ const actions = {
         storyHTML,
         storyTags,
         storyBrief,
+        storyCover,
         createdAt,
       });
       commit("changeLoadingState", false);
@@ -121,6 +92,34 @@ const actions = {
     } catch (err) {
       commit("changeLoadingState", false);
       throw Error(err.message);
+    }
+  },
+  async saveDraft(
+    { state, commit },
+    { storyTitle, storyHTML, storyTags, docId }
+  ) {
+    try {
+      commit("changeLoadingState", true);
+      const img = state.storyImg;
+      const tags = storyTags;
+      const title = storyTitle ? storyTitle : null;
+      const HTML = storyHTML ? storyHTML : null;
+      let docRef;
+
+      // doc已存在則更新，未存在則new一個doc並且回傳此doc的id
+      if (docId) {
+        await db
+          .collection("drafts")
+          .doc(docId)
+          .update({ img, tags, title, HTML });
+      } else {
+        docRef = await db.collection("drafts").add({ img, tags, title, HTML });
+      }
+      commit("changeLoadingState", false);
+      return docRef ? docRef.id : docId;
+    } catch (err) {
+      commit("changeLoadingState", false);
+      throw new Error(err.message);
     }
   },
   async getAllStories({ commit }) {
@@ -148,18 +147,16 @@ const mutations = {
       return img.imgUploadPath !== imgUploadPath;
     });
   },
-  addStoryCover(state, storyCover) {
-    state.storyCover = storyCover;
-  },
   //! 備份的話應該是需要在本地也存比較好，發佈的時候要不要存在思考看看，這邊先暫且本地也存起來。
   setPublishStory(
     state,
-    { storyTitle, storyHTML, storyTags, storyBrief, createdAt }
+    { storyTitle, storyHTML, storyTags, storyBrief, storyCover, createdAt }
   ) {
     state.storyTitle = storyTitle;
     state.storyHTML = storyHTML;
     state.storyTags = storyTags;
     state.storyBreif = storyBrief;
+    state.storyCover = storyCover;
     state.storyCreatedAt = createdAt;
   },
   setTopToHeaderDistance(state, topToHeaderDistance) {

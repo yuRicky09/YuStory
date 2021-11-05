@@ -48,7 +48,6 @@ export default {
       currentAuthor: null,
     };
   },
-  computed: {},
   methods: {
     // 目前覺得當前文章的內容與使用者只會用於此組件與他的子組件，簡單的父傳子並不需要大量共享，所以先存於data有需要再改存vuex
     async fetchCurrentStory() {

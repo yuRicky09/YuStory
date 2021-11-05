@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import { auth } from "@/firebase/config";
 import Home from "@/views/Home.vue";
+import store from "@/store/index";
 
 Vue.use(VueRouter);
 
@@ -95,6 +96,17 @@ const routes = [
     component: () => import("@/views/story/Story.vue"),
     meta: {
       requireAuth: false,
+      title: (route) => {
+        console.log(route);
+        return "Story";
+      },
+    },
+    beforeEnter: (to, _, next) => {
+      const { title } = store.state.story.stories.find((story) => {
+        return story.id === to.params.id;
+      });
+      document.title = title;
+      next();
     },
     props: true,
   },
@@ -122,7 +134,7 @@ const router = new VueRouter({
   },
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   const user = auth.currentUser;
   if (!to.meta.requireAuth && to.meta.requireAuth !== undefined) {
     next();
@@ -134,7 +146,11 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to) => {
-  document.title = to.meta.title;
+  console.log("afterEach");
+  // Story頁面希望動態獲取資料後定義標題，另寫方法於story路徑配置內
+  if (to.name !== "Story") {
+    document.title = to.meta.title;
+  }
 });
 
 export default router;

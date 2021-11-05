@@ -26,6 +26,7 @@ export default {
 <style lang="scss" scoped>
 //! scoped作用域會為這範圍內的所有tag加上一個hash屬性， 但是用v-html渲染出來的HTML結構會沒有，所以我們必須用深層選取器才能選取到v-html的結構。
 .story-content-wrapper {
+  background-color: #fff;
   /deep/ .ql-editor {
     h1,
     h2,

@@ -1,8 +1,8 @@
 <template>
   <div class="cover-preview-area">
     <div>
-      <p class="note" v-if="pendingCovers.length > 0">請選擇故事封面圖片:</p>
-      <div v-show="pendingCovers.length > 0">
+      <p class="note">請選擇故事封面圖片:</p>
+      <div>
         <swiper ref="mySwiper" class="swiper" :options="swiperOption">
           <swiper-slide v-for="cover in pendingCovers" :key="cover">
             <img :src="cover" alt="cover" />
@@ -52,7 +52,8 @@ export default {
   },
   mounted() {
     this.swiper.on("activeIndexChange", (swiper) => {
-      this.$emit("coverActiveIndex", swiper.activeIndex);
+      const index = swiper.activeIndex;
+      this.$emit("cover-active-index", index);
     });
   },
 };

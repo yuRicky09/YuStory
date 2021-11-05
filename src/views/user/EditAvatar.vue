@@ -210,12 +210,4 @@ export default {
     margin: 2rem 0;
   }
 }
-
-.zoom-in-enter-active {
-  animation: zoom-in 0.3s ease-out;
-}
-
-.zoom-in-leave-active {
-  animation: zoom-in 0.3s ease-out reverse;
-}
 </style>
