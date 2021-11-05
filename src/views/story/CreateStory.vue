@@ -11,26 +11,6 @@
         class="story-title"
         v-model="title"
       />
-      <div class="story-cover">
-        <div>
-          <label for="upload-cover" class="button cover-botton">上傳封面</label>
-          <input
-            type="file"
-            id="upload-cover"
-            accept="image/png, image/jpeg"
-            @change="handleCoverChange"
-          />
-          <span class="button cover-botton" @click="showCover = true"
-            >預覽封面</span
-          >
-        </div>
-        <small class="story-cover-name">封面檔名:{{ storyCoverName }}</small>
-        <cover-preview
-          v-if="showCover"
-          :storyCoverURL="storyCoverURL"
-          @close-cover="showCover = false"
-        ></cover-preview>
-      </div>
     </div>
     <div class="editor-wrapper">
       <vue-editor
@@ -41,8 +21,35 @@
         :editor-toolbar="customToolBar"
         @image-added="handleImageAdded"
         @image-removed="handleImageRemoved"
+        placeholder="插入圖片後即可選擇封面"
         ref="editor"
       ></vue-editor>
+    </div>
+    <div class="cover-preview-area">
+      <div>
+        <p class="note" v-if="pendingCovers.length > 0">請選擇故事封面圖片:</p>
+        <div v-show="pendingCovers.length > 0">
+          <swiper ref="mySwiper" class="swiper" :options="swiperOption">
+            <swiper-slide v-for="cover in pendingCovers" :key="cover">
+              <img :src="cover" alt="cover" />
+            </swiper-slide>
+            <template #button-prev>
+              <div @click="swiper.slidePrev()" class="button-prev">
+                <font-awesome-icon
+                  :icon="['fa', 'arrow-left']"
+                ></font-awesome-icon>
+              </div>
+            </template>
+            <template #button-next>
+              <div @click="swiper.slideNext()" class="button-next">
+                <font-awesome-icon
+                  :icon="['fa', 'arrow-right']"
+                ></font-awesome-icon>
+              </div>
+            </template>
+          </swiper>
+        </div>
+      </div>
     </div>
     <div>
       <div class="story-tags">
@@ -107,37 +114,46 @@
 
 <script>
 import BaseTag from "@/components/UI/BaseTag.vue";
-import CoverPreview from "@/components/story/CoverPreview.vue";
 import { VueEditor, Quill } from "vue2-editor";
-// 引入Quill module
 import { ImageDrop } from "quill-image-drop-module";
 import ImageResize from "quill-image-resize-vue";
 // 語法高亮配置
 import hljs from "highlight.js";
 import "highlight.js/styles/monokai-sublime.css";
+import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+import "swiper/swiper-bundle.min.css";
 
 Quill.register("modules/imageDrop", ImageDrop);
 Quill.register("modules/imageResize", ImageResize);
 
 export default {
   name: "CreateStory",
-  components: { VueEditor, BaseTag, CoverPreview },
+  components: {
+    VueEditor,
+    BaseTag,
+    Swiper,
+    SwiperSlide,
+  },
   data() {
     return {
       title: null,
       tag: null,
       tags: [],
       tagWarnMessage: "",
-      storyCoverFile: null,
-      storyCoverName: null,
-      storyCoverURL: null,
       showCover: false,
       errorMsg: null,
       show: false,
       modalErrorMsg: null,
-
+      swiperOption: {
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      },
+      coverActiveIndex: null,
+      pendingCovers: [],
       // editor初始設定
-      content: "開始撰寫故事......",
+      content: "",
       useCustomImageHandler: true,
       customToolBar: [
         [{ header: [false, 1, 2, 3] }],
@@ -184,6 +200,9 @@ export default {
     userId() {
       return this.$store.state.auth.userId;
     },
+    swiper() {
+      return this.$refs.mySwiper.$swiper;
+    },
   },
   methods: {
     editorInit() {
@@ -201,26 +220,26 @@ export default {
         btn.setAttribute("title", this.tooltips[index]);
       });
     },
-    // 圖片處理
-    handleCoverChange(e) {
-      this.storyCoverFile = e.target.files[0];
-      this.storyCoverName = this.storyCoverFile.name;
-      this.storyCoverURL = URL.createObjectURL(this.storyCoverFile);
-    },
     async handleImageAdded(file, Editor, cursorLocation, resetUploader) {
       try {
         this.errorMsg = null;
-        this.$store.dispatch("story/addStoryImg", {
-          file,
-          Editor,
-          cursorLocation,
-          resetUploader,
-        });
+        const coverDownloadURL = await this.$store.dispatch(
+          "story/addStoryImg",
+          {
+            file,
+            Editor,
+            cursorLocation,
+            resetUploader,
+          }
+        );
+
+        this.pendingCovers.push(coverDownloadURL);
       } catch (err) {
         this.errorMsg = err.message;
       }
     },
     async handleImageRemoved(file) {
+      this.pendingCovers = this.pendingCovers.filter((cover) => cover !== file);
       this.$store.dispatch("story/removeImg", file);
     },
     // 標籤處理
@@ -248,10 +267,7 @@ export default {
     // 故事發佈、備份等處理
     async publishStory() {
       try {
-        if (!this.storyCoverFile) {
-          this.modalErrorMsg = "請選擇故事封面";
-          this.show = true;
-        } else if (!this.title || !this.content) {
+        if (!this.title || !this.content) {
           this.modalErrorMsg = "請確切填寫故事標題與內容，標題與內容不得為空";
           this.show = true;
         } else {
@@ -261,7 +277,6 @@ export default {
             .slice(0, 60);
 
           const storyId = await this.$store.dispatch("story/publishStory", {
-            storyCoverFile: this.storyCoverFile,
             storyTitle: this.title,
             storyHTML: this.content,
             storyTags: this.tags,
@@ -274,13 +289,14 @@ export default {
         this.errorMsg = err;
       }
     },
-    textChange(e) {
-      console.log(e);
-    },
   },
   mounted() {
     // 要抓取到真實DOM的話，必須等真實DOM掛載完畢的mounted階段才能獲取。
     this.editorInit();
+    this.swiper.on("activeIndexChange", (swiper) => {
+      this.coverActiveIndex = swiper.activeIndex;
+      console.log(swiper.activeIndex);
+    });
   },
 };
 </script>
@@ -312,16 +328,8 @@ export default {
   .story-header {
     margin: 1.5rem 0;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    row-gap: 1rem;
-
-    @media (min-width: $bp-md) {
-      flex-direction: row;
-      row-gap: 0;
-      column-gap: 5rem;
-    }
 
     @media (min-width: $bp-lg) {
       justify-content: flex-start;
@@ -334,7 +342,6 @@ export default {
       border-bottom: 1px solid #777;
       padding: 1.5rem;
       transition: all 0.3s ease-out;
-      margin-right: 1rem;
 
       @media (min-width: $bp-md) {
         width: 30rem;
@@ -348,47 +355,66 @@ export default {
         box-shadow: 0 1px 0 0 var(--color-bg-dark-2);
       }
     }
-
-    .story-cover {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      @media (min-width: $bp-xl) {
-        flex-direction: row;
-      }
-      .cover-botton {
-        display: inline-block;
-        margin: 0.5rem;
-      }
-
-      input {
-        display: none;
-      }
-
-      .story-cover-name {
-        width: 25rem;
-        display: inline-block;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
-    }
   }
 
   .editor-wrapper {
-    height: 35rem;
+    height: 49rem;
+    @media (min-width: $bp-md) {
+      height: 57rem;
+    }
+  }
+  .vue-editor {
+    height: 38rem;
+    @media (min-width: $bp-md) {
+      height: 48rem;
+    }
+  }
 
-    @media (min-width: $bp-sm) {
-      height: 68rem;
+  .cover-preview-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 1rem 0;
+    text-align: center;
+
+    .note {
+      padding: 0.5rem 0;
+      color: #000;
     }
 
-    .vue-editor {
-      @media (min-width: $bp-sm) {
-        height: 60rem;
+    .swiper {
+      width: 24rem;
+      height: 18rem;
+      border-radius: 5px;
+
+      img {
+        width: 24rem;
+        height: 18rem;
+        object-fit: cover;
+        object-position: center center;
       }
-      width: 100%;
+
+      .button-prev,
+      .button-next {
+        position: absolute;
+        top: 50%;
+        z-index: 10;
+        background-color: #222;
+        padding: 0.5rem;
+        opacity: 0.6;
+        transform: translateY(-50%);
+
+        svg {
+          color: #fff;
+          opacity: 0.8;
+          font-size: 2rem;
+          cursor: pointer;
+        }
+      }
+
+      .button-next {
+        right: 0;
+      }
     }
   }
 

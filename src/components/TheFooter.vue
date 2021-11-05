@@ -70,21 +70,27 @@ footer {
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     padding: 1rem 0;
     border-bottom: 1px solid var(--color-bg-gray-1);
 
     @media (min-width: $bp-md) {
       justify-content: space-evenly;
+      font-size: 1.8rem;
       flex-basis: 50%;
       border-bottom: 0px;
     }
 
     .left-side {
+      font-size: 1.8rem;
+
+      @media (min-width: $bp-md) {
+        font-size: 2.4rem;
+      }
+
       a {
         margin: 1rem 0;
         display: block;
-        font-size: 2.5rem;
 
         &:hover {
           opacity: 0.7;

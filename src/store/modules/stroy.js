@@ -6,7 +6,7 @@ const state = function() {
     storyCover: null,
     storyTitle: null,
     storyHTML: null,
-    storyBreif: null,
+    storyBrief: null,
     storyTags: [],
     storyImg: [],
     storyCreatedAt: null,
@@ -33,6 +33,7 @@ const actions = {
       resetUploader();
 
       commit("addStoryImg", { imgUploadPath, imgDownLoadURL });
+      return imgDownLoadURL;
     } catch (err) {
       throw Error(err.message);
     }
@@ -67,7 +68,7 @@ const actions = {
   },
   async publishStory(
     { state, rootState, dispatch, commit },
-    { storyCoverFile, storyTitle, storyHTML, storyTags, storyBreif }
+    { storyCoverFile, storyTitle, storyHTML, storyTags, storyBrief }
   ) {
     try {
       commit("changeLoadingState", true);
@@ -81,12 +82,26 @@ const actions = {
       const storyImg = state.storyImg;
       const createdAt = timestamp();
 
+      const data = {
+        title: storyTitle,
+        cover: storyCover,
+        HTML: storyHTML,
+        tags: storyTags,
+        brief: storyBrief,
+        img: storyImg,
+        userId,
+        userName,
+        userProfileImg,
+        createdAt,
+      };
+      console.log(data);
+
       const docRef = await db.collection("stories").add({
         title: storyTitle,
         cover: storyCover,
         HTML: storyHTML,
         tags: storyTags,
-        brief: storyBreif,
+        brief: storyBrief,
         img: storyImg,
         userId,
         userName,
@@ -98,7 +113,7 @@ const actions = {
         storyTitle,
         storyHTML,
         storyTags,
-        storyBreif,
+        storyBrief,
         createdAt,
       });
       commit("changeLoadingState", false);
@@ -139,12 +154,12 @@ const mutations = {
   //! 備份的話應該是需要在本地也存比較好，發佈的時候要不要存在思考看看，這邊先暫且本地也存起來。
   setPublishStory(
     state,
-    { storyTitle, storyHTML, storyTags, storyBreif, createdAt }
+    { storyTitle, storyHTML, storyTags, storyBrief, createdAt }
   ) {
     state.storyTitle = storyTitle;
     state.storyHTML = storyHTML;
     state.storyTags = storyTags;
-    state.storyBreif = storyBreif;
+    state.storyBreif = storyBrief;
     state.storyCreatedAt = createdAt;
   },
   setTopToHeaderDistance(state, topToHeaderDistance) {

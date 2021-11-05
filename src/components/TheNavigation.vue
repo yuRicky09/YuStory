@@ -253,7 +253,7 @@ export default {
       this.$emit("toggle-mobile-menu", this.menuIsOpen);
     },
     windowSizeChange() {
-      if (window.innerWidth > 640) {
+      if (window.innerWidth >= 768) {
         this.menuIsOpen = false;
       }
     },
@@ -570,7 +570,7 @@ export default {
     color: #fff;
     display: flex;
     align-items: center;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
 
     &:hover,
     &:active,
@@ -585,14 +585,18 @@ export default {
     a {
       display: block;
       width: 100%;
-      padding: 2.5rem 0;
+      padding: 1rem 0;
       text-align: start;
+
+      @media (min-width: $bp-sm) {
+        padding: 1.5rem 0;
+      }
     }
   }
 
   li.logout {
     cursor: pointer;
-    padding: 2.5rem 0;
+    padding: 1.5rem 0;
     border-top: 1px solid gray;
     margin-top: auto;
   }

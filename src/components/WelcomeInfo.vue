@@ -41,6 +41,7 @@ export default {
     flex-basis: 50%;
 
     img {
+      display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;

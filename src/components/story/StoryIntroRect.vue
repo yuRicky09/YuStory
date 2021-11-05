@@ -27,8 +27,16 @@
               </router-link>
             </div>
             <div class="other-action">
-              <font-awesome-icon :icon="['fa', 'bookmark']" />
-              <font-awesome-icon :icon="['far', 'bookmark']" />
+              <font-awesome-icon
+                :icon="['fa', 'bookmark']"
+                @click="addToFavorite"
+                v-if="favorited"
+              />
+              <font-awesome-icon
+                :icon="['far', 'bookmark']"
+                @click="addToFavorite"
+                v-else
+              />
               <font-awesome-icon :icon="['fa', 'ellipsis-v']" />
             </div>
           </div>
@@ -52,11 +60,21 @@ export default {
   name: "StoryIntroRect",
   props: ["story", "id"],
   components: { BaseTag },
+  data() {
+    return {
+      favorited: false,
+    };
+  },
   computed: {
     createdTime() {
       const timestamp = this.story.createdAt.toDate();
       moment.locale("zh-cn");
       return moment(timestamp).format("lll");
+    },
+  },
+  methods: {
+    addToFavorite() {
+      this.favorited = !this.favorited;
     },
   },
 };
@@ -73,26 +91,34 @@ export default {
   .story {
     display: flex;
     align-items: center;
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem;
 
     @media (min-width: $bp-md) {
-      padding: 3rem 2rem;
+      padding: 2rem 1.5rem;
+    }
+
+    &:hover .story-cover {
+      box-shadow: 0 5px 10px var(--color-layout);
+
+      img {
+        transform: scale(1.05);
+      }
     }
   }
 
   .story-info {
     flex: 1;
-    padding: 0 0.5rem;
+    padding: 0 0.7rem;
     .author {
       display: flex;
       align-items: center;
-      margin: 1.2rem 0;
-      padding: 0.5rem;
+      margin: 0.5rem 0;
+      padding: 8px 5px;
       border-bottom: 1px solid var(--color-border);
 
       img {
-        width: 5rem;
-        height: 5rem;
+        width: 3rem;
+        height: 3rem;
         border-radius: 50%;
       }
 
@@ -104,8 +130,18 @@ export default {
     }
 
     .story-content {
+      padding-right: 2rem;
       &:hover .title {
         color: #117096;
+      }
+
+      .title,
+      .brief {
+        // 多行省略效果
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
       }
 
       .title {
@@ -121,10 +157,7 @@ export default {
       .brief {
         color: var(--color-bg-gray-1);
         display: none;
-        // 多行省略效果
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        overflow: hidden;
+        margin-bottom: 5px;
 
         @media (min-width: $bp-md) {
           display: -webkit-box;
@@ -135,7 +168,11 @@ export default {
 
     .story-footer {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
+
+      @media (min-width: $bp-iphone-ten) {
+        justify-content: space-between;
+      }
       align-items: center;
 
       .left-side {
@@ -151,8 +188,16 @@ export default {
       .story-tags {
         display: none;
 
+        span {
+          max-width: 20rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
         @media (min-width: $bp-md) {
-          display: inline-block;
+          display: flex;
+          align-items: center;
           &:hover {
             opacity: 0.8;
           }
@@ -161,13 +206,17 @@ export default {
 
       .other-action {
         display: none;
+        padding-right: 1rem;
 
         @media (min-width: $bp-iphone-ten) {
-          display: inline-block;
+          display: flex;
+          align-items: center;
         }
 
         svg {
-          margin: 0.5rem;
+          margin: 0.8rem;
+          cursor: pointer;
+          font-size: 1.8rem;
         }
       }
     }
@@ -175,36 +224,31 @@ export default {
 
   .story-cover {
     display: none;
-    align-self: stretch;
     overflow: hidden;
-    margin-left: 2rem;
-
-    &:hover {
-      box-shadow: 0 5px 10px var(--color-layout);
-
-      img {
-        transform: scale(1.05);
-      }
-    }
+    border-radius: 5px;
 
     @media (min-width: $bp-iphone-ten) {
       display: block;
+      width: 12rem;
+    }
+
+    @media (min-width: $bp-sm) {
+      width: 18rem;
+    }
+
+    @media (min-width: $bp-md) {
+      align-self: stretch;
+      width: 24rem;
     }
 
     img {
-      width: 12rem;
+      display: block;
+      width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
       transition: transform 0.3s ease-out;
-
-      @media (min-width: $bp-sm) {
-        width: 15rem;
-      }
-
-      @media (min-width: $bp-md) {
-        width: 20rem;
-      }
+      user-select: none;
     }
   }
 }

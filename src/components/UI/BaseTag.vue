@@ -16,9 +16,10 @@ export default {
 .tag {
   font-size: 1.2rem;
   display: inline-block;
-  padding: 0.5rem;
-  margin: 0 0.5rem;
+  padding: 2px 5px;
+  margin: 0 5px;
   border-radius: 15px;
-  background-color: var(--color-bg-gray-2);
+  background-color: #969696;
+  color: #fff;
 }
 </style>

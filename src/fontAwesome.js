@@ -19,6 +19,8 @@ import {
   faFileUpload,
   faTimes,
   faEllipsisV,
+  faArrowLeft,
+  faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faGoogle,
@@ -50,7 +52,9 @@ library.add(
   faFileUpload,
   faEye,
   faTimes,
-  faEllipsisV
+  faEllipsisV,
+  faArrowRight,
+  faArrowLeft
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

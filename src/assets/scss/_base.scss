@@ -40,13 +40,17 @@ textarea:focus {
 
 button,
 .button {
-  padding: 12px 30px;
   border: none;
+  padding: 8px 15px;
   border-radius: 25px;
   color: #fff;
   background-color: var(--color-bg-dark-2);
   cursor: pointer;
   transition: all 0.3s ease;
+
+  @media (min-width: $bp-sm) {
+    padding: 12px 30px;
+  }
 
   &:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
