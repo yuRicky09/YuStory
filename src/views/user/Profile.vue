@@ -19,42 +19,41 @@
       </div>
     </div>
     <div class="bio">
-      <h3>個人簡歷</h3>
-      <p>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda
-        dolor a repellat ullam quasi dolore quaerat error ipsa tempora veritatis
-        quod iure dolorum quam, quia doloribus perspiciatis sit nemo rerum.
-      </p>
+      <h4>個人簡歷</h4>
+      <p v-if="userBio">{{ userBio }}</p>
+      <p v-else>尚未設定個人簡歷</p>
     </div>
     <div class="stories">
-      <h3>個人故事</h3>
-      <ul>
-        <li>故事一</li>
-      </ul>
-      <ul>
-        <li>故事一</li>
-      </ul>
-      <ul>
-        <li>故事一</li>
-      </ul>
-      <ul>
-        <li>故事一</li>
+      <div class="header">
+        <h4>我的故事</h4>
+        <router-link to="#" class="button">更多</router-link>
+      </div>
+      <ul v-if="fiveRecordsMyStories.length > 0" class="story-list">
+        <my-story-brief
+          v-for="story in fiveRecordsMyStories"
+          :key="story.id"
+          :story="story"
+        ></my-story-brief>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
+import MyStoryBrief from "@/components/story/MyStoryBrief.vue";
 
 export default {
   name: "Profile",
+  components: { MyStoryBrief },
   computed: {
     ...mapState("auth", {
       userProfileImg: (state) => state.userProfileImg,
       userName: (state) => state.userName,
       userEmail: (state) => state.userEmail,
+      userBio: (state) => state.userBio,
     }),
+    ...mapGetters("story", ["fiveRecordsMyStories"]),
   },
 };
 </script>
@@ -63,6 +62,10 @@ export default {
 .profile-wrapper {
   > div {
     border-bottom: 1px solid var(--color-border);
+
+    &:last-child {
+      border-bottom: 0px;
+    }
   }
 
   .profile-title {
@@ -123,9 +126,20 @@ export default {
     padding: 1.5rem 0;
     position: relative;
 
-    h3 {
-      padding: 1rem;
-      font-size: 1.8rem;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0;
+
+      h4 {
+        padding: 1rem;
+        font-size: 1.8rem;
+      }
+
+      a {
+        margin-right: 3rem;
+      }
     }
   }
 
@@ -133,6 +147,15 @@ export default {
     p {
       padding: 1rem;
       font-size: 1.6rem;
+    }
+  }
+
+  .story-list {
+    background-color: #f2f2f2;
+    border-radius: 5px;
+
+    > li:last-child {
+      border: none;
     }
   }
 }

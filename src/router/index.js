@@ -146,7 +146,6 @@ router.beforeEach((to, _, next) => {
 });
 
 router.afterEach((to) => {
-  console.log("afterEach");
   // Story頁面希望動態獲取資料後定義標題，另寫方法於story路徑配置內
   if (to.name !== "Story") {
     document.title = to.meta.title;

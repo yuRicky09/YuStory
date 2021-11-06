@@ -85,11 +85,7 @@
       :storyHTML="content"
       @close-story-preview="showPreview = false"
     ></story-preview>
-    <base-modal
-      :message="modalErrorMsg"
-      :show="show"
-      @close-modal="show = false"
-    >
+    <base-modal :message="modalMsg" :show="show" @close-modal="show = false">
       <template #action>
         <button @click="show = false">確定</button>
       </template>
@@ -130,7 +126,7 @@ export default {
       showCover: false,
       errorMsg: null,
       show: false,
-      modalErrorMsg: null,
+      modalMsg: null,
       coverActiveIndex: 0,
       pendingCovers: [],
       storyCover: null,
@@ -247,14 +243,17 @@ export default {
         return tag !== deleteTag;
       });
     },
+    handleCoverActiveIndex(index) {
+      this.coverActiveIndex = index;
+    },
     // 故事發佈、備份等處理
     async publishStory() {
       try {
         if (!this.title || !this.content) {
-          this.modalErrorMsg = "請確切填寫故事標題與內容，標題與內容不得為空";
+          this.modalMsg = "請確切填寫故事標題與內容，標題與內容不得為空";
           this.show = true;
         } else {
-          // 擷取文章前六十字當簡介
+          // 擷取文章前九十字當簡介
           const brief = this.$refs.editor.$el.innerText
             .replace(/\n/g, " ")
             .slice(0, 90);
@@ -277,17 +276,21 @@ export default {
         this.errorMsg = err;
       }
     },
-    handleCoverActiveIndex(index) {
-      this.coverActiveIndex = index;
-    },
     async saveDraft() {
-      const id = await this.$store.dispatch("story/saveDraft", {
-        storyTitle: this.title,
-        storyHTML: this.content,
-        storyTags: this.tags,
-        docId: this.docId,
-      });
-      this.docId = id;
+      try {
+        const id = await this.$store.dispatch("story/saveDraft", {
+          storyTitle: this.title,
+          storyHTML: this.content,
+          storyTags: this.tags,
+          docId: this.docId,
+        });
+
+        this.docId = id;
+        this.modalMsg = "備份成功";
+        this.show = true;
+      } catch (err) {
+        this.errorMsg = err.message;
+      }
     },
   },
   mounted() {
@@ -295,10 +298,12 @@ export default {
     this.editorInit();
   },
   beforeRouteLeave(_, _2, next) {
-    const res = confirm(
-      "確定要離開嗎?\n未備份的情況下離開，內容將不會被保存。"
-    );
-    if (res) {
+    if (this.title || this.content || this.tags.length > 0) {
+      const res = confirm(
+        "確定要離開嗎?\n未備份的情況下離開，內容將不會被保存。"
+      );
+      if (res) next();
+    } else {
       next();
     }
   },

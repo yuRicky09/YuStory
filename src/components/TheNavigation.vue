@@ -66,9 +66,9 @@
                     <li class="user-center-link">
                       <router-link :to="{ name: 'Profile' }"
                         ><font-awesome-icon
-                          :icon="['fa', 'user-edit']"
+                          :icon="['fa', 'user-cog']"
                           fixed-width
-                        /><span>帳戶設定</span></router-link
+                        /><span>我的帳戶</span></router-link
                       >
                     </li>
                     <li class="user-center-link">
@@ -151,16 +151,16 @@
               <span>{{ userEmail }}</span>
             </div>
           </div>
-          <li class="mobile-link" v-if="currentUser">
-            <router-link :to="{ name: 'Profile' }"
-              ><font-awesome-icon :icon="['fa', 'user-edit']" fixed-width />
-              <span>帳戶設定</span></router-link
-            >
-          </li>
           <li class="mobile-link">
             <router-link :to="{ name: 'Home' }"
               ><font-awesome-icon :icon="['fa', 'home']" fixed-width />
               <span>首頁</span></router-link
+            >
+          </li>
+          <li class="mobile-link" v-if="currentUser">
+            <router-link :to="{ name: 'Profile' }"
+              ><font-awesome-icon :icon="['fa', 'user-cog']" fixed-width />
+              <span>我的帳戶</span></router-link
             >
           </li>
           <li class="mobile-link" v-if="!currentUser">

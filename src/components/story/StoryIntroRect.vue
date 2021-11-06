@@ -11,7 +11,6 @@
             :to="{
               name: 'Story',
               params: { id: id },
-              meta: { title: story.title },
             }"
             class="story-content"
           >
@@ -57,24 +56,18 @@
 </template>
 
 <script>
-import moment from "moment";
 import BaseTag from "@/components/UI/BaseTag.vue";
+import { timeFormatMixin } from "@/mixin/timeFormatMixin";
 
 export default {
   name: "StoryIntroRect",
   props: ["story", "id"],
   components: { BaseTag },
+  mixins: [timeFormatMixin],
   data() {
     return {
       favorited: false,
     };
-  },
-  computed: {
-    createdTime() {
-      const timestamp = this.story.createdAt.toDate();
-      moment.locale("zh-cn");
-      return moment(timestamp).format("lll");
-    },
   },
   methods: {
     addToFavorite() {

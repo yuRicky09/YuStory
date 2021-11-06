@@ -3,6 +3,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faUserCircle,
   faUserEdit,
+  faUserCog,
   faHome,
   faSignInAlt,
   faSignOutAlt,
@@ -33,6 +34,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(
   faUserCircle,
   faUserEdit,
+  faUserCog,
   faGoogle,
   faGithub,
   faGithubSquare,

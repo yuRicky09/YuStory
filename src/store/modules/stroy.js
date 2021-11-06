@@ -16,7 +16,16 @@ const state = function() {
   };
 };
 
-const getters = {};
+const getters = {
+  myStories(state, _2, rootState) {
+    const userId = rootState.auth.userId;
+    return state.stories.filter((story) => story.userId === userId);
+  },
+  fiveRecordsMyStories(state, _2, rootState) {
+    const userId = rootState.auth.userId;
+    return state.stories.filter((story) => story.userId === userId).slice(0, 5);
+  },
+};
 
 const actions = {
   async addStoryImg(
@@ -95,7 +104,7 @@ const actions = {
     }
   },
   async saveDraft(
-    { state, commit },
+    { state, rootState, commit },
     { storyTitle, storyHTML, storyTags, docId }
   ) {
     try {
@@ -104,6 +113,8 @@ const actions = {
       const tags = storyTags;
       const title = storyTitle ? storyTitle : null;
       const HTML = storyHTML ? storyHTML : null;
+      const userId = rootState.auth.userId;
+      const createdAt = timestamp();
       let docRef;
 
       // doc已存在則更新，未存在則new一個doc並且回傳此doc的id
@@ -111,9 +122,11 @@ const actions = {
         await db
           .collection("drafts")
           .doc(docId)
-          .update({ img, tags, title, HTML });
+          .update({ img, tags, title, HTML, createdAt });
       } else {
-        docRef = await db.collection("drafts").add({ img, tags, title, HTML });
+        docRef = await db
+          .collection("drafts")
+          .add({ img, tags, title, HTML, createdAt, userId });
       }
       commit("changeLoadingState", false);
       return docRef ? docRef.id : docId;
