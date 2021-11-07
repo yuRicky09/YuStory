@@ -317,12 +317,12 @@ export default {
   font-size: 1.4rem;
 
   @media (min-width: $bp-md) {
-    padding: 4rem;
+    padding: 4rem 6rem;
     font-size: 1.6rem;
   }
 
   @media (min-width: $bp-lg) {
-    padding: 4rem 7rem;
+    padding: 4rem 10rem;
     font-size: 1.6rem;
   }
 

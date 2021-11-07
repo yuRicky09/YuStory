@@ -13,6 +13,7 @@ const state = function() {
     isLoading: false,
     topToHeaderDistance: null,
     stories: [],
+    drafts: [],
   };
 };
 
@@ -24,6 +25,9 @@ const getters = {
   fiveRecordsMyStories(state, _2, rootState) {
     const userId = rootState.auth.userId;
     return state.stories.filter((story) => story.userId === userId).slice(0, 5);
+  },
+  fiveRecordsMyDrafts(state) {
+    return state.drafts.slice(0, 5);
   },
 };
 
@@ -146,6 +150,21 @@ const actions = {
       commit("setAllStories", stories);
     });
   },
+  async getAllDrafts({ commit }, userId) {
+    const draftsRef = db
+      .collection("drafts")
+      .where("userId", "==", userId)
+      .orderBy("createdAt", "desc");
+    const drafts = [];
+
+    draftsRef.onSnapshot((snap) => {
+      snap.docs.forEach((doc) => {
+        const draft = { ...doc.data(), id: doc.id };
+        drafts.push(draft);
+      });
+      commit("setAllDrafts", drafts);
+    });
+  },
 };
 
 const mutations = {
@@ -177,6 +196,9 @@ const mutations = {
   },
   setAllStories(state, stories) {
     state.stories = stories;
+  },
+  setAllDrafts(state, drafts) {
+    state.drafts = drafts;
   },
 };
 

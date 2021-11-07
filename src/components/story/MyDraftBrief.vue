@@ -1,10 +1,46 @@
 <template>
-  <div></div>
+  <li class="story-item">
+    <div>
+      <router-link to="#">
+        <h5>{{ draft.title }}</h5>
+      </router-link>
+      <span>最後編輯: {{ lastEditTime }}</span>
+    </div>
+    <font-awesome-icon
+      :icon="['fa', 'ellipsis-v']"
+      class="more-option-icon"
+      @click="showPanel = !showPanel"
+    ></font-awesome-icon>
+    <div class="backdrop" v-if="showPanel" @click="showPanel = false"></div>
+    <div class="option-panel-position" v-if="showPanel">
+      <more-option-panel
+        :storyUserId="draft.userId"
+        type="draft"
+      ></more-option-panel>
+    </div>
+  </li>
 </template>
 
 <script>
+import moment from "moment";
+import MoreOptionPanel from "@/components/MoreOptionPanel.vue";
+
 export default {
   name: "MyDraftBrief",
+  props: ["draft"],
+  components: { MoreOptionPanel },
+  data() {
+    return {
+      showPanel: false,
+    };
+  },
+  computed: {
+    lastEditTime() {
+      const timestamp = this.draft.createdAt.toDate();
+      moment.locale("zh-cn");
+      return moment(timestamp).calendar();
+    },
+  },
 };
 </script>
 

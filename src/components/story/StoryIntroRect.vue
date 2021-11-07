@@ -10,7 +10,7 @@
           <router-link
             :to="{
               name: 'Story',
-              params: { id: id },
+              params: { id: story.id },
             }"
             class="story-content"
           >
@@ -30,22 +30,36 @@
               </router-link>
             </div>
             <div class="other-action">
+              <div
+                class="backdrop"
+                v-if="showPanel"
+                @click="showPanel = false"
+              ></div>
+              <div class="option-panel-position" v-if="showPanel">
+                <more-option-panel
+                  :storyUserId="story.userId"
+                  type="story"
+                ></more-option-panel>
+              </div>
               <font-awesome-icon
                 :icon="['fa', 'bookmark']"
                 @click="addToFavorite"
-                v-if="favorited"
+                v-if="favorited && userId !== story.userId"
               />
               <font-awesome-icon
                 :icon="['far', 'bookmark']"
                 @click="addToFavorite"
-                v-else
+                v-if="!favorited && userId !== story.userId"
               />
-              <font-awesome-icon :icon="['fa', 'ellipsis-v']" />
+              <font-awesome-icon
+                :icon="['fa', 'ellipsis-v']"
+                @click="showPanel = !showPanel"
+              />
             </div>
           </div>
         </div>
         <router-link
-          :to="{ name: 'Story', params: { id: id } }"
+          :to="{ name: 'Story', params: { id: story.id } }"
           class="story-cover"
         >
           <img :src="story.cover" />
@@ -57,17 +71,24 @@
 
 <script>
 import BaseTag from "@/components/UI/BaseTag.vue";
+import MoreOptionPanel from "@/components/MoreOptionPanel.vue";
 import { timeFormatMixin } from "@/mixin/timeFormatMixin";
 
 export default {
   name: "StoryIntroRect",
-  props: ["story", "id"],
-  components: { BaseTag },
+  props: ["story"],
+  components: { BaseTag, MoreOptionPanel },
   mixins: [timeFormatMixin],
   data() {
     return {
       favorited: false,
+      showPanel: false,
     };
+  },
+  computed: {
+    userId() {
+      return this.$store.state.auth.userId;
+    },
   },
   methods: {
     addToFavorite() {
@@ -82,7 +103,7 @@ export default {
   margin: 1rem;
 
   a {
-    display: inline-block;
+    display: block;
   }
 
   .story {
@@ -204,6 +225,7 @@ export default {
       .other-action {
         display: none;
         padding-right: 1rem;
+        position: relative;
 
         @media (min-width: $bp-iphone-ten) {
           display: flex;
@@ -211,9 +233,23 @@ export default {
         }
 
         svg {
-          margin: 0.8rem;
+          width: 2.5rem;
+          height: 2.5rem;
+          margin: 3px;
+          padding: 4px;
           cursor: pointer;
-          font-size: 1.8rem;
+        }
+
+        .backdrop {
+          background-color: transparent;
+        }
+
+        .option-panel-position {
+          position: absolute;
+          z-index: 1000;
+          transform: translateY(-100%);
+          right: -3rem;
+          top: -1rem;
         }
       }
     }

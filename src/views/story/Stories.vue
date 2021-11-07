@@ -6,7 +6,6 @@
         <story-intro-rect
           v-for="story in stories"
           :story="story"
-          :id="story.id"
           :key="story.id"
         ></story-intro-rect>
       </article>
