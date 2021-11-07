@@ -32,7 +32,7 @@
               ></textarea>
             </div>
             <div class="action">
-              <button>保存</button>
+              <button :class="{ block: btndisabled }">保存</button>
             </div>
           </form>
         </ValidationObserver>
@@ -65,6 +65,7 @@ export default {
       userName: null,
       userBio: null,
       isLoading: null,
+      btndisabled: false,
     };
   },
   components: { ValidationProvider, ValidationObserver },
@@ -77,12 +78,14 @@ export default {
     async updateUserInfo() {
       try {
         this.errorMsg = null;
+        this.btndisabled = true;
         const userNewInfo = {
           userName: this.userName,
           userBio: this.userBio,
         };
         await this.$store.dispatch("auth/updateUserInfo", userNewInfo);
         this.show = true;
+        this.btndisabled = false;
       } catch (err) {
         this.errorMsg = err.message;
       }

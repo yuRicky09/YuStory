@@ -15,6 +15,7 @@
     <div class="option-panel-position" v-if="showPanel">
       <more-option-panel
         :storyUserId="draft.userId"
+        :storyId="draft.id"
         type="draft"
       ></more-option-panel>
     </div>

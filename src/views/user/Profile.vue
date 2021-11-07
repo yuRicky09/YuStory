@@ -30,18 +30,18 @@
       </div>
       <div class="select-type-area">
         <span
-          @click="itemType = 'Story'"
-          :class="{ active: itemType === 'Story' }"
+          @click="itemType = 'story'"
+          :class="{ active: itemType === 'story' }"
           >Stories</span
         >
         <span
-          @click="itemType = 'Draft'"
-          :class="{ active: itemType === 'Draft' }"
+          @click="itemType = 'draft'"
+          :class="{ active: itemType === 'draft' }"
           >Drafts</span
         >
       </div>
       <ul
-        v-if="fiveRecordsMyStories.length > 0 && itemType === 'Story'"
+        v-if="fiveRecordsMyStories.length > 0 && itemType === 'story'"
         class="story-list"
       >
         <my-story-brief
@@ -51,7 +51,7 @@
         ></my-story-brief>
       </ul>
       <ul
-        v-if="fiveRecordsMyDrafts.length > 0 && itemType === 'Draft'"
+        v-if="fiveRecordsMyDrafts.length > 0 && itemType === 'draft'"
         class="story-list"
       >
         <my-draft-brief
@@ -74,7 +74,7 @@ export default {
   components: { MyStoryBrief, MyDraftBrief },
   data() {
     return {
-      itemType: "Story",
+      itemType: "story",
     };
   },
   computed: {

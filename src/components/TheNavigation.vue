@@ -197,8 +197,8 @@
             v-if="currentUser"
             class="logout"
             @click="
-              menuIsOpen = false;
               showModal = true;
+              menuIsOpen = false;
             "
           >
             <div>
@@ -217,8 +217,8 @@
       @close-modal="closeModal"
     >
       <template #action>
-        <button class="action-btn" @click="userLogout">確定</button>
-        <button class="action-btn ghost" @click="closeModal">
+        <button class="modal-action-btn" @click="userLogout">確定</button>
+        <button class="modal-action-btn ghost" @click="closeModal">
           取消
         </button>
       </template>
@@ -268,6 +268,11 @@ export default {
     },
     closeModal() {
       this.showModal = false;
+      this.userCenterIsOpen = false;
+    },
+    showModalPlease() {
+      this.showModal = true;
+      console.log(this.showModal);
     },
     async userLogout() {
       try {
@@ -414,7 +419,7 @@ export default {
       top: 150%;
       right: 0;
       width: 28rem;
-      z-index: 20;
+      z-index: 1000;
 
       .user-center-header {
         display: flex;
@@ -612,9 +617,5 @@ export default {
 
 ::selection {
   user-select: none;
-}
-
-.action-btn {
-  margin: 0 1rem;
 }
 </style>

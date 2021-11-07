@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <portal to="modal-destination">
     <div v-if="show" class="backdrop" @click="$emit('close-modal')"></div>
     <transition name="zoom-in">
       <div v-if="show" class="message-box">
@@ -14,13 +14,16 @@
         </base-card>
       </div>
     </transition>
-  </div>
+  </portal>
 </template>
 
 <script>
+import { Portal } from "portal-vue";
+
 export default {
   name: "BaseModal",
   props: ["message", "show"],
+  components: { Portal },
 };
 </script>
 
@@ -30,34 +33,42 @@ export default {
   top: 30vh;
   left: 10%;
   width: 80%;
-  z-index: 200;
+  z-index: 1000;
 
   @media (min-width: $bp-lg) {
+    left: 20%;
+    width: 60%;
+  }
+
+  @media (min-width: $bp-xl) {
     left: 30%;
     width: 40%;
   }
 
   .content {
+    text-align: center;
+
     h2 {
       background-color: var(--color-bg-dark-3);
-      display: flex;
-      justify-content: center;
-      align-items: center;
       color: #fff;
       padding: 1.5rem 0;
+      font-size: 1.8rem;
+
+      @media (min-width: $bp-md) {
+        font-size: 2.8rem;
+      }
     }
 
     p {
       background-color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       font-size: 1.6rem;
       font-weight: 600;
-      padding: 7rem 0;
+      padding: 0 2rem;
+      margin: 4rem;
 
-      @media (min-width: $bp-lg) {
-        font-size: 2.5rem;
+      @media (min-width: $bp-md) {
+        font-size: 2.2rem;
+        margin: 7rem 0;
       }
     }
   }
@@ -65,6 +76,11 @@ export default {
   .modal-action {
     text-align: center;
     margin: 2rem 0;
+    font-size: 1.4rem;
+
+    @media (min-width: $bp-md) {
+      font-size: 1.6rem;
+    }
   }
 }
 </style>

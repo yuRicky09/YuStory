@@ -14,6 +14,8 @@ const state = function() {
     topToHeaderDistance: null,
     stories: [],
     drafts: [],
+    unsubscribeStoryId: null,
+    unsubscribeDraftId: null,
   };
 };
 
@@ -141,7 +143,7 @@ const actions = {
   },
   async getAllStories({ commit }) {
     const storiesRef = db.collection("stories").orderBy("createdAt", "desc");
-    storiesRef.onSnapshot((snap) => {
+    const unsubscribeStoryId = storiesRef.onSnapshot((snap) => {
       const stories = [];
       snap.docs.forEach((doc) => {
         const story = { ...doc.data(), id: doc.id };
@@ -149,21 +151,39 @@ const actions = {
       });
       commit("setAllStories", stories);
     });
+    commit("setUnsubscribeStoryId", unsubscribeStoryId);
   },
   async getAllDrafts({ commit }, userId) {
     const draftsRef = db
       .collection("drafts")
       .where("userId", "==", userId)
       .orderBy("createdAt", "desc");
-    const drafts = [];
 
-    draftsRef.onSnapshot((snap) => {
+    const unsubscribeDraftId = draftsRef.onSnapshot((snap) => {
+      const drafts = [];
       snap.docs.forEach((doc) => {
         const draft = { ...doc.data(), id: doc.id };
         drafts.push(draft);
       });
       commit("setAllDrafts", drafts);
     });
+    commit("setUnsubscribeDraftId", unsubscribeDraftId);
+  },
+  async deleteStory(_, storyId) {
+    await db
+      .collection("stories")
+      .doc(storyId)
+      .delete();
+  },
+  async deleteDraft(_, storyId) {
+    await db
+      .collection("drafts")
+      .doc(storyId)
+      .delete();
+  },
+  async unsubscribeAll(state) {
+    state.unsubscribeDraftId();
+    state.unsubscribeStoryId();
   },
 };
 
@@ -199,6 +219,12 @@ const mutations = {
   },
   setAllDrafts(state, drafts) {
     state.drafts = drafts;
+  },
+  setUnsubscribeStoryId(state, id) {
+    state.unsubscribeStoryId = id;
+  },
+  setUnsubscribeDraftId(state, id) {
+    state.unsubscribeDraftId = id;
   },
 };
 
