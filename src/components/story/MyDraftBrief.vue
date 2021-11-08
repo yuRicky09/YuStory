@@ -17,6 +17,7 @@
         :storyUserId="draft.userId"
         :storyId="draft.id"
         type="draft"
+        @close-option-panel="showPanel = false"
       ></more-option-panel>
     </div>
   </li>

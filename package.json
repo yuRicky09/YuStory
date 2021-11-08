@@ -28,6 +28,7 @@
     "vue": "^2.6.11",
     "vue-advanced-cropper": "^1.8.2",
     "vue-awesome-swiper": "^4.1.1",
+    "vue-notification": "^1.3.20",
     "vue-router": "^3.2.0",
     "vue2-editor": "^2.10.3",
     "vuex": "^3.4.0"

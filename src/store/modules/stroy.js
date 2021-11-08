@@ -169,17 +169,22 @@ const actions = {
     });
     commit("setUnsubscribeDraftId", unsubscribeDraftId);
   },
-  async deleteStory(_, storyId) {
-    await db
-      .collection("stories")
-      .doc(storyId)
-      .delete();
-  },
-  async deleteDraft(_, storyId) {
-    await db
-      .collection("drafts")
-      .doc(storyId)
-      .delete();
+  async deleteStory(_, { type, storyId }) {
+    try {
+      if (type === "story") {
+        await db
+          .collection("stories")
+          .doc(storyId)
+          .delete();
+      } else if (type === "draft") {
+        await db
+          .collection("drafts")
+          .doc(storyId)
+          .delete();
+      }
+    } catch (err) {
+      throw new Error(err.message);
+    }
   },
   async unsubscribeAll(state) {
     state.unsubscribeDraftId();

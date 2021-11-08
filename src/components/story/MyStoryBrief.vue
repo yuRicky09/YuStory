@@ -18,6 +18,7 @@
         :storyUserId="story.userId"
         :storyId="story.id"
         type="story"
+        @close-option-panel="showPanel = false"
       ></more-option-panel>
     </div>
   </li>

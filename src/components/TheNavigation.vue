@@ -217,10 +217,10 @@
       @close-modal="closeModal"
     >
       <template #action>
-        <button class="modal-action-btn" @click="userLogout">確定</button>
         <button class="modal-action-btn ghost" @click="closeModal">
           取消
         </button>
+        <button class="modal-action-btn" @click="userLogout">登出</button>
       </template>
     </base-modal>
   </header>

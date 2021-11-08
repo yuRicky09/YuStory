@@ -4,6 +4,7 @@
     <router-view></router-view>
     <the-footer></the-footer>
     <portal-target name="modal-destination" multiple></portal-target>
+    <notifications classes="my-notification" />
   </div>
 </template>
 
@@ -40,4 +41,35 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.my-notification {
+  margin: 20px 5px;
+  padding: 22px 24px;
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 700;
+  background: #44a4fc;
+  border-left: 5px solid #187fe7;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+
+  &.success {
+    background: #68cd86;
+    border-left-color: #4caf4f;
+    border-radius: 5px;
+  }
+
+  &.warn {
+    background: #ffb648;
+    border-left-color: #f48a06;
+  }
+
+  &.error {
+    background: #e54d42;
+    border-left-color: #b82e24;
+  }
+}
+</style>

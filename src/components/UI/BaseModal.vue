@@ -28,6 +28,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.backdrop {
+  z-index: 200;
+}
+
 .message-box {
   position: fixed;
   top: 30vh;

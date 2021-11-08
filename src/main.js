@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import { auth } from "./firebase/config";
+import Notifications from "vue-notification";
 
 import BaseCard from "@/components/UI/BaseCard.vue";
 import BaseModal from "@/components/UI/BaseModal.vue";
@@ -17,6 +18,8 @@ Vue.config.productionTip = false;
 Vue.component("base-card", BaseCard);
 Vue.component("base-modal", BaseModal);
 Vue.component("base-spinner", BaseSpinner);
+
+Vue.use(Notifications);
 
 let app;
 
