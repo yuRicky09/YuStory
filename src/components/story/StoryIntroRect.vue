@@ -74,7 +74,7 @@
 <script>
 import BaseTag from "@/components/UI/BaseTag.vue";
 import MoreOptionPanel from "@/components/MoreOptionPanel.vue";
-import { timeFormatMixin } from "@/mixin/timeFormatMixin";
+import { timeFormatMixin } from "@/mixins/timeFormatMixin";
 
 export default {
   name: "StoryIntroRect",

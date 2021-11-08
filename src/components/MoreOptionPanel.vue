@@ -2,18 +2,22 @@
   <ul class="more-option" :class="{ panelInvisible: panelInvisible }">
     <template v-if="type === 'story'">
       <li v-if="storyUserId === userId">
-        <router-link to="#">編輯故事</router-link>
+        <router-link :to="{ name: 'EditStory', params: { storyId: storyId } }"
+          >編輯故事</router-link
+        >
       </li>
       <li v-if="storyUserId === userId" @click="showModal">
-        <router-link to="#">刪除故事</router-link>
+        <span>刪除故事</span>
       </li>
     </template>
     <template v-if="type === 'draft'">
       <li v-if="storyUserId === userId">
-        <router-link to="#">編輯草稿</router-link>
+        <router-link :to="{ name: 'EditDraft', params: { draftId: storyId } }"
+          >編輯草稿</router-link
+        >
       </li>
       <li v-if="storyUserId === userId" @click="showModal">
-        <router-link to="#">刪除草稿</router-link>
+        <span>刪除草稿</span>
       </li>
     </template>
     <li v-if="storyUserId !== userId">
@@ -110,7 +114,8 @@ export default {
   li {
     text-align: center;
 
-    a {
+    a,
+    span {
       display: block;
       padding: 0.8rem 0.5rem;
 

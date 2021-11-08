@@ -1,7 +1,7 @@
 <template>
   <div class="create-story-container">
     <div class="page-title">
-      <h2>Write a story</h2>
+      <h2>Edit Draft</h2>
       <span v-if="errorMsg" class="error-msg">{{ errorMsg }}</span>
     </div>
     <div class="story-header">
@@ -97,9 +97,37 @@
 <script>
 import { vueEditorMixin } from "@/mixins/vueEditorMixin";
 import { createStoryMixin } from "@/mixins/createStoryMixin";
+import { db } from "@/firebase/config";
 
 export default {
-  name: "CreateStory",
+  name: "EditDraft",
   mixins: [vueEditorMixin, createStoryMixin],
+  props: ["draftId"],
+  data() {
+    return {
+      initLoading: false,
+    };
+  },
+  async created() {
+    this.initLoading = true;
+    const res = await db
+      .collection("drafts")
+      .doc(this.draftId)
+      .get();
+
+    // img為一陣列類型資料，每筆資料為一obj，內存對應圖片的上傳、下載位置之URL。
+    const { HTML, img, tags, title } = res.data();
+    const imgURLArr = [];
+    img.forEach((i) => {
+      imgURLArr.push(i.imgDownLoadURL);
+    });
+    // 將fetch下來的備份內容帶入data(詳見createStoryMixin檔內的data屬性)
+    this.content = HTML;
+    this.pendingCovers = imgURLArr;
+    this.tags = tags;
+    this.title = title;
+    this.docId = this.draftId;
+    this.initLoading = false;
+  },
 };
 </script>

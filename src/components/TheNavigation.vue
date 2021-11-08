@@ -80,7 +80,7 @@
                       >
                     </li>
                     <li class="user-center-link">
-                      <router-link to="#"
+                      <router-link :to="{ name: 'MyStories' }"
                         ><font-awesome-icon
                           :icon="['fa', 'book']"
                           fixed-width
@@ -182,7 +182,7 @@
             >
           </li>
           <li class="mobile-link">
-            <router-link to="#"
+            <router-link :to="{ name: 'MyStories' }"
               ><font-awesome-icon :icon="['fa', 'book']" fixed-width />
               <span>我的故事</span></router-link
             >

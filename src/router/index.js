@@ -91,6 +91,26 @@ const routes = [
     },
   },
   {
+    path: "/story/edit/story/:storyId",
+    name: "EditStory",
+    component: () => import("@/views/story/EditStory.vue"),
+    meta: {
+      title: "編輯故事 | YUSTORY",
+      requireLogin: true,
+    },
+    props: true,
+  },
+  {
+    path: "/story/edit/draft/:draftId",
+    name: "EditDraft",
+    component: () => import("@/views/story/EditDraft.vue"),
+    meta: {
+      title: "編輯草稿 | YUSTORY",
+      requireLogin: true,
+    },
+    props: true,
+  },
+  {
     path: "/story/:id",
     name: "Story",
     component: () => import("@/views/story/Story.vue"),
@@ -117,6 +137,15 @@ const routes = [
     meta: {
       title: "STORIES | YUSTORY",
       requireAuth: false,
+    },
+  },
+  {
+    path: "/stories/me",
+    name: "MyStories",
+    component: () => import("@/views/story/MyStories.vue"),
+    meta: {
+      title: "MY STORIES | YUSTORY",
+      requireLogin: true,
     },
   },
 ];

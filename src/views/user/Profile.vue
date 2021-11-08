@@ -26,7 +26,9 @@
     <div class="stories">
       <div class="header">
         <h4>我的故事</h4>
-        <router-link to="#" class="button">更多</router-link>
+        <router-link :to="{ name: 'MyStories' }" class="button"
+          >更多</router-link
+        >
       </div>
       <div class="select-type-area">
         <span

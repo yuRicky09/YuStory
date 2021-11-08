@@ -1,7 +1,7 @@
 <template>
   <li class="story-item">
-    <div>
-      <router-link to="#">
+    <div class="item-content">
+      <router-link :to="{ name: 'EditDraft', params: { draftId: draft.id } }">
         <h5>{{ draft.title }}</h5>
       </router-link>
       <span>最後編輯: {{ lastEditTime }}</span>

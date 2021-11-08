@@ -1,6 +1,6 @@
 <template>
   <li class="story-item">
-    <div>
+    <div class="item-content">
       <router-link :to="{ name: 'Story', params: { id: story.id } }">
         <h5>{{ story.title }}</h5>
         <p>{{ story.brief }}</p>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { timeFormatMixin } from "@/mixin/timeFormatMixin";
+import { timeFormatMixin } from "@/mixins/timeFormatMixin";
 import MoreOptionPanel from "@/components/MoreOptionPanel.vue";
 
 export default {
@@ -46,10 +46,10 @@ export default {
   position: relative;
   border-bottom: 1px solid var(--color-border);
 
-  div {
+  .item-content {
     padding: 1rem 2.5rem;
 
-    a {
+    > a {
       display: inline-block;
       margin-bottom: 8px;
 
@@ -79,7 +79,7 @@ export default {
         color: #117096;
       }
     }
-    span {
+    > span {
       display: block;
       text-align: end;
     }
@@ -101,8 +101,8 @@ export default {
 
   .option-panel-position {
     position: absolute;
-    right: -6rem;
-    top: 1rem;
+    right: -3.3rem;
+    top: 0rem;
     transform: translateY(-100%);
     z-index: 1000;
   }
