@@ -2,7 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import { auth } from "@/firebase/config";
 import Home from "@/views/Home.vue";
-import store from "@/store/index";
 
 Vue.use(VueRouter);
 
@@ -91,7 +90,7 @@ const routes = [
     },
   },
   {
-    path: "/story/edit/story/:storyId",
+    path: "/story/edit/:storyId",
     name: "EditStory",
     component: () => import("@/views/story/EditStory.vue"),
     meta: {
@@ -116,17 +115,7 @@ const routes = [
     component: () => import("@/views/story/Story.vue"),
     meta: {
       requireAuth: false,
-      title: (route) => {
-        console.log(route);
-        return "Story";
-      },
-    },
-    beforeEnter: (to, _, next) => {
-      const { title } = store.state.story.stories.find((story) => {
-        return story.id === to.params.id;
-      });
-      document.title = title;
-      next();
+      title: "STORY | YUSTORY",
     },
     props: true,
   },
@@ -146,6 +135,15 @@ const routes = [
     meta: {
       title: "MY STORIES | YUSTORY",
       requireLogin: true,
+    },
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: () => import("@/views/NotFound.vue"),
+    meta: {
+      title: "Not Found | YUSTORY",
+      requireAuth: false,
     },
   },
 ];
@@ -175,10 +173,7 @@ router.beforeEach((to, _, next) => {
 });
 
 router.afterEach((to) => {
-  // Story頁面希望動態獲取資料後定義標題，另寫方法於story路徑配置內
-  if (to.name !== "Story") {
-    document.title = to.meta.title;
-  }
+  document.title = to.meta.title;
 });
 
 export default router;

@@ -13,14 +13,15 @@ export const createStoryMixin = {
       docId: null,
       tagWarnMessage: "",
       showCover: false,
-      errorMsg: null,
-      show: false,
-      modalMsg: null,
       coverActiveIndex: 0,
       pendingCovers: [],
       storyCover: null,
+      brief: null,
       showPreview: false,
       saved: true,
+      show: false,
+      modalMsg: null,
+      errorMsg: null,
     };
   },
   computed: {
@@ -71,27 +72,28 @@ export const createStoryMixin = {
         this.errorMsg = err.message;
       }
     },
+    getStoryBrief() {
+      // 擷取文章前九十字當簡介
+      this.brief = this.$refs.editor.$el.innerText
+        .replace(/\n/g, " ")
+        .slice(0, 90);
+    },
     async publishStory() {
       try {
         if (!this.title || !this.content) {
           this.modalMsg = "請確切填寫故事標題與內容，標題與內容不得為空";
           this.show = true;
         } else {
-          // 擷取文章前九十字當簡介
-          const brief = this.$refs.editor.$el.innerText
-            .replace(/\n/g, " ")
-            .slice(0, 90);
-
           if (this.pendingCovers.length > 0) {
             this.storyCover = this.pendingCovers[this.coverActiveIndex];
           }
-
+          this.getStoryBrief();
           const storyId = await this.$store.dispatch("story/publishStory", {
             storyTitle: this.title,
             storyHTML: this.content,
             storyTags: this.tags,
             storyCover: this.storyCover,
-            storyBrief: brief,
+            storyBrief: this.brief,
           });
           this.saved = true;
           this.$router.push({ name: "Story", params: { id: storyId } });

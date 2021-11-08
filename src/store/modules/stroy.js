@@ -109,6 +109,42 @@ const actions = {
       throw Error(err.message);
     }
   },
+  async updateStory(
+    { state, commit },
+    { storyTitle, storyHTML, storyTags, storyBrief, storyCover, storyId }
+  ) {
+    try {
+      commit("changeLoadingState", true);
+
+      const createdAt = timestamp();
+      const storyImg = state.storyImg;
+
+      await db
+        .collection("stories")
+        .doc(storyId)
+        .update({
+          title: storyTitle,
+          HTML: storyHTML,
+          tags: storyTags,
+          brief: storyBrief,
+          cover: storyCover,
+          img: storyImg,
+          createdAt,
+        });
+
+      commit("setPublishStory", {
+        storyTitle,
+        storyHTML,
+        storyTags,
+        storyBrief,
+        storyCover,
+        createdAt,
+      });
+      commit("changeLoadingState", false);
+    } catch (err) {
+      commit("changeLoadingState", false);
+    }
+  },
   async saveDraft(
     { state, rootState, commit },
     { storyTitle, storyHTML, storyTags, docId }
@@ -123,7 +159,7 @@ const actions = {
       const createdAt = timestamp();
       let docRef;
 
-      // doc已存在則更新，未存在則new一個doc並且回傳此doc的id
+      // doc已存在則更新，未存在則new一個doc並且回傳此doc的id，之後再按備份的話則都視為更新。
       if (docId) {
         await db
           .collection("drafts")
@@ -198,6 +234,9 @@ const mutations = {
   },
   addStoryImg(state, img) {
     state.storyImg.push(img);
+  },
+  updateStoryImg(state, img) {
+    state.storyImg = img;
   },
   removeImg(state, imgUploadPath) {
     state.storyImg = state.storyImg.filter((img) => {

@@ -72,6 +72,7 @@ export const vueEditorMixin = {
     async handleImageAdded(file, Editor, cursorLocation, resetUploader) {
       try {
         this.errorMsg = null;
+        console.log("圖片被添加了");
         const coverDownloadURL = await this.$store.dispatch(
           "story/addStoryImg",
           {

@@ -5,8 +5,7 @@
         <story-header
           v-if="currentAuthor && currentStory"
           :currentAuthor="currentAuthor"
-          :title="currentStory.title"
-          :createdAt="currentStory.createdAt"
+          :story="currentStory"
         ></story-header>
         <div ref="contentStartLine">
           <story-content
@@ -23,8 +22,8 @@
     </div>
     <div class="right-side">
       <aside-user-info
-        :currentAuthor="currentAuthor"
         v-if="currentAuthor"
+        :currentAuthor="currentAuthor"
       ></aside-user-info>
     </div>
   </div>
@@ -82,6 +81,11 @@ export default {
   async created() {
     const userId = await this.fetchCurrentStory();
     this.fetchCurrentAuthor(userId);
+  },
+  watch: {
+    currentStory(newValue) {
+      document.title = newValue.title;
+    },
   },
 };
 </script>

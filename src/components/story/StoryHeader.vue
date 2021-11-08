@@ -1,7 +1,7 @@
 <template>
   <section class="story-header" ref="storyHeader">
     <div>
-      <h2 class="story-title">{{ title }}</h2>
+      <h2 class="story-title">{{ story.title }}</h2>
       <div class="title-content">
         <div class="user-info">
           <img
@@ -20,18 +20,12 @@
 </template>
 
 <script>
-import moment from "moment";
+import { timeFormatMixin } from "@/mixins/timeFormatMixin";
 
 export default {
   name: "StoryHeader",
-  props: ["currentAuthor", "title", "createdAt"],
-  computed: {
-    createdTime() {
-      const timestamp = this.createdAt.toDate();
-      moment.locale("zh-cn");
-      return moment(timestamp).format("lll");
-    },
-  },
+  props: ["currentAuthor", "story"],
+  mixins: [timeFormatMixin],
   mounted() {
     const topToHeaderDistance =
       this.$refs.storyHeader.offsetHeight + this.$refs.storyHeader.offsetTop;
