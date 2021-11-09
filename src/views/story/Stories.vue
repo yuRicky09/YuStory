@@ -2,13 +2,13 @@
   <div class="container">
     <main class="left-side">
       <h2>Stories</h2>
-      <article class="story-list" v-if="stories">
+      <div class="story-list" v-if="stories">
         <story-intro-rect
           v-for="story in stories"
           :story="story"
           :key="story.id"
         ></story-intro-rect>
-      </article>
+      </div>
     </main>
     <aside class="right-side"></aside>
   </div>

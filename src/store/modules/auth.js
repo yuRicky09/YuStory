@@ -15,7 +15,14 @@ const state = function() {
   };
 };
 
-const getters = {};
+const getters = {
+  myFavoriteStories(state, _, rootState) {
+    const stories = rootState.story.stories;
+    return stories.filter((story) => {
+      return state.favorites[story.id] === true;
+    });
+  },
+};
 
 const actions = {
   async userRegister({ commit }, registerData) {

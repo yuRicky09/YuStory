@@ -25,23 +25,15 @@
     </div>
     <div class="stories">
       <div class="header">
-        <h4>我的故事</h4>
+        <h4>近期故事</h4>
         <router-link :to="{ name: 'MyStories' }" class="button"
           >更多</router-link
         >
       </div>
-      <div class="select-type-area">
-        <span
-          @click="itemType = 'story'"
-          :class="{ active: itemType === 'story' }"
-          >Stories</span
-        >
-        <span
-          @click="itemType = 'draft'"
-          :class="{ active: itemType === 'draft' }"
-          >Drafts</span
-        >
-      </div>
+      <select-story-tab
+        @select-story="changeToStory"
+        @select-draft="changeToDraft"
+      ></select-story-tab>
       <ul
         v-if="fiveRecordsMyStories.length > 0 && itemType === 'story'"
         class="story-list"
@@ -70,10 +62,11 @@
 import { mapState, mapGetters } from "vuex";
 import MyStoryBrief from "@/components/story/MyStoryBrief.vue";
 import MyDraftBrief from "@/components/story/MyDraftBrief.vue";
+import SelectStoryTab from "@/components/story/SelectStoryTab.vue";
 
 export default {
   name: "Profile",
-  components: { MyStoryBrief, MyDraftBrief },
+  components: { MyStoryBrief, MyDraftBrief, SelectStoryTab },
   data() {
     return {
       itemType: "story",
@@ -87,6 +80,14 @@ export default {
       userBio: (state) => state.userBio,
     }),
     ...mapGetters("story", ["fiveRecordsMyStories", "fiveRecordsMyDrafts"]),
+  },
+  methods: {
+    changeToStory() {
+      this.itemType = "story";
+    },
+    changeToDraft() {
+      this.itemType = "draft";
+    },
   },
 };
 </script>
@@ -180,32 +181,6 @@ export default {
 
       a {
         margin-right: 3rem;
-      }
-    }
-
-    .select-type-area {
-      margin-top: 1rem;
-
-      span {
-        display: inline-block;
-        font-size: 1.4rem;
-        padding: 0.5rem 1rem;
-        cursor: pointer;
-        transition: all 0.2s ease-out;
-
-        @media (min-width: $bp-md) {
-          font-size: 1.6rem;
-          padding: 0.8rem 1.5rem;
-        }
-
-        &:hover {
-          opacity: 0.8;
-        }
-      }
-
-      span.active {
-        background-color: var(--color-bg-dark-2);
-        color: #fff;
       }
     }
 

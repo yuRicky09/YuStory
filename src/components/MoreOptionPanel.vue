@@ -118,6 +118,7 @@ export default {
     span {
       display: block;
       padding: 0.8rem 0.5rem;
+      cursor: pointer;
 
       @media (min-width: $bp-md) {
         padding: 1.2rem 1rem;

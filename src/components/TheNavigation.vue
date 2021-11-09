@@ -88,7 +88,7 @@
                       >
                     </li>
                     <li class="user-center-link">
-                      <router-link to="#"
+                      <router-link :to="{ name: 'Favorite' }"
                         ><font-awesome-icon
                           :icon="['fa', 'bookmark']"
                           fixed-width
@@ -170,9 +170,9 @@
             >
           </li>
           <li class="mobile-link">
-            <router-link to="#"
+            <router-link :to="{ name: 'Favorite' }"
               ><font-awesome-icon :icon="['fa', 'bookmark']" fixed-width />
-              <span>收藏</span></router-link
+              <span>我的收藏</span></router-link
             >
           </li>
           <li class="mobile-link">
