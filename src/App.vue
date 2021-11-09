@@ -5,6 +5,7 @@
     <the-footer></the-footer>
     <portal-target name="modal-destination" multiple></portal-target>
     <notifications classes="my-notification" />
+    <base-spinner v-if="isLoading"></base-spinner>
   </div>
 </template>
 
@@ -23,8 +24,12 @@ export default {
       unsubscribeDraftId: null,
     };
   },
+  computed: {
+    isLoading() {
+      return this.$store.state.story.isLoading;
+    },
+  },
   created() {
-    this.$store.dispatch("story/getAllStories");
     // 有任何auth state change都將觸發(包括註冊 null => new user)
     auth.onAuthStateChanged((user) => {
       this.$store.commit("auth/getCurrentUser", user);
@@ -34,6 +39,7 @@ export default {
         this.$store.dispatch("story/getAllDrafts", user.uid);
       }
     });
+    this.$store.dispatch("story/getAllStories");
   },
   beforeDestroy() {
     this.$store.dispatch("story/unsubscribeAll");
@@ -42,7 +48,7 @@ export default {
 </script>
 
 <style lang="scss">
-.my-notification {
+.vue-notification-template.my-notification {
   margin: 20px 5px;
   padding: 22px 24px;
   font-size: 14px;
@@ -50,6 +56,7 @@ export default {
   font-weight: 700;
   background: #44a4fc;
   border-left: 5px solid #187fe7;
+  border-radius: 5px;
 
   &:hover {
     cursor: pointer;
@@ -59,7 +66,6 @@ export default {
   &.success {
     background: #68cd86;
     border-left-color: #4caf4f;
-    border-radius: 5px;
   }
 
   &.warn {

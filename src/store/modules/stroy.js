@@ -178,16 +178,24 @@ const actions = {
     }
   },
   async getAllStories({ commit }) {
-    const storiesRef = db.collection("stories").orderBy("createdAt", "desc");
-    const unsubscribeStoryId = storiesRef.onSnapshot((snap) => {
-      const stories = [];
-      snap.docs.forEach((doc) => {
-        const story = { ...doc.data(), id: doc.id };
-        stories.push(story);
+    try {
+      commit("changeLoadingState", true);
+
+      const storiesRef = db.collection("stories").orderBy("createdAt", "desc");
+      const unsubscribeStoryId = storiesRef.onSnapshot((snap) => {
+        const stories = [];
+        snap.docs.forEach((doc) => {
+          const story = { ...doc.data(), id: doc.id };
+          stories.push(story);
+        });
+        commit("setAllStories", stories);
       });
-      commit("setAllStories", stories);
-    });
-    commit("setUnsubscribeStoryId", unsubscribeStoryId);
+
+      commit("setUnsubscribeStoryId", unsubscribeStoryId);
+      commit("changeLoadingState", false);
+    } catch (err) {
+      console.log(err);
+    }
   },
   async getAllDrafts({ commit }, userId) {
     const draftsRef = db

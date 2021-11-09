@@ -5,7 +5,7 @@
         <h5>{{ story.title }}</h5>
         <p>{{ story.brief }}</p>
       </router-link>
-      <span>最後發佈: {{ createdTime }}</span>
+      <span>發佈: {{ createdTime }}</span>
     </div>
     <font-awesome-icon
       :icon="['fa', 'ellipsis-v']"

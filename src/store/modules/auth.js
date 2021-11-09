@@ -1,3 +1,4 @@
+import Vue from "vue";
 import { auth, db, googleProvider, storage } from "@/firebase/config";
 
 const state = function() {
@@ -8,6 +9,7 @@ const state = function() {
     userId: null,
     userBio: null,
     userProfileImg: null,
+    favorites: {},
     isLoading: false,
     currentUser: null,
   };
@@ -38,6 +40,7 @@ const actions = {
           name: registerData.userName,
           email: registerData.userEmail,
           password: registerData.userPassword,
+          favorites: {},
         });
 
       commit("changeLoadingState", false);
@@ -156,6 +159,34 @@ const actions = {
       throw new Error(err.message);
     }
   },
+  async addToFavorites({ state, commit }, storyId) {
+    try {
+      await db
+        .collection("users")
+        .doc(state.userId)
+        .update({
+          [`favorites.${storyId}`]: true,
+        });
+
+      commit("addToFavorites", storyId);
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  },
+  async removeFromFavorites({ state, commit }, storyId) {
+    try {
+      await db
+        .collection("users")
+        .doc(state.userId)
+        .update({
+          [`favorites.${storyId}`]: false,
+        });
+
+      commit("removeFromFavorites", storyId);
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  },
 };
 
 const mutations = {
@@ -169,6 +200,7 @@ const mutations = {
     state.userId = userData.userId;
     state.userProfileImg = userData.profileImg;
     state.userBio = userData.bio;
+    state.favorites = userData.favorites;
   },
   clearUserData(state) {
     state.userEmail = null;
@@ -187,6 +219,18 @@ const mutations = {
   },
   updateProfileImg(state, userProfileImg) {
     state.userProfileImg = userProfileImg;
+  },
+  addToFavorites(state, storyId) {
+    //! Vue無法監測到obj屬性的添加or刪除，所以響應式會失效，這邊透過Vue.set method來幫我們達成資料響應式。
+    if (state.favorites[storyId] === undefined) {
+      Vue.set(state.favorites, storyId, true);
+    } else {
+      // 已添加到收藏後又移除，移除後又再添加到收藏的狀況
+      state.favorites[storyId] = true;
+    }
+  },
+  removeFromFavorites(state, storyId) {
+    state.favorites[storyId] = false;
   },
 };
 

@@ -45,13 +45,13 @@
               </div>
               <font-awesome-icon
                 :icon="['fa', 'bookmark']"
-                @click="addToFavorite"
-                v-if="favorited && userId !== story.userId"
+                @click="removeFromFavorites"
+                v-if="favorited && userId && userId !== story.userId"
               />
               <font-awesome-icon
                 :icon="['far', 'bookmark']"
-                @click="addToFavorite"
-                v-if="!favorited && userId !== story.userId"
+                @click="addToFavorites"
+                v-if="!favorited && userId && userId !== story.userId"
               />
               <font-awesome-icon
                 :icon="['fa', 'ellipsis-v']"
@@ -75,6 +75,7 @@
 import BaseTag from "@/components/UI/BaseTag.vue";
 import MoreOptionPanel from "@/components/MoreOptionPanel.vue";
 import { timeFormatMixin } from "@/mixins/timeFormatMixin";
+import { mapState } from "vuex";
 
 export default {
   name: "StoryIntroRect",
@@ -83,18 +84,46 @@ export default {
   mixins: [timeFormatMixin],
   data() {
     return {
-      favorited: false,
       showPanel: false,
     };
   },
   computed: {
-    userId() {
-      return this.$store.state.auth.userId;
+    ...mapState("auth", {
+      userId: (state) => state.userId,
+      favorites: (state) => state.favorites,
+    }),
+    // 判斷此故事id key值，為true則顯示已收藏mark，反之顯示未收藏。
+    favorited() {
+      return this.favorites[`${this.story.id}`] ? true : false;
     },
   },
   methods: {
-    addToFavorite() {
-      this.favorited = !this.favorited;
+    async addToFavorites() {
+      try {
+        await this.$store.dispatch("auth/addToFavorites", this.story.id);
+        this.$notify({
+          text: "已將此故事加入我的收藏",
+          type: "success",
+        });
+      } catch (_) {
+        this.$notify({
+          text: "添加收藏失敗，請再添加一次",
+          type: "error",
+        });
+      }
+    },
+    async removeFromFavorites() {
+      try {
+        await this.$store.dispatch("auth/removeFromFavorites", this.story.id);
+        this.$notify({
+          text: "已將此故事從我的收藏移除",
+        });
+      } catch (_) {
+        this.$notify({
+          text: "移除收藏失敗，請再移除一次",
+          type: "error",
+        });
+      }
     },
   },
 };

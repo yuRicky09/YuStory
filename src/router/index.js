@@ -133,7 +133,16 @@ const routes = [
     name: "MyStories",
     component: () => import("@/views/story/MyStories.vue"),
     meta: {
-      title: "MY STORIES | YUSTORY",
+      title: "我的故事 | YUSTORY",
+      requireLogin: true,
+    },
+  },
+  {
+    path: "/favorite",
+    name: "Favorite",
+    component: () => import("@/views/story/Favorite.vue"),
+    meta: {
+      title: "我的收藏 | YUSTORY",
       requireLogin: true,
     },
   },

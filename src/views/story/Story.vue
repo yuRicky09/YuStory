@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="left-side">
+    <main class="left-side">
       <article>
         <story-header
           v-if="currentAuthor && currentStory"
@@ -19,7 +19,7 @@
         <section>顯示留言</section>
         <section>留言組件</section>
       </div>
-    </div>
+    </main>
     <div class="right-side">
       <aside-user-info
         v-if="currentAuthor"
