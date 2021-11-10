@@ -3,7 +3,7 @@
     <div class="item-content">
       <router-link :to="{ name: 'Story', params: { id: story.id } }">
         <h5>{{ story.title }}</h5>
-        <p>{{ story.brief }}</p>
+        <p class="one-line">{{ story.brief }}</p>
       </router-link>
       <span>發佈: {{ createdTime }}</span>
     </div>

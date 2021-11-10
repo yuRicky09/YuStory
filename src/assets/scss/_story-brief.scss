@@ -21,9 +21,6 @@
         margin: 0.5rem 0;
         color: var(--color-bg-gray-1);
         width: 13rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
 
         @media (min-width: $bp-md) {
           font-size: 1.4rem;

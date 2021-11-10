@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="header">
+    <div class="my-story-header">
       <h2>My Stories</h2>
       <router-link :to="{ name: 'CreateStory' }" class="button"
         >撰寫故事</router-link
@@ -34,11 +34,8 @@
         :draft="draft"
       ></my-draft-brief>
     </div>
-    <div v-else>
-      <p>您尚未發佈任何故事</p>
-      <router-link :to="{ name: 'CreateStory' }" class="button"
-        >前往撰寫!</router-link
-      >
+    <div v-else class="story-empty">
+      <p>尚未發佈任何故事</p>
     </div>
   </div>
 </template>
@@ -92,7 +89,7 @@ export default {
   margin: auto;
   padding: 6rem 2rem;
 
-  .header {
+  .my-story-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -100,6 +97,10 @@ export default {
 
     @media (min-width: $bp-md) {
       padding: 0 4rem;
+    }
+
+    @media (min-width: $bp-xl) {
+      padding: 0;
     }
 
     h2 {
@@ -122,6 +123,7 @@ export default {
   .select-action-area {
     display: flex;
     align-items: center;
+    border-bottom: 2px solid var(--color-border);
 
     .tab {
       margin: 0 1rem;
@@ -129,6 +131,11 @@ export default {
 
     .sort-controller {
       margin: 0 2rem;
+      font-size: 1.4rem;
+      select {
+        outline: none;
+        padding: 0.8rem;
+      }
     }
   }
 }

@@ -147,6 +147,15 @@ const routes = [
     },
   },
   {
+    path: "/tags/:tagName",
+    name: "Tags",
+    component: () => import("@/views/story/Tags.vue"),
+    meta: {
+      title: "TAGS | YUSTORY",
+      requireAuth: false,
+    },
+  },
+  {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: () => import("@/views/NotFound.vue"),

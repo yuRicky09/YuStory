@@ -103,6 +103,12 @@ button.block {
 img {
   max-width: 100%;
 }
+
+.one-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 // auth's view pages style
 .auth-wrapper {
   padding: 8rem 0;

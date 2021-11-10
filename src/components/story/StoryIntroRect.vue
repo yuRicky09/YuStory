@@ -20,14 +20,15 @@
           <div class="story-footer">
             <div class="left-side">
               <div class="created-time">{{ createdTime }}</div>
-              <router-link
-                class="story-tags"
-                :to="{ name: 'Home' }"
-                v-for="tag in story.tags"
-                :key="tag"
-              >
-                <base-tag :tagName="tag"></base-tag>
-              </router-link>
+              <div class="story-tags">
+                <router-link
+                  :to="{ name: 'Home' }"
+                  v-for="tag in story.tags"
+                  :key="tag"
+                >
+                  <base-tag :tagName="tag"></base-tag>
+                </router-link>
+              </div>
             </div>
             <div class="other-action">
               <div
@@ -237,16 +238,13 @@ export default {
       .story-tags {
         display: none;
 
-        span {
-          max-width: 20rem;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-
         @media (min-width: $bp-md) {
           display: flex;
           align-items: center;
+        }
+
+        a {
+          display: inline-block;
           &:hover {
             opacity: 0.8;
           }

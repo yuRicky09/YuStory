@@ -31,6 +31,16 @@ const getters = {
   fiveRecordsMyDrafts(state) {
     return state.drafts.slice(0, 5);
   },
+  recentlyStories(state) {
+    return state.stories.slice(0, 10);
+  },
+  recommendedTags(state) {
+    let allTags = [];
+    state.stories.forEach((story) => allTags.push(story.tags));
+    // 去重複值
+    allTags = new Set(allTags.flat());
+    return Array.from(allTags).slice(0, 20);
+  },
 };
 
 const actions = {

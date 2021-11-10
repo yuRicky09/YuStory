@@ -1,5 +1,5 @@
 <template>
-  <span class="tag">
+  <span class="tag one-line" :class="{ big: big }">
     <slot></slot>
     {{ tagName }}
   </span>
@@ -8,7 +8,7 @@
 <script>
 export default {
   name: "BaseTag",
-  props: ["tagName"],
+  props: ["tagName", "big"],
 };
 </script>
 
@@ -16,10 +16,16 @@ export default {
 .tag {
   font-size: 1.2rem;
   display: inline-block;
-  padding: 2px 5px;
-  margin: 0 5px;
+  padding: 3px 7px;
+  margin: 0 6px;
   border-radius: 15px;
   background-color: #969696;
   color: #fff;
+  max-width: 20rem;
+}
+
+.tag.big {
+  padding: 5px 10px;
+  font-size: 1.4rem;
 }
 </style>
