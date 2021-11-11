@@ -1,9 +1,14 @@
 @import "../../../node_modules/modern-normalize/modern-normalize.css";
-@import "base";
-@import "variables";
-@import "form";
-@import "animation";
-@import "transition";
-@import "story";
-@import "story-brief";
-@import "story-empty";
+
+@import "abstracts/variables";
+
+@import "base/typography";
+@import "base/base";
+@import "base/animation";
+@import "base/transition";
+
+@import "components/backdrop";
+@import "components/button";
+@import "components/form";
+
+@import "layouts";

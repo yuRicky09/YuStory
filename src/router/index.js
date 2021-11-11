@@ -154,6 +154,7 @@ const routes = [
       title: "TAGS | YUSTORY",
       requireAuth: false,
     },
+    props: true,
   },
   {
     path: "/:pathMatch(.*)*",

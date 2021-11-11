@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="stories-container">
     <div class="stories-header">
       <h2>Stories</h2>
     </div>
@@ -59,77 +59,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.container {
-  max-width: 120rem;
-  margin: auto;
-  font-size: 1.4rem;
-  padding: 6rem 2rem;
-
-  .stories-header {
-    margin: 2rem 0;
-    h2 {
-      font-size: 2.6rem;
-
-      @media (min-width: $bp-md) {
-        font-size: 3.6rem;
-      }
-    }
-  }
-
-  .stories-body {
-    display: flex;
-    gap: 6rem;
-
-    .left-side {
-      max-width: 77rem;
-    }
-
-    .right-side {
-      display: none;
-      flex: 1;
-
-      @media (min-width: $bp-lg) {
-        display: block;
-        max-width: 35rem;
-      }
-
-      .recently-stories {
-        margin: 6rem 0;
-
-        li {
-          margin: 1rem 0;
-          a {
-            display: inline-block;
-            padding: 0 1.5rem;
-            position: relative;
-
-            &::before {
-              content: "";
-              position: absolute;
-              top: 50%;
-              left: 0;
-              transform: translateY(-50%);
-              width: 7px;
-              height: 7px;
-              border-radius: 50%;
-              background-color: #ccc;
-            }
-
-            &:hover {
-              color: #117096;
-            }
-          }
-        }
-      }
-
-      .recommendedTags {
-        .tag {
-          margin: 0 4px 10px;
-        }
-      }
-    }
-  }
-}
-</style>

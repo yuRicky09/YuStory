@@ -22,13 +22,18 @@ import {
   faEllipsisV,
   faArrowLeft,
   faArrowRight,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faGoogle,
   faGithub,
   faGithubSquare,
 } from "@fortawesome/free-brands-svg-icons";
-import { faBookmark as farBookmark } from "@fortawesome/free-regular-svg-icons";
+import {
+  faBookmark as farBookmark,
+  faComment,
+  faHeart as farHeart,
+} from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(
@@ -56,7 +61,10 @@ library.add(
   faTimes,
   faEllipsisV,
   faArrowRight,
-  faArrowLeft
+  faArrowLeft,
+  faComment,
+  faHeart,
+  farHeart
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

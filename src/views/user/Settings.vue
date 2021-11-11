@@ -155,7 +155,11 @@ export default {
     }
 
     .setting-content {
-      padding: 1rem 5rem;
+      padding: 1rem;
+
+      @media (min-width: $bp-sm) {
+        padding: 1rem 5rem;
+      }
       flex: 1;
     }
   }

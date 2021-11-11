@@ -14,6 +14,8 @@ const state = function() {
     topToHeaderDistance: null,
     stories: [],
     drafts: [],
+    currentStory: null,
+    currentAuthor: null,
     unsubscribeStoryId: null,
     unsubscribeDraftId: null,
   };
@@ -223,6 +225,41 @@ const actions = {
     });
     commit("setUnsubscribeDraftId", unsubscribeDraftId);
   },
+  async getCurrentStory({ commit }, storyId) {
+    try {
+      const res = await db
+        .collection("stories")
+        .doc(storyId)
+        .get();
+
+      const currentStory = { ...res.data(), id: storyId };
+      commit("setCurrentStory", currentStory);
+
+      return currentStory.userId;
+    } catch (err) {
+      console.log(err.message);
+      throw new Error(err.message);
+    }
+  },
+  async getCurrentAuthor({ dispatch, commit }, storyId) {
+    try {
+      commit("changeLoadingState", true);
+      const userId = await dispatch("getCurrentStory", storyId);
+
+      const res = await db
+        .collection("users")
+        .doc(userId)
+        .get();
+
+      const currentAuthor = res.data();
+      commit("setCurrentAuthor", currentAuthor);
+      commit("changeLoadingState", false);
+    } catch (err) {
+      commit("changeLoadingState", false);
+      console.log(err.message);
+      throw new Error(err.message);
+    }
+  },
   async deleteStory(_, { type, storyId }) {
     try {
       if (type === "story") {
@@ -281,6 +318,12 @@ const mutations = {
   },
   setAllDrafts(state, drafts) {
     state.drafts = drafts;
+  },
+  setCurrentStory(state, currentStory) {
+    state.currentStory = currentStory;
+  },
+  setCurrentAuthor(state, currentAuthor) {
+    state.currentAuthor = currentAuthor;
   },
   setUnsubscribeStoryId(state, id) {
     state.unsubscribeStoryId = id;

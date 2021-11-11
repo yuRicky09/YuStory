@@ -19,10 +19,10 @@
           </router-link>
           <div class="story-footer">
             <div class="left-side">
-              <div class="created-time">{{ createdTime }}</div>
+              <div class="created-time">{{ createdTimeSimple }}</div>
               <div class="story-tags">
                 <router-link
-                  :to="{ name: 'Home' }"
+                  :to="{ name: 'Tags', params: { tagName: tag } }"
                   v-for="tag in story.tags"
                   :key="tag"
                 >
@@ -44,17 +44,9 @@
                   @close-option-panel="showPanel = false"
                 ></more-option-panel>
               </div>
+              <bookmark :story="story"></bookmark>
               <font-awesome-icon
-                :icon="['fa', 'bookmark']"
-                @click="removeFromFavorites"
-                v-if="favorited && userId && userId !== story.userId"
-              />
-              <font-awesome-icon
-                :icon="['far', 'bookmark']"
-                @click="addToFavorites"
-                v-if="!favorited && userId && userId !== story.userId"
-              />
-              <font-awesome-icon
+                class="ellipsis-icon"
                 :icon="['fa', 'ellipsis-v']"
                 @click="showPanel = !showPanel"
               />
@@ -76,56 +68,17 @@
 import BaseTag from "@/components/UI/BaseTag.vue";
 import MoreOptionPanel from "@/components/MoreOptionPanel.vue";
 import { timeFormatMixin } from "@/mixins/timeFormatMixin";
-import { mapState } from "vuex";
+import Bookmark from "@/components/UI/Bookmark.vue";
 
 export default {
   name: "StoryIntroRect",
   props: ["story"],
-  components: { BaseTag, MoreOptionPanel },
+  components: { BaseTag, MoreOptionPanel, Bookmark },
   mixins: [timeFormatMixin],
   data() {
     return {
       showPanel: false,
     };
-  },
-  computed: {
-    ...mapState("auth", {
-      userId: (state) => state.userId,
-      favorites: (state) => state.favorites,
-    }),
-    // 判斷此故事id key值，為true則顯示已收藏mark，反之顯示未收藏。
-    favorited() {
-      return this.favorites[`${this.story.id}`] ? true : false;
-    },
-  },
-  methods: {
-    async addToFavorites() {
-      try {
-        await this.$store.dispatch("auth/addToFavorites", this.story.id);
-        this.$notify({
-          text: "已將此故事加入我的收藏",
-          type: "success",
-        });
-      } catch (_) {
-        this.$notify({
-          text: "添加收藏失敗，請再添加一次",
-          type: "error",
-        });
-      }
-    },
-    async removeFromFavorites() {
-      try {
-        await this.$store.dispatch("auth/removeFromFavorites", this.story.id);
-        this.$notify({
-          text: "已將此故事從我的收藏移除",
-        });
-      } catch (_) {
-        this.$notify({
-          text: "移除收藏失敗，請再移除一次",
-          type: "error",
-        });
-      }
-    },
   },
 };
 </script>
@@ -219,15 +172,21 @@ export default {
     .story-footer {
       display: flex;
       justify-content: flex-end;
+      align-items: center;
+      padding-right: 1rem;
 
       @media (min-width: $bp-iphone-ten) {
         justify-content: space-between;
       }
-      align-items: center;
 
       .left-side {
         display: flex;
+        justify-content: flex-end;
         align-items: center;
+
+        @media (min-width: $bp-iphone-ten) {
+          justify-content: flex-start;
+        }
       }
 
       .created-time {
@@ -253,12 +212,10 @@ export default {
 
       .other-action {
         display: none;
-        padding-right: 1rem;
         position: relative;
 
         @media (min-width: $bp-iphone-ten) {
           display: flex;
-          align-items: center;
         }
 
         svg {
@@ -277,7 +234,7 @@ export default {
           position: absolute;
           z-index: 1000;
           transform: translateY(-100%);
-          right: -3rem;
+          right: -3.4rem;
           top: -1rem;
         }
       }

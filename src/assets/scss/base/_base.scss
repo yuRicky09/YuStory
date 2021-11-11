@@ -1,0 +1,43 @@
+html {
+  font-size: 62.5%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  color: inherit;
+  word-break: break-all;
+}
+
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px 15px 10px 25px;
+  border: 2px solid #e2e2e2;
+  border-radius: 3px;
+  font-size: 1.6rem;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border: 2px solid #727171;
+}
+
+::placeholder {
+  font-size: 14px;
+  color: var(--color-bg-gray-1);
+}
+
+img {
+  max-width: 100%;
+}

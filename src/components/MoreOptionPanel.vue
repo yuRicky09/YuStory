@@ -93,7 +93,7 @@ export default {
 <style lang="scss" scoped>
 .more-option {
   position: relative;
-  width: 11rem;
+  width: 10rem;
   background: #fff;
   border-radius: 5px;
   box-shadow: 0 5px 10px var(--color-layout);
@@ -117,8 +117,9 @@ export default {
     a,
     span {
       display: block;
-      padding: 0.8rem 0.5rem;
+      padding: 0.5rem;
       cursor: pointer;
+      font-size: 1.4rem;
 
       @media (min-width: $bp-md) {
         padding: 1.2rem 1rem;

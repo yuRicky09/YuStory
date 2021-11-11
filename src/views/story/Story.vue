@@ -1,24 +1,26 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="currentAuthor && currentStory">
     <main class="left-side">
       <article>
         <story-header
-          v-if="currentAuthor && currentStory"
           :currentAuthor="currentAuthor"
           :story="currentStory"
         ></story-header>
         <div ref="contentStartLine">
-          <story-content
-            v-if="currentStory"
-            :storyHTML="currentStory.HTML"
-          ></story-content>
+          <story-content :storyHTML="currentStory.HTML"></story-content>
         </div>
       </article>
-      <section>這邊會是尾部 點讚 收藏</section>
-      <div>
-        <section>顯示留言</section>
-        <section>留言組件</section>
-      </div>
+      <story-footer></story-footer>
+      <section class="reply">
+        <img class="user-avatar" :src="userProfileImg" alt="user-avatar" />
+        <textarea
+          placeholder="留言"
+          class="reply-input"
+          rows="1"
+          v-model.trim="reply"
+        ></textarea>
+      </section>
+      <reply-editor></reply-editor>
     </main>
     <div class="right-side">
       <aside-user-info
@@ -30,57 +32,42 @@
 </template>
 
 <script>
-import { db } from "@/firebase/config";
+import { mapState } from "vuex";
 import StoryHeader from "@/components/story/StoryHeader.vue";
 import StoryContent from "@/components/story/StoryContent.vue";
+import StoryFooter from "@/components/story/StoryFooter.vue";
 import AsideUserInfo from "@/components/story/AsideUserInfo.vue";
+import ReplyEditor from "@/components/story/ReplyEditor.vue";
 
 export default {
   name: "Story",
   props: ["id"],
-  components: { StoryHeader, StoryContent, AsideUserInfo },
+  components: {
+    StoryHeader,
+    StoryContent,
+    AsideUserInfo,
+    StoryFooter,
+    ReplyEditor,
+  },
   data() {
     return {
       showEditor: false,
       scrollHeight: null,
-      currentStory: null,
-      currentAuthor: null,
+      reply: null,
     };
   },
-  methods: {
-    // 目前覺得當前文章的內容與使用者只會用於此組件與他的子組件，簡單的父傳子並不需要大量共享，所以先存於data有需要再改存vuex
-    async fetchCurrentStory() {
-      try {
-        const res = await db
-          .collection("stories")
-          .doc(this.id)
-          .get();
-
-        const currentStory = res.data();
-        this.currentStory = currentStory;
-        return currentStory.userId;
-      } catch (err) {
-        console.log(err.message);
-        throw new Error(err.message);
-      }
-    },
-    async fetchCurrentAuthor(userId) {
-      try {
-        const res = await db
-          .collection("users")
-          .doc(userId)
-          .get();
-        const user = res.data();
-        this.currentAuthor = user;
-      } catch (err) {
-        console.log(err.message);
-        throw new Error(err.message);
-      }
-    },
+  computed: {
+    ...mapState("story", {
+      currentStory: (state) => state.currentStory,
+      currentAuthor: (state) => state.currentAuthor,
+    }),
+    ...mapState("auth", {
+      userProfileImg: (state) => state.userProfileImg,
+      userName: (state) => state.userName,
+    }),
   },
-  async created() {
-    const userId = await this.fetchCurrentStory();
-    this.fetchCurrentAuthor(userId);
+  created() {
+    this.$store.dispatch("story/getCurrentAuthor", this.id);
   },
   watch: {
     currentStory(newValue) {
@@ -94,7 +81,7 @@ export default {
 .container {
   min-height: 80vh;
   max-width: 103rem;
-  padding: 5rem 1rem;
+  padding: 5rem 2.5rem;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -124,6 +111,33 @@ export default {
     @media (min-width: $bp-lg) {
       display: block;
       flex-basis: 18%;
+    }
+  }
+
+  .reply {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 0;
+
+    @media (min-width: $bp-sm) {
+      padding: 1.5rem 3rem;
+    }
+
+    .user-avatar {
+      display: none;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+
+      @media (min-width: $bp-iphone-ten) {
+        display: inline-block;
+      }
+    }
+    .reply-input {
+      padding: 1rem;
+      resize: none;
     }
   }
 }

@@ -7,5 +7,10 @@ export const timeFormatMixin = {
       moment.locale("zh-cn");
       return moment(timestamp).format("lll");
     },
+    createdTimeSimple() {
+      const timestamp = this.story.createdAt.toDate();
+      moment.locale("zh-cn");
+      return moment(timestamp).format("l");
+    },
   },
 };

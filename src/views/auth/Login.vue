@@ -135,7 +135,6 @@ export default {
 .icon-box {
   align-self: center;
   cursor: pointer;
-  width: 50%;
   margin: auto;
   padding: 1rem 1rem;
   margin: 1.7rem 0;

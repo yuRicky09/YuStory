@@ -170,15 +170,15 @@
             >
           </li>
           <li class="mobile-link">
-            <router-link :to="{ name: 'Favorite' }"
-              ><font-awesome-icon :icon="['fa', 'bookmark']" fixed-width />
-              <span>我的收藏</span></router-link
-            >
-          </li>
-          <li class="mobile-link">
             <router-link :to="{ name: 'Stories' }"
               ><font-awesome-icon :icon="['fa', 'list-ul']" fixed-width />
               <span>所有故事</span></router-link
+            >
+          </li>
+          <li class="mobile-link">
+            <router-link :to="{ name: 'CreateStory' }"
+              ><font-awesome-icon :icon="['fa', 'pencil-alt']" fixed-width />
+              <span>撰寫故事</span></router-link
             >
           </li>
           <li class="mobile-link">
@@ -188,9 +188,9 @@
             >
           </li>
           <li class="mobile-link">
-            <router-link :to="{ name: 'CreateStory' }"
-              ><font-awesome-icon :icon="['fa', 'pencil-alt']" fixed-width />
-              <span>撰寫故事</span></router-link
+            <router-link :to="{ name: 'Favorite' }"
+              ><font-awesome-icon :icon="['fa', 'bookmark']" fixed-width />
+              <span>我的收藏</span></router-link
             >
           </li>
           <li
