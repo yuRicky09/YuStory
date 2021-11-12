@@ -11,16 +11,12 @@
         </div>
       </article>
       <story-footer></story-footer>
-      <section class="reply">
-        <img class="user-avatar" :src="userProfileImg" alt="user-avatar" />
-        <textarea
-          placeholder="留言"
-          class="reply-input"
-          rows="1"
-          v-model.trim="reply"
-        ></textarea>
-      </section>
-      <reply-editor></reply-editor>
+      <reply-list :storyId="currentStory.id"></reply-list>
+      <reply-editor
+        :story="currentStory"
+        :userProfileImg="userProfileImg"
+        :userName="userName"
+      ></reply-editor>
     </main>
     <div class="right-side">
       <aside-user-info
@@ -38,6 +34,7 @@ import StoryContent from "@/components/story/StoryContent.vue";
 import StoryFooter from "@/components/story/StoryFooter.vue";
 import AsideUserInfo from "@/components/story/AsideUserInfo.vue";
 import ReplyEditor from "@/components/story/ReplyEditor.vue";
+import ReplyList from "@/components/story/ReplyList.vue";
 
 export default {
   name: "Story",
@@ -48,13 +45,7 @@ export default {
     AsideUserInfo,
     StoryFooter,
     ReplyEditor,
-  },
-  data() {
-    return {
-      showEditor: false,
-      scrollHeight: null,
-      reply: null,
-    };
+    ReplyList,
   },
   computed: {
     ...mapState("story", {
@@ -111,33 +102,6 @@ export default {
     @media (min-width: $bp-lg) {
       display: block;
       flex-basis: 18%;
-    }
-  }
-
-  .reply {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    padding: 1.5rem 0;
-
-    @media (min-width: $bp-sm) {
-      padding: 1.5rem 3rem;
-    }
-
-    .user-avatar {
-      display: none;
-      width: 4rem;
-      height: 4rem;
-      border-radius: 50%;
-
-      @media (min-width: $bp-iphone-ten) {
-        display: inline-block;
-      }
-    }
-    .reply-input {
-      padding: 1rem;
-      resize: none;
     }
   }
 }

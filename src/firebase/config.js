@@ -19,6 +19,7 @@ const db = firebase.firestore();
 const storage = firebase.storage();
 const auth = firebase.auth();
 const timestamp = firebase.firestore.FieldValue.serverTimestamp;
+const arrayUnion = firebase.firestore.FieldValue.arrayUnion;
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 // 當用戶有多個google帳號時，登入都會訊問要使用的google帳號
@@ -26,4 +27,4 @@ googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 
-export { db, storage, auth, timestamp, googleProvider };
+export { db, storage, auth, timestamp, googleProvider, arrayUnion };

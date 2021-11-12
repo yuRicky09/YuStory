@@ -1,4 +1,4 @@
-import { storage, db, timestamp } from "@/firebase/config";
+import { storage, db, timestamp, arrayUnion } from "@/firebase/config";
 import { nanoid } from "nanoid";
 
 const state = function() {
@@ -9,6 +9,7 @@ const state = function() {
     storyBrief: null,
     storyTags: [],
     storyImg: [],
+    replies: [],
     storyCreatedAt: null,
     isLoading: false,
     topToHeaderDistance: null,
@@ -69,13 +70,15 @@ const actions = {
     try {
       const storageRef = storage.ref();
       // 刪除圖片時觸發的remove callback會給即將刪除的圖片的下載位置， 與所有圖片比對下載位置，相同則於storage刪除此圖片。
-      const { imgUploadPath } = state.storyImg.find((img) => {
+      const matchingImg = state.storyImg.find((img) => {
         return img.imgDownLoadURL === file;
       });
 
-      const imgDeleteRef = storageRef.child(imgUploadPath);
+      // 透過複製而非toolbar上傳的貼圖將不會存於storage，因此會拿不到imgUploadPath，所以要阻擋。
+      if (!matchingImg) return;
+      const imgDeleteRef = storageRef.child(matchingImg.imgUploadPath);
       imgDeleteRef.delete();
-      commit("removeImg", imgUploadPath);
+      commit("removeImg", matchingImg.imgUploadPath);
     } catch (err) {
       throw Error(err.message);
     }
@@ -277,6 +280,29 @@ const actions = {
       throw new Error(err.message);
     }
   },
+  async addReply({ commit, rootState }, { content, storyId }) {
+    try {
+      const reply = {
+        userName: rootState.auth.userName,
+        userProfileImg: rootState.auth.userProfileImg,
+        createdAt: Date.now(),
+        HTML: content,
+        id: nanoid(),
+      };
+
+      console.log(reply);
+      await db
+        .collection("stories")
+        .doc(storyId)
+        .update({
+          replies: arrayUnion(reply),
+        });
+
+      commit("addReply", reply);
+    } catch (err) {
+      console.log(err);
+    }
+  },
   async unsubscribeAll(state) {
     state.unsubscribeDraftId();
     state.unsubscribeStoryId();
@@ -324,6 +350,9 @@ const mutations = {
   },
   setCurrentAuthor(state, currentAuthor) {
     state.currentAuthor = currentAuthor;
+  },
+  addReply(state, reply) {
+    state.replies.push(reply);
   },
   setUnsubscribeStoryId(state, id) {
     state.unsubscribeStoryId = id;
