@@ -14,7 +14,7 @@
     <div class="backdrop" v-if="showPanel" @click="showPanel = false"></div>
     <div class="option-panel-position" v-if="showPanel">
       <more-option-panel
-        :storyUserId="draft.userId"
+        :authorId="draft.userId"
         :storyId="draft.id"
         type="draft"
         @close-option-panel="showPanel = false"

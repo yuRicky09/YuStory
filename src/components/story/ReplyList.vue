@@ -1,47 +1,40 @@
 <template>
-  <section class="reply-wrapper">
-    <h3>Comment</h3>
-    <ul class="reply-list" v-for="reply in replies" :key="reply.id">
-      <li class="reply-item">
-        <img
-          class="user-avatar"
-          :src="reply.userProfileImg"
-          alt="user-avatar"
-        />
-        <div class="reply-info">
-          <span class="reply-name">{{ reply.userName }}</span>
-          <span class="reply-time">{{ createdTime(reply.createdAt) }}</span>
-          <p v-html="reply.HTML"></p>
-        </div>
-      </li>
+  <section class="reply-wrapper" v-if="replies.length > 0">
+    <h4 class="heading">Comment</h4>
+    <ul class="reply-list">
+      <reply-item
+        v-for="reply in replies"
+        :key="reply.id"
+        :reply="reply"
+      ></reply-item>
     </ul>
   </section>
 </template>
 
 <script>
 import { db } from "@/firebase/config";
-import moment from "moment";
+import ReplyItem from "@/components/story/ReplyItem";
 
 export default {
   name: "ReplyList",
   props: ["storyId"],
   data() {
     return {
-      replies: null,
+      replies: [],
       unsubscribeId: null,
+      showPanel: false,
     };
   },
-  methods: {
-    createdTime(timestamp) {
-      moment.locale("zh-cn");
-      return moment(timestamp).format("lll");
-    },
-  },
+  components: { ReplyItem },
   created() {
+    //! 明天將監聽移至上層story， 當story doc有任何更動就執行getCurrentStory來更新 抱持資料是最新的
     const storyRef = db.collection("stories").doc(this.storyId);
-    this.unsubscribeId = storyRef.onSnapshot((story) => {
+    this.unsubscribeId = storyRef.onSnapshot((doc) => {
       const replies = [];
-      story.data().replies.forEach((reply) => replies.push(reply));
+      const story = doc.data();
+
+      if (story.replies === undefined) return;
+      story.replies.forEach((reply) => replies.push(reply));
       this.replies = replies;
     });
   },
@@ -53,46 +46,17 @@ export default {
 
 <style lang="scss" scoped>
 .reply-wrapper {
-  margin-top: 1rem;
+  margin: 1rem 0 2rem;
   background-color: #fafafa;
   font-size: 1.4rem;
 
-  .reply-list {
-    padding: 0.8rem 1rem;
-
-    .reply-item {
-      display: flex;
-      gap: 1rem;
-
-      &:hover {
-        background-color: #f0f0f0;
-      }
-
-      .user-avatar {
-        width: 5rem;
-        height: 5rem;
-        border-radius: 50%;
-      }
-
-      .reply-info {
-        padding: 0 4rem 0 0;
-        flex: 1;
-
-        > span {
-          display: inline-block;
-          margin-right: 0.5rem;
-          font-size: 1.3rem;
-        }
-
-        .reply-name {
-          font-weight: 700;
-        }
-
-        .reply-time {
-          color: var(--color-bg-gray-1);
-        }
-      }
-    }
+  .heading {
+    color: #fff;
+    font-size: 2rem;
+    background-color: var(--color-bg-dark-2);
+    padding: 1rem 2rem;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
   }
 }
 </style>

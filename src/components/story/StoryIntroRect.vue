@@ -38,7 +38,7 @@
               ></div>
               <div class="option-panel-position" v-if="showPanel">
                 <more-option-panel
-                  :storyUserId="story.userId"
+                  :authorId="story.userId"
                   :storyId="story.id"
                   type="story"
                   @close-option-panel="showPanel = false"
@@ -46,7 +46,6 @@
               </div>
               <bookmark :story="story"></bookmark>
               <font-awesome-icon
-                class="ellipsis-icon"
                 :icon="['fa', 'ellipsis-v']"
                 @click="showPanel = !showPanel"
               />

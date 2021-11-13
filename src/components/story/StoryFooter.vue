@@ -13,16 +13,14 @@
       <div class="left-side">
         <font-awesome-icon :icon="['far', 'heart']" />
         <font-awesome-icon :icon="['fa', 'heart']" />
-        <font-awesome-icon :icon="['far', 'comment']" />
+        <a href="#" @click.prevent="moveToReplyEditor">
+          <font-awesome-icon :icon="['far', 'comment']" />
+        </a>
       </div>
       <div class="right-side">
         <bookmark :story="currentStory"></bookmark>
+        <div class="backdrop" v-if="showPanel" @click="showPanel = false"></div>
         <div class="option-panel-position">
-          <div
-            class="backdrop"
-            v-if="showPanel"
-            @click="showPanel = false"
-          ></div>
           <more-option-panel
             v-if="showPanel"
             :storyUserId="currentStory.userId"
@@ -57,6 +55,11 @@ export default {
   computed: {
     currentStory() {
       return this.$store.state.story.currentStory;
+    },
+  },
+  methods: {
+    moveToReplyEditor() {
+      document.querySelector("#reply").scrollIntoView({ behavior: "smooth" });
     },
   },
 };

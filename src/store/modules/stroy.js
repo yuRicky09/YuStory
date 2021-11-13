@@ -263,26 +263,10 @@ const actions = {
       throw new Error(err.message);
     }
   },
-  async deleteStory(_, { type, storyId }) {
-    try {
-      if (type === "story") {
-        await db
-          .collection("stories")
-          .doc(storyId)
-          .delete();
-      } else if (type === "draft") {
-        await db
-          .collection("drafts")
-          .doc(storyId)
-          .delete();
-      }
-    } catch (err) {
-      throw new Error(err.message);
-    }
-  },
   async addReply({ commit, rootState }, { content, storyId }) {
     try {
       const reply = {
+        userId: rootState.auth.userId,
         userName: rootState.auth.userName,
         userProfileImg: rootState.auth.userProfileImg,
         createdAt: Date.now(),
@@ -290,7 +274,6 @@ const actions = {
         id: nanoid(),
       };
 
-      console.log(reply);
       await db
         .collection("stories")
         .doc(storyId)
@@ -350,6 +333,9 @@ const mutations = {
   },
   setCurrentAuthor(state, currentAuthor) {
     state.currentAuthor = currentAuthor;
+  },
+  clearCurrentStory(state) {
+    state.currentStory = null;
   },
   addReply(state, reply) {
     state.replies.push(reply);

@@ -1,6 +1,6 @@
 <template>
-  <div class="container" v-if="currentAuthor && currentStory">
-    <main class="left-side">
+  <div class="container">
+    <main class="left-side" v-if="currentAuthor && currentStory">
       <article>
         <story-header
           :currentAuthor="currentAuthor"
@@ -11,14 +11,14 @@
         </div>
       </article>
       <story-footer></story-footer>
-      <reply-list :storyId="currentStory.id"></reply-list>
+      <reply-list :storyId="id"></reply-list>
       <reply-editor
         :story="currentStory"
         :userProfileImg="userProfileImg"
         :userName="userName"
       ></reply-editor>
     </main>
-    <div class="right-side">
+    <div class="right-side" v-if="currentAuthor && currentStory">
       <aside-user-info
         v-if="currentAuthor"
         :currentAuthor="currentAuthor"
@@ -58,7 +58,11 @@ export default {
     }),
   },
   created() {
+    // 於vuex中dispatch getCurrentAuthor時會同時dispatch getCurrentStory
     this.$store.dispatch("story/getCurrentAuthor", this.id);
+  },
+  beforeDestroy() {
+    this.$store.commit("story/clearCurrentStory");
   },
   watch: {
     currentStory(newValue) {

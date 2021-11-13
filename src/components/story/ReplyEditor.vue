@@ -1,5 +1,5 @@
 <template>
-  <div class="reply">
+  <div class="reply" id="reply" ref="reply">
     <div class="reply-header">
       <img
         :src="userProfileImg"
@@ -19,6 +19,11 @@
     <div class="reply-action">
       <button @click="reply">留言</button>
     </div>
+    <base-modal message="留言不能為空" :show="show" @close-modal="show = false">
+      <template #action>
+        <button @click="show = false">確定</button>
+      </template>
+    </base-modal>
   </div>
 </template>
 
@@ -38,6 +43,7 @@ export default {
         ["clean"],
       ],
       tooltips: ["粗體", "斜線", "清除格式"],
+      show: false,
     };
   },
   methods: {
@@ -55,6 +61,11 @@ export default {
       });
     },
     reply() {
+      if (!this.content) {
+        this.show = true;
+        return;
+      }
+
       this.$store.dispatch("story/addReply", {
         content: this.content,
         storyId: this.story.id,
@@ -72,6 +83,7 @@ export default {
 <style lang="scss" scoped>
 .reply {
   padding: 2rem;
+  scroll-behavior: smooth;
 
   .reply-header {
     display: flex;
