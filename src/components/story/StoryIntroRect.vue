@@ -19,7 +19,9 @@
           </router-link>
           <div class="story-footer">
             <div class="left-side">
-              <div class="created-time">{{ createdTimeSimple }}</div>
+              <div class="created-time">
+                {{ createdTimeSimple(story.createdAt.toDate()) }}
+              </div>
               <div class="story-tags">
                 <router-link
                   :to="{ name: 'Tags', params: { tagName: tag } }"

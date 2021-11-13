@@ -12,7 +12,7 @@
           <p>{{ currentAuthor.name }}</p>
         </div>
         <div class="created-time">
-          <span>{{ createdTime }}</span>
+          <span>{{ createdTime(story.createdAt.toDate()) }}</span>
         </div>
       </div>
     </div>

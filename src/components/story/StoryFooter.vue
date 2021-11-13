@@ -23,7 +23,7 @@
         <div class="option-panel-position">
           <more-option-panel
             v-if="showPanel"
-            :storyUserId="currentStory.userId"
+            :authorId="currentStory.userId"
             :storyId="currentStory.id"
             type="story"
             @close-option-panel="showPanel = false"

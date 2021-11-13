@@ -48,6 +48,8 @@ const actions = {
           email: registerData.userEmail,
           password: registerData.userPassword,
           favorites: {},
+          userProfileImg:
+            "https://firebasestorage.googleapis.com/v0/b/yu-story.appspot.com/o/other%2Fdefault-avatar.png?alt=media&token=691d4033-bd6a-4620-925f-4769ce4d89bb",
         });
 
       commit("changeLoadingState", false);

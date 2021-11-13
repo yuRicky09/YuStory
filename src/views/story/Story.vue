@@ -11,12 +11,8 @@
         </div>
       </article>
       <story-footer></story-footer>
-      <reply-list :storyId="id"></reply-list>
-      <reply-editor
-        :story="currentStory"
-        :userProfileImg="userProfileImg"
-        :userName="userName"
-      ></reply-editor>
+      <reply-list :story="currentStory"></reply-list>
+      <reply-editor></reply-editor>
     </main>
     <div class="right-side" v-if="currentAuthor && currentStory">
       <aside-user-info
@@ -28,6 +24,7 @@
 </template>
 
 <script>
+import { db } from "@/firebase/config";
 import { mapState } from "vuex";
 import StoryHeader from "@/components/story/StoryHeader.vue";
 import StoryContent from "@/components/story/StoryContent.vue";
@@ -47,22 +44,31 @@ export default {
     ReplyEditor,
     ReplyList,
   },
+  data() {
+    return {
+      unsubscribeCurrenyStoryId: null,
+    };
+  },
   computed: {
     ...mapState("story", {
       currentStory: (state) => state.currentStory,
       currentAuthor: (state) => state.currentAuthor,
     }),
-    ...mapState("auth", {
-      userProfileImg: (state) => state.userProfileImg,
-      userName: (state) => state.userName,
-    }),
   },
-  created() {
+  async created() {
     // 於vuex中dispatch getCurrentAuthor時會同時dispatch getCurrentStory
-    this.$store.dispatch("story/getCurrentAuthor", this.id);
+    await this.$store.dispatch("story/getCurrentAuthor", this.id);
+
+    // 在獲取完currentAuthor與currentStory後，同時監聽currentStory同步每次的更新
+    const storyRef = db.collection("stories").doc(this.id);
+    this.unsubscribeCurrenyStoryId = storyRef.onSnapshot((doc) => {
+      const story = { ...doc.data(), id: doc.id };
+      this.$store.commit("story/setCurrentStory", story);
+    });
   },
   beforeDestroy() {
     this.$store.commit("story/clearCurrentStory");
+    this.unsubscribeCurrenyStoryId();
   },
   watch: {
     currentStory(newValue) {

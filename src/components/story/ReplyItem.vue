@@ -12,6 +12,7 @@
         v-if="showPanel"
         :replyId="reply.id"
         :replyUserId="reply.userId"
+        :authorId="authorId"
         type="reply"
         @close-option-panel="showPanel = false"
       ></more-option-panel>
@@ -25,23 +26,18 @@
 </template>
 
 <script>
-import moment from "moment";
 import MoreOptionPanel from "@/components/MoreOptionPanel.vue";
+import { timeFormatMixin } from "@/mixins/timeFormatMixin";
 
 export default {
   name: "ReplyItem",
-  props: ["reply"],
+  props: ["reply", "authorId"],
+  mixins: [timeFormatMixin],
   components: { MoreOptionPanel },
   data() {
     return {
       showPanel: false,
     };
-  },
-  methods: {
-    createdTime(timestamp) {
-      moment.locale("zh-cn");
-      return moment(timestamp).format("lll");
-    },
   },
 };
 </script>

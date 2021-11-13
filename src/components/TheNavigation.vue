@@ -27,15 +27,9 @@
               class="user-avatar"
               @click="userCenterIsOpen = !userCenterIsOpen"
             >
-              <font-awesome-icon
-                :icon="['fa', 'user-circle']"
-                size="2x"
-                class="user-icon"
-                v-if="!userProfileImg"
-              />
               <img
                 class="user-avatar-img"
-                v-else
+                v-if="userProfileImg"
                 :src="userProfileImg"
                 alt="user-avatar"
               />
@@ -44,14 +38,9 @@
               <div class="user-center" v-show="userCenterIsOpen" @click.stop="">
                 <div class="user-center-header">
                   <div>
-                    <font-awesome-icon
-                      :icon="['fa', 'user-circle']"
-                      size="3x"
-                      v-if="!userProfileImg"
-                    ></font-awesome-icon>
                     <img
                       class="user-avatar-img-big"
-                      v-else
+                      v-if="userProfileImg"
                       :src="userProfileImg"
                       alt="user-avatar"
                     />
@@ -134,14 +123,9 @@
         <ul class="mobile-menu" v-show="menuIsOpen" @click="closeMenu($event)">
           <div class="mobile-menu-header">
             <div>
-              <font-awesome-icon
-                :icon="['fa', 'user-circle']"
-                size="3x"
-                v-if="!userProfileImg"
-              ></font-awesome-icon>
               <img
                 class="mobile-user-avatar"
-                v-else
+                v-if="userProfileImg"
                 :src="userProfileImg"
                 alt="user-avatar"
               />

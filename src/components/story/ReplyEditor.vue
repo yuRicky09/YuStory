@@ -29,11 +29,11 @@
 
 <script>
 import { VueEditor } from "vue2-editor";
+import { mapState } from "vuex";
 
 export default {
   name: "ReplayEditor",
   components: { VueEditor },
-  props: ["story", "userProfileImg", "userName"],
   data() {
     return {
       content: "",
@@ -45,6 +45,12 @@ export default {
       tooltips: ["粗體", "斜線", "清除格式"],
       show: false,
     };
+  },
+  computed: {
+    ...mapState("auth", {
+      userProfileImg: (state) => state.userProfileImg,
+      userName: (state) => state.userName,
+    }),
   },
   methods: {
     editorInit() {
@@ -66,10 +72,7 @@ export default {
         return;
       }
 
-      this.$store.dispatch("story/addReply", {
-        content: this.content,
-        storyId: this.story.id,
-      });
+      this.$store.dispatch("story/addReply", this.content);
 
       this.content = "";
     },

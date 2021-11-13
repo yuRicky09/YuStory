@@ -1,14 +1,12 @@
 import moment from "moment";
 
 export const timeFormatMixin = {
-  computed: {
-    createdTime() {
-      const timestamp = this.story.createdAt.toDate();
+  methods: {
+    createdTime(timestamp) {
       moment.locale("zh-cn");
       return moment(timestamp).format("lll");
     },
-    createdTimeSimple() {
-      const timestamp = this.story.createdAt.toDate();
+    createdTimeSimple(timestamp) {
       moment.locale("zh-cn");
       return moment(timestamp).format("l");
     },

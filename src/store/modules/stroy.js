@@ -17,8 +17,8 @@ const state = function() {
     drafts: [],
     currentStory: null,
     currentAuthor: null,
-    unsubscribeStoryId: null,
-    unsubscribeDraftId: null,
+    unsubscribeStoriesId: null,
+    unsubscribeDraftsId: null,
   };
 };
 
@@ -197,7 +197,7 @@ const actions = {
       commit("changeLoadingState", true);
 
       const storiesRef = db.collection("stories").orderBy("createdAt", "desc");
-      const unsubscribeStoryId = storiesRef.onSnapshot((snap) => {
+      const unsubscribeStoriesId = storiesRef.onSnapshot((snap) => {
         const stories = [];
         snap.docs.forEach((doc) => {
           const story = { ...doc.data(), id: doc.id };
@@ -206,7 +206,7 @@ const actions = {
         commit("setAllStories", stories);
       });
 
-      commit("setUnsubscribeStoryId", unsubscribeStoryId);
+      commit("setUnsubscribeStoriesId", unsubscribeStoriesId);
       commit("changeLoadingState", false);
     } catch (err) {
       console.log(err);
@@ -218,7 +218,7 @@ const actions = {
       .where("userId", "==", userId)
       .orderBy("createdAt", "desc");
 
-    const unsubscribeDraftId = draftsRef.onSnapshot((snap) => {
+    const unsubscribeDraftsId = draftsRef.onSnapshot((snap) => {
       const drafts = [];
       snap.docs.forEach((doc) => {
         const draft = { ...doc.data(), id: doc.id };
@@ -226,7 +226,7 @@ const actions = {
       });
       commit("setAllDrafts", drafts);
     });
-    commit("setUnsubscribeDraftId", unsubscribeDraftId);
+    commit("setUnsubscribeDraftsId", unsubscribeDraftsId);
   },
   async getCurrentStory({ commit }, storyId) {
     try {
@@ -263,7 +263,7 @@ const actions = {
       throw new Error(err.message);
     }
   },
-  async addReply({ commit, rootState }, { content, storyId }) {
+  async addReply({ commit, state, rootState }, content) {
     try {
       const reply = {
         userId: rootState.auth.userId,
@@ -273,10 +273,11 @@ const actions = {
         HTML: content,
         id: nanoid(),
       };
+      console.log(reply);
 
       await db
         .collection("stories")
-        .doc(storyId)
+        .doc(state.currentStory.id)
         .update({
           replies: arrayUnion(reply),
         });
@@ -287,8 +288,8 @@ const actions = {
     }
   },
   async unsubscribeAll(state) {
-    state.unsubscribeDraftId();
-    state.unsubscribeStoryId();
+    state.unsubscribeDraftsId();
+    state.unsubscribeStoriesId();
   },
 };
 
@@ -340,11 +341,11 @@ const mutations = {
   addReply(state, reply) {
     state.replies.push(reply);
   },
-  setUnsubscribeStoryId(state, id) {
-    state.unsubscribeStoryId = id;
+  setUnsubscribeStoriesId(state, id) {
+    state.unsubscribeStoriesId = id;
   },
-  setUnsubscribeDraftId(state, id) {
-    state.unsubscribeDraftId = id;
+  setUnsubscribeDraftsId(state, id) {
+    state.unsubscribeDraftsId = id;
   },
 };
 

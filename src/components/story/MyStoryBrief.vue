@@ -5,7 +5,7 @@
         <h5>{{ story.title }}</h5>
         <p class="one-line">{{ story.brief }}</p>
       </router-link>
-      <span>發佈: {{ createdTime }}</span>
+      <span>發佈: {{ createdTime(story.createdAt.toDate()) }}</span>
     </div>
     <font-awesome-icon
       :icon="['fa', 'ellipsis-v']"

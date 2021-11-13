@@ -23,6 +23,7 @@
         <span>刪除草稿</span>
       </li>
     </template>
+    <!-- 作者可任意刪除自己文章下的任意留言， 回文者只能刪除自己的回文 -->
     <template v-if="type === 'reply'">
       <li
         v-if="userId === authorId || userId === replyUserId"
@@ -110,12 +111,7 @@ export default {
         this.panelInvisible = true;
 
         const updatedReplies = this.replies.filter(
-          // (reply) => reply.id !== this.replyId
-          (reply) => {
-            console.log(reply, reply.id);
-            console.log(this.replyId);
-            return reply.id !== this.replyId;
-          }
+          (reply) => reply.id !== this.replyId
         );
         const storyRef = db.collection("stories").doc(this.currentStory.id);
         await storyRef.update({
