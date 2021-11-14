@@ -157,6 +157,16 @@ const routes = [
     props: true,
   },
   {
+    path: "/search/:type/:search",
+    name: "Search",
+    component: () => import("@/views/story/Search.vue"),
+    meta: {
+      title: "搜尋 | YUSTORY",
+      requireAuth: false,
+    },
+    props: true,
+  },
+  {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: () => import("@/views/NotFound.vue"),

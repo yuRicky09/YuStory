@@ -31,7 +31,9 @@
         </ul>
       </div>
       <div class="setting-content">
-        <router-view></router-view>
+        <transition name="show-up" mode="out-in">
+          <router-view></router-view>
+        </transition>
       </div>
     </div>
   </div>

@@ -107,9 +107,9 @@ export default {
   // 為了保存未更新前的資料，選擇先fetch此用戶在db的name與bio資料，再賦值給date中雙向綁定的userName與userBio屬性。
   // 當用戶按下保存後才再度更新db與vuex，之後用戶的資料都透過vuex存取。
   async created() {
-    this.isLoading = true;
+    // this.isLoading = true;
     await this.getUserNameAndBio();
-    this.isLoading = false;
+    // this.isLoading = false;
   },
 };
 </script>

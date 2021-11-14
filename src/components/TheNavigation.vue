@@ -10,6 +10,7 @@
           />
         </router-link>
       </h1>
+      <search-bar></search-bar>
       <nav>
         <ul class="menu">
           <li>
@@ -212,6 +213,7 @@
 
 <script>
 import { mapState } from "vuex";
+import SearchBar from "@/components/SearchBar.vue";
 
 export default {
   name: "TheNavigation",
@@ -223,6 +225,7 @@ export default {
       sticky: false,
     };
   },
+  components: { SearchBar },
   computed: {
     ...mapState("auth", {
       currentUser: (state) => state.currentUser,

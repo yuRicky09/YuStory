@@ -5,3 +5,11 @@
 .zoom-in-leave-active {
   animation: zoom-in 0.3s ease-out reverse;
 }
+
+.show-up-enter-active {
+  animation: show-up 0.3s ease-out;
+}
+
+.show-up-leave-active {
+  animation: show-up 0.2s ease-out reverse;
+}
