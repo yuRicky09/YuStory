@@ -1,5 +1,8 @@
 <template>
-  <section class="reply-wrapper" v-if="story.replies.length > 0">
+  <section
+    class="reply-wrapper"
+    v-if="story.replies && story.replies.length > 0"
+  >
     <h4 class="heading">Comment</h4>
     <ul class="reply-list">
       <reply-item

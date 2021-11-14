@@ -33,7 +33,7 @@
                 :src="userProfileImg"
                 alt="user-avatar"
               />
-              <span v-if="!userProfileImg">{{ userName }}</span>
+              <span>{{ userName }}</span>
               <!-- user center interface -->
               <div class="user-center" v-show="userCenterIsOpen" @click.stop="">
                 <div class="user-center-header">

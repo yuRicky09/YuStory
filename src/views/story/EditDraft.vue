@@ -115,7 +115,8 @@ export default {
       .doc(this.draftId)
       .get();
 
-    // img為一陣列類型資料，每筆資料為一obj，內存對應圖片的上傳、下載位置之URL。
+    this.$store.commit("story/updateStoryImg", img);
+
     const { HTML, img, tags, title } = res.data();
     const imgURLArr = [];
     img.forEach((i) => {

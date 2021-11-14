@@ -62,8 +62,13 @@ export default {
     // 在獲取完currentAuthor與currentStory後，同時監聽currentStory同步每次的更新
     const storyRef = db.collection("stories").doc(this.id);
     this.unsubscribeCurrenyStoryId = storyRef.onSnapshot((doc) => {
-      const story = { ...doc.data(), id: doc.id };
-      this.$store.commit("story/setCurrentStory", story);
+      // 如果doc被刪除也要清空currentStory的值，防止在跳轉路徑前組件內用到computed讀取currentStory此空值的未存在屬性而報錯。
+      if (!doc.data()) {
+        this.$store.commit("story/clearCurrentStory");
+      } else {
+        const story = { ...doc.data(), id: doc.id };
+        this.$store.commit("story/setCurrentStory", story);
+      }
     });
   },
   beforeDestroy() {
@@ -72,7 +77,9 @@ export default {
   },
   watch: {
     currentStory(newValue) {
-      document.title = newValue.title;
+      if (newValue) {
+        document.title = newValue.title;
+      }
     },
   },
 };
@@ -80,7 +87,7 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  min-height: 80vh;
+  // min-height: 80vh;
   max-width: 103rem;
   padding: 5rem 2.5rem;
   margin: auto;

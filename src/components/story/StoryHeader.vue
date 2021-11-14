@@ -1,5 +1,5 @@
 <template>
-  <section class="story-header" ref="storyHeader">
+  <section class="story-header" ref="storyHeader" v-if="story">
     <div>
       <h2 class="story-title">{{ story.title }}</h2>
       <div class="title-content">

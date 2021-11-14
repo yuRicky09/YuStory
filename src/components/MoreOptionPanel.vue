@@ -80,13 +80,10 @@ export default {
     currentStory() {
       return this.$store.state.story.currentStory;
     },
-    replies() {
-      return this.currentStory.replies;
-    },
   },
   methods: {
     async deleteStory() {
-      // 因有監聽realtime update，所以刪除後的變動會被監聽的callback執行，不用透過vuex存取任何變動。
+      // 因有監聽realtime update，所以刪除後的變動會被監聽的callback執行，這邊不用再透過vuex存取任何變動。
       try {
         if (this.type === "story") {
           await db
@@ -99,9 +96,16 @@ export default {
             .doc(this.storyId)
             .delete();
         }
-        this.$emit("close-option-panel");
-        this.successfullyDeleted();
-      } catch (_) {
+
+        // 在story頁面刪除文章的話，跳轉到所有文章頁面
+        if (this.$route.name === "Story") {
+          this.$router.replace({ name: "Stories" });
+        } else {
+          this.$emit("close-option-panel");
+          this.successfullyDeleted();
+        }
+      } catch (err) {
+        console.log(err.message);
         this.$emit("close-option-panel");
         this.failedToDelete();
       }
@@ -110,7 +114,7 @@ export default {
       try {
         this.panelInvisible = true;
 
-        const updatedReplies = this.replies.filter(
+        const updatedReplies = this.currentStory.replies.filter(
           (reply) => reply.id !== this.replyId
         );
         const storyRef = db.collection("stories").doc(this.currentStory.id);

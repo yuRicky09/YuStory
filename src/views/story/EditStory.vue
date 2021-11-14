@@ -120,6 +120,7 @@ export default {
       // 先將img資料存到vuex(防止原先圖檔資訊遺失)，如果用戶又添加新圖片時就會再觸發編輯器的callback將新圖資訊存於storage並同步更新vuex。當用戶按下更新文章時，再藉由vuex裡的最新img資訊上傳到db。
       this.$store.commit("story/updateStoryImg", img);
 
+      // img為一陣列類型資料，每筆資料為一obj，內存對應圖片的上傳、下載位置之URL。
       const imgURLArr = [];
       img.forEach((i) => {
         imgURLArr.push(i.imgDownLoadURL);

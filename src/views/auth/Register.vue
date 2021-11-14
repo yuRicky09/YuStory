@@ -134,7 +134,11 @@ export default {
           this.$router.replace({ name: "Home" });
         }, 2000);
       } catch (err) {
-        this.errorMsg = err.message;
+        if (
+          err.message ===
+          "The email address is already in use by another account."
+        )
+          this.errorMsg = "此信箱已註冊過帳號，請使用其他信箱";
       }
     },
     closeModal() {

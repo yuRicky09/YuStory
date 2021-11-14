@@ -32,7 +32,7 @@
                 </router-link>
               </div>
             </div>
-            <div class="other-action">
+            <div class="other-action" v-if="currentUser">
               <div
                 class="backdrop"
                 v-if="showPanel"
@@ -80,6 +80,11 @@ export default {
     return {
       showPanel: false,
     };
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.currentUser;
+    },
   },
 };
 </script>

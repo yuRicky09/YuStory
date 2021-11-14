@@ -1,16 +1,25 @@
 import { storage, db, timestamp, arrayUnion } from "@/firebase/config";
 import { nanoid } from "nanoid";
 
+// 亂數排列 原理:從array最後一個元素開始，與他前面的任一位置的元素對換，下一輪則從倒數第二個位置開始，依此類推。
+const shuffle = function(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+
+  return array;
+};
 const state = function() {
   return {
-    storyCover: null,
-    storyTitle: null,
-    storyHTML: null,
-    storyBrief: null,
-    storyTags: [],
+    // storyCover: null,
+    // storyTitle: null,
+    // storyHTML: null,
+    // storyBrief: null,
+    // storyCreatedAt: null,
+    // storyTags: [],
+    //將圖片的增刪緩存於storyImg陣列，當按下備份or發佈後再上傳到db與storage。
     storyImg: [],
-    replies: [],
-    storyCreatedAt: null,
     isLoading: false,
     topToHeaderDistance: null,
     stories: [],
@@ -42,7 +51,7 @@ const getters = {
     state.stories.forEach((story) => allTags.push(story.tags));
     // 去重複值
     allTags = new Set(allTags.flat());
-    return Array.from(allTags).slice(0, 20);
+    return shuffle(Array.from(allTags).slice(0, 20));
   },
 };
 
@@ -55,7 +64,10 @@ const actions = {
       const storageRef = storage.ref();
       const imgUploadPath = `story/${rootState.auth.userId}/img/${nanoid()}`;
       const imgUploadRef = storageRef.child(imgUploadPath);
+
+      commit("changeLoadingState", true);
       await imgUploadRef.put(file);
+      commit("changeLoadingState", false);
       const imgDownLoadURL = await imgUploadRef.getDownloadURL();
       Editor.insertEmbed(cursorLocation, "image", imgDownLoadURL);
       resetUploader();
@@ -109,14 +121,14 @@ const actions = {
         createdAt,
       });
 
-      commit("setPublishStory", {
-        storyTitle,
-        storyHTML,
-        storyTags,
-        storyBrief,
-        storyCover,
-        createdAt,
-      });
+      // commit("setPublishStory", {
+      //   storyTitle,
+      //   storyHTML,
+      //   storyTags,
+      //   storyBrief,
+      //   storyCover,
+      //   createdAt,
+      // });
       commit("changeLoadingState", false);
       return docRef.id;
     } catch (err) {
@@ -263,7 +275,7 @@ const actions = {
       throw new Error(err.message);
     }
   },
-  async addReply({ commit, state, rootState }, content) {
+  async addReply({ state, rootState }, content) {
     try {
       const reply = {
         userId: rootState.auth.userId,
@@ -281,8 +293,6 @@ const actions = {
         .update({
           replies: arrayUnion(reply),
         });
-
-      commit("addReply", reply);
     } catch (err) {
       console.log(err);
     }
@@ -309,17 +319,17 @@ const mutations = {
     });
   },
   //! 備份的話應該是需要在本地也存比較好，發佈的時候要不要存在思考看看，這邊先暫且本地也存起來。
-  setPublishStory(
-    state,
-    { storyTitle, storyHTML, storyTags, storyBrief, storyCover, createdAt }
-  ) {
-    state.storyTitle = storyTitle;
-    state.storyHTML = storyHTML;
-    state.storyTags = storyTags;
-    state.storyBreif = storyBrief;
-    state.storyCover = storyCover;
-    state.storyCreatedAt = createdAt;
-  },
+  // setPublishStory(
+  //   state,
+  //   { storyTitle, storyHTML, storyTags, storyBrief, storyCover, createdAt }
+  // ) {
+  //   state.storyTitle = storyTitle;
+  //   state.storyHTML = storyHTML;
+  //   state.storyTags = storyTags;
+  //   state.storyBreif = storyBrief;
+  //   state.storyCover = storyCover;
+  //   state.storyCreatedAt = createdAt;
+  // },
   setTopToHeaderDistance(state, topToHeaderDistance) {
     state.topToHeaderDistance = topToHeaderDistance;
   },
@@ -337,9 +347,6 @@ const mutations = {
   },
   clearCurrentStory(state) {
     state.currentStory = null;
-  },
-  addReply(state, reply) {
-    state.replies.push(reply);
   },
   setUnsubscribeStoriesId(state, id) {
     state.unsubscribeStoriesId = id;

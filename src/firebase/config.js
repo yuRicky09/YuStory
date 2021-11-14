@@ -5,12 +5,12 @@ import "firebase/auth";
 
 const firebaseConfig = {
   apiKey: `${process.env.VUE_APP_FIREBASE}`,
-  authDomain: "yu-story.firebaseapp.com",
-  projectId: "yu-story",
-  storageBucket: "yu-story.appspot.com",
-  messagingSenderId: "362985153097",
-  appId: "1:362985153097:web:68d3fe72a5603f2437d598",
-  measurementId: "G-2PCR4WS2PF",
+  authDomain: "yustory-ded59.firebaseapp.com",
+  projectId: "yustory-ded59",
+  storageBucket: "yustory-ded59.appspot.com",
+  messagingSenderId: "346858590",
+  appId: "1:346858590:web:4f8c56de4ee9275b5a00cf",
+  measurementId: "G-F4TB93GX9Y",
 };
 
 firebase.initializeApp(firebaseConfig);

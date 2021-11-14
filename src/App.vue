@@ -1,7 +1,9 @@
 <template>
   <div>
     <the-navigation></the-navigation>
-    <router-view></router-view>
+    <div class="main-content">
+      <router-view></router-view>
+    </div>
     <the-footer></the-footer>
     <portal-target name="modal-destination" multiple></portal-target>
     <notifications classes="my-notification" />
@@ -48,6 +50,10 @@ export default {
 </script>
 
 <style lang="scss">
+.main-content {
+  min-height: 80vh;
+}
+
 .vue-notification-template.my-notification {
   margin: 20px 5px;
   padding: 22px 24px;

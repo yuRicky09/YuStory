@@ -9,7 +9,7 @@
         <base-tag :tagName="tag" :rect="true"></base-tag>
       </router-link>
     </div>
-    <div class="other-action">
+    <div class="other-action" v-if="currentUser">
       <div class="left-side">
         <font-awesome-icon :icon="['far', 'heart']" />
         <font-awesome-icon :icon="['fa', 'heart']" />
@@ -55,6 +55,9 @@ export default {
   computed: {
     currentStory() {
       return this.$store.state.story.currentStory;
+    },
+    currentUser() {
+      return this.$store.state.auth.currentUser;
     },
   },
   methods: {

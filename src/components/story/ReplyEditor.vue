@@ -1,5 +1,5 @@
 <template>
-  <div class="reply" id="reply" ref="reply">
+  <div class="reply" id="reply" ref="reply" v-if="currentUser">
     <div class="reply-header">
       <img
         :src="userProfileImg"
@@ -50,6 +50,7 @@ export default {
     ...mapState("auth", {
       userProfileImg: (state) => state.userProfileImg,
       userName: (state) => state.userName,
+      currentUser: (state) => state.currentUser,
     }),
   },
   methods: {
@@ -78,7 +79,7 @@ export default {
     },
   },
   mounted() {
-    this.editorInit();
+    if (this.currentUser) this.editorInit();
   },
 };
 </script>

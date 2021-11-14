@@ -185,7 +185,7 @@ router.beforeEach((to, _, next) => {
   if (!to.meta.requireAuth && to.meta.requireAuth !== undefined) {
     next();
   } else if (to.meta.requireLogin) {
-    user ? next() : next({ name: "Home" });
+    user ? next() : next({ name: "Login" });
   } else if (!to.meta.requireLogin) {
     user ? next({ name: "Home" }) : next();
   }
