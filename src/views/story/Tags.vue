@@ -2,6 +2,7 @@
   <div class="stories-container">
     <div class="stories-header">
       <h2><font-awesome-icon :icon="['fa', 'tags']" />Tag: {{ tagName }}</h2>
+      <p class="matching-result">共有 {{ matchingStories.length }} 畢相關</p>
     </div>
     <div class="stories-body">
       <main class="left-side">
@@ -12,6 +13,7 @@
             :key="story.id"
           ></story-intro-rect>
         </div>
+        <div></div>
       </main>
       <aside class="right-side">
         <div class="recently-stories">
@@ -92,3 +94,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.matching-result {
+  margin: 1rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.6rem;
+  }
+}
+</style>

@@ -81,7 +81,7 @@
             </ValidationProvider>
             <div v-if="errorMsg" class="error-msg">{{ errorMsg }}</div>
             <div class="action">
-              <button>註冊</button>
+              <button class="btn">註冊</button>
             </div>
           </form>
         </ValidationObserver>

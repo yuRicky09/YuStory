@@ -17,11 +17,11 @@
       ref="editor"
     ></vue-editor>
     <div class="reply-action">
-      <button @click="reply">留言</button>
+      <button class="btn" @click="reply">留言</button>
     </div>
     <base-modal message="留言不能為空" :show="show" @close-modal="show = false">
       <template #action>
-        <button @click="show = false">確定</button>
+        <button class="btn" @click="show = false">確定</button>
       </template>
     </base-modal>
   </div>

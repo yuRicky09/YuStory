@@ -13,7 +13,7 @@
         <p>{{ userEmail }}</p>
       </div>
       <div class="action">
-        <router-link class="button" :to="{ name: 'EditAccount' }"
+        <router-link class="btn" :to="{ name: 'EditAccount' }"
           >編輯</router-link
         >
       </div>
@@ -26,9 +26,7 @@
     <div class="stories">
       <div class="header">
         <h4>近期故事</h4>
-        <router-link :to="{ name: 'MyStories' }" class="button"
-          >更多</router-link
-        >
+        <router-link :to="{ name: 'MyStories' }" class="btn">更多</router-link>
       </div>
       <select-story-tab
         @select-story="changeToStory"

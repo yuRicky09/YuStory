@@ -56,7 +56,7 @@
             </ValidationProvider>
             <div v-if="errorMsg" class="error-msg">{{ errorMsg }}</div>
             <div class="action">
-              <button>登入</button>
+              <button class="btn">登入</button>
             </div>
             <router-link class="forgot-link" :to="{ name: 'ForgotPassword' }"
               ><span>忘記密碼?</span></router-link

@@ -32,7 +32,7 @@
               ></textarea>
             </div>
             <div class="action">
-              <button :class="{ block: btndisabled }">保存</button>
+              <button class="btn" :class="{ block: btndisabled }">保存</button>
             </div>
           </form>
         </ValidationObserver>
@@ -45,7 +45,7 @@
       @close-modal="closeModal"
     >
       <template #action>
-        <button @click="closeModal">確定</button>
+        <button class="btn" @click="closeModal">確定</button>
       </template>
     </base-modal>
   </div>

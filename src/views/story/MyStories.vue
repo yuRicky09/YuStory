@@ -2,7 +2,7 @@
   <div class="container">
     <div class="my-story-header">
       <h2>My Stories</h2>
-      <router-link :to="{ name: 'CreateStory' }" class="button"
+      <router-link :to="{ name: 'CreateStory' }" class="btn"
         >撰寫故事</router-link
       >
     </div>

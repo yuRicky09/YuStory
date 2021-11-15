@@ -25,7 +25,7 @@
             </ValidationProvider>
             <div v-if="errorMsg" class="error-msg">{{ errorMsg }}</div>
             <div class="action">
-              <button>重置密碼</button>
+              <button class="btn">重置密碼</button>
             </div>
           </form>
         </ValidationObserver>
@@ -38,7 +38,7 @@
       @close-modal="closeModal"
     >
       <template #action>
-        <button @click="closeModal">確定</button>
+        <button class="btn" @click="closeModal">確定</button>
       </template>
     </base-modal>
   </div>

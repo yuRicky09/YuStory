@@ -61,17 +61,17 @@
         </ul>
       </div>
       <div class="story-action">
-        <button class="ghost" @click="saveDraft">
+        <button class="btn ghost" @click="saveDraft">
           <font-awesome-icon :icon="['fa', 'save']" class="action-icon" /><span
             >備份</span
           >
         </button>
-        <button class="ghost" @click="showPreview = true">
+        <button class="btn ghost" @click="showPreview = true">
           <font-awesome-icon :icon="['fa', 'eye']" class="action-icon" /><span
             >預覽</span
           >
         </button>
-        <button @click="updateStory">
+        <button class="btn" @click="updateStory">
           <font-awesome-icon
             :icon="['fa', 'file-upload']"
             class="action-icon"
@@ -87,7 +87,7 @@
     ></story-preview>
     <base-modal :message="modalMsg" :show="show" @close-modal="show = false">
       <template #action>
-        <button @click="show = false">確定</button>
+        <button class="btn" @click="show = false">確定</button>
       </template>
     </base-modal>
     <base-spinner v-if="initLoading || isLoading"></base-spinner>

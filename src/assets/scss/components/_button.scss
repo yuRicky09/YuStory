@@ -1,5 +1,4 @@
-button,
-.button {
+.btn {
   border: none;
   padding: 8px 15px;
   border-radius: 25px;
@@ -23,16 +22,16 @@ button,
   }
 }
 
-button.ghost {
+.btn.ghost {
   background-color: #e1e1e1;
   color: #000;
 }
 
-button.delete {
+.btn.delete {
   background-color: #e74c4cef;
 }
 
-button.block {
+.btn.block {
   cursor: not-allowed;
   opacity: 0.5;
 }

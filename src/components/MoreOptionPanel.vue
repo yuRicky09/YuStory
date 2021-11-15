@@ -41,10 +41,10 @@
       @close-modal="show = false"
     >
       <template #action>
-        <button class="modal-action-btn ghost" @click="cancelDelete">
+        <button class="btn modal-action-btn ghost" @click="cancelDelete">
           取消
         </button>
-        <button class="modal-action-btn delete" @click="deleteStory">
+        <button class="btn modal-action-btn delete" @click="deleteStory">
           刪除
         </button>
       </template>

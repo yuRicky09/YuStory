@@ -157,7 +157,7 @@ const routes = [
     props: true,
   },
   {
-    path: "/search/:type/:search",
+    path: "/search/:type?/:search?",
     name: "Search",
     component: () => import("@/views/story/Search.vue"),
     meta: {

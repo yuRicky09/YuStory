@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    <div class="search-box" :class="{ active: showSearchBar }">
+    <div class="search-bar" :class="{ active: showSearchBar }">
       <input
         type="text"
         class="search-input"
@@ -19,15 +19,6 @@
       class="search-icon"
       @click="toggleSearchBar"
     />
-    <base-modal
-      :show="show"
-      message="請輸入搜尋內容"
-      @close-modal="show = false"
-    >
-      <template #action>
-        <button @click="show = false">確定</button>
-      </template>
-    </base-modal>
   </div>
 </template>
 
@@ -38,14 +29,13 @@ export default {
   name: "SearchBar",
   data() {
     return {
-      show: false,
       showSearchBar: false,
-      options: [{ name: "找標題" }, { name: "找標籤" }, { name: "找作者" }],
+      options: [{ name: "找故事" }, { name: "找標籤" }, { name: "找作者" }],
       selectedOption: {
-        name: "找標題",
+        name: "找故事",
       },
       search: "",
-      type: "title",
+      type: "story",
     };
   },
   components: { dropdown },
@@ -55,8 +45,8 @@ export default {
     },
     handleSelected(option) {
       const { name } = option;
-      if (name === "找標題") {
-        this.type = "title";
+      if (name === "找故事") {
+        this.type = "story";
       } else if (name === "找標籤") {
         this.type = "tags";
       } else if (name === "找作者") {
@@ -64,18 +54,23 @@ export default {
       }
     },
     searching() {
-      if (!this.search) {
-        this.show = true;
+      if (this.search) {
+        this.$router
+          .push({
+            name: "Search",
+            params: { type: this.type, search: this.search },
+          })
+          .catch(() => {});
+        this.search = "";
       } else {
         this.$router
           .push({
             name: "Search",
-            params: { search: this.search, type: this.type },
+            params: { type: this.type },
           })
           .catch(() => {});
-        this.search = "";
-        // this.showSearchBar = false;
       }
+      this.showSearchBar = false;
     },
   },
 };
@@ -92,18 +87,15 @@ export default {
     align-items: center;
   }
 
-  .search-input {
-    width: 30rem;
-    border-radius: 2rem;
-    padding: 0.5rem 1rem;
-    margin: 0 1rem;
-  }
-
-  .search-box {
+  .search-bar {
     display: flex;
     align-items: center;
 
     .search-input {
+      width: 30rem;
+      border-radius: 2rem;
+      padding: 0.5rem 1rem;
+      margin: 0 1rem;
       transform: scaleX(0);
       transform-origin: right;
       transition: all 0.2s ease-out;
@@ -115,7 +107,7 @@ export default {
     }
   }
 
-  .search-box.active {
+  .search-bar.active {
     .search-input {
       transform: scaleX(1);
     }

@@ -8,7 +8,7 @@
         <p>當前頭像</p>
         <img v-if="userProfileImg" :src="userProfileImg" alt="user-avatar" />
         <div v-else class="avatar-null"><span>頭像尚未設置</span></div>
-        <label class="button" for="avatar-input">設置頭像</label>
+        <label class="btn" for="avatar-input">設置頭像</label>
         <input
           type="file"
           accept="image/png, image/jpeg"
@@ -46,13 +46,13 @@
         </div>
       </transition>
       <div class="avatar-action" v-if="selectedFileURL">
-        <button @click="updateAvatar">更新</button>
+        <button class="btn" @click="updateAvatar">更新</button>
       </div>
     </div>
     <base-spinner v-if="isLoading"></base-spinner>
     <base-modal :show="show" message="更新頭像成功" @close-modal="closeModal">
       <template #action>
-        <button @click="closeModal">確定</button>
+        <button class="btn" @click="closeModal">確定</button>
       </template>
     </base-modal>
   </div>
@@ -147,7 +147,7 @@ export default {
       color: #fff;
     }
 
-    label.button {
+    label.btn {
       margin: 2rem 0;
     }
 
