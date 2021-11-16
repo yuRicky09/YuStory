@@ -1,8 +1,7 @@
 <template>
   <div class="container">
-    <div class="search-result">
+    <div class="search-title">
       <h2>搜尋結果</h2>
-      <p>共有 {{ matchingStories.length }} 比相關</p>
     </div>
     <ul class="type-list">
       <li
@@ -36,6 +35,11 @@
       />
       <button class="search-btn" @click="searching">搜尋</button>
     </div>
+    <div class="search-result">
+      <p>
+        搜尋 <span>{{ search }}</span> 共有 {{ matchingStories.length }} 筆相關
+      </p>
+    </div>
     <div class="matching-stories" v-if="matchingStories.length > 0">
       <story-intro-rect
         v-for="story in matchingStories"
@@ -43,7 +47,7 @@
         :story="story"
       ></story-intro-rect>
     </div>
-    <div v-else>
+    <div class="no-result" v-else>
       <p>查無結果</p>
     </div>
   </div>
@@ -60,7 +64,7 @@ export default {
     return {
       matchingStories: null,
       searchingText: "",
-      searchingType: "story",
+      searchingType: null,
     };
   },
   computed: {
@@ -68,28 +72,31 @@ export default {
       return this.$store.state.story.stories;
     },
   },
+  created() {
+    this.searchingType = this.type;
+  },
   methods: {
     matchingItems() {
-      if (!this.search) return (this.matchingStories = []);
+      this.matchingStories = [];
+      if (!this.search) return;
+      const searchText = this.search.toLowerCase();
       if (this.type === "userName") {
-        const regex = new RegExp(this.search, "gi");
         this.matchingStories = this.storires.filter((story) =>
-          regex.test(story.userName)
+          story.userName.toLowerCase().includes(searchText)
         );
       } else if (this.type === "story") {
-        // ?! === negative lookahead, 找尋的目標的'後方'符合此negative lookahead的條件的話就刪去。 這邊用來ignore HTML標籤
-        const str = `(${this.search})(?![^<]*>)`;
-        const regex = new RegExp(str, "gi");
         this.matchingStories = this.storires.filter((story) => {
-          const storyAllText = story.title + story.HTML;
-          return regex.test(storyAllText);
+          // 去除HTML tag
+          const content = story.HTML.replace(/<[^>]*>/g, "");
+          const storyAllText = (story.title + " " + content).toLowerCase();
+          console.log(storyAllText);
+          return storyAllText.includes(searchText);
         });
       } else if (this.type === "tags") {
-        const regex = new RegExp(this.search, "gi");
         this.matchingStories = this.storires.filter((story) => {
           const { tags } = story;
           for (let tag of tags) {
-            if (regex.test(tag)) return true;
+            if (tag.includes(searchText)) return true;
           }
         });
       }
@@ -112,12 +119,12 @@ export default {
           .catch(() => {});
       }
     },
-    setSearchingType(type) {
-      this.searchingType = type;
+    setSearchingType(searchingType) {
+      this.searchingType = searchingType;
     },
   },
   watch: {
-    search: {
+    $route: {
       immediate: true,
       handler() {
         this.matchingItems();
@@ -132,9 +139,13 @@ export default {
   max-width: 102rem;
   margin: auto;
   padding: 6rem 2rem;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
 
-  .search-result {
+  @media (min-width: $bp-iphone-ten) {
+    font-size: 1.6rem;
+  }
+
+  .search-title {
     margin: 2rem 0;
     h2 {
       font-size: 2.6rem;
@@ -144,7 +155,6 @@ export default {
       }
     }
   }
-
   .type-list {
     display: flex;
     justify-content: center;
@@ -153,12 +163,35 @@ export default {
 
     .type {
       cursor: pointer;
-      padding: 1rem 3rem;
+      padding: 1rem 1.5rem;
+      margin: 0 0.5rem;
       color: #000;
       transition: all 0.2s ease-out;
+      position: relative;
+
+      @media (min-width: $bp-iphone-ten) {
+        padding: 1rem 3rem;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: #000;
+        bottom: 0;
+        left: 0;
+        transform: scale(0);
+        transform-origin: left;
+        transition: all 0.3s ease-out;
+      }
 
       &:hover {
-        opacity: 0.8;
+        opacity: 0.6;
+
+        &::before {
+          transform: scale(1);
+        }
       }
     }
 
@@ -168,6 +201,10 @@ export default {
 
       &:hover {
         opacity: 1;
+
+        &::before {
+          transform: scale(0);
+        }
       }
     }
   }
@@ -199,8 +236,23 @@ export default {
     }
   }
 
+  .search-result {
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-border);
+
+    span {
+      color: #e74c4cef;
+    }
+  }
   .matching-stories {
     padding: 3rem 0;
+  }
+
+  .no-result {
+    margin-top: 5rem;
+    text-align: center;
+    font-size: 2rem;
+    color: #e74c4cef;
   }
 }
 </style>
