@@ -143,7 +143,7 @@ const actions = {
       throw new Error(err.message);
     }
   },
-  async updateProfileImg({ commit, state }, avatar) {
+  async updateProfileImg({ commit, state, rootState }, avatar) {
     try {
       commit("changeLoadingState", true);
 
@@ -159,6 +159,49 @@ const actions = {
         .update({
           profileImg: userProfileImg,
         });
+
+      // 此用戶發佈的故事的頭貼也要更新
+      const storiesRef = await db
+        .collection("stories")
+        .where("userId", "==", `${state.userId}`)
+        .get();
+
+      storiesRef.docs.forEach(async (story) => {
+        await story.ref.update({
+          userProfileImg: userProfileImg,
+        });
+      });
+
+      // 更新此用戶的所有留言頭貼
+      const hasUserReplyStories = rootState.story.stories.filter((story) => {
+        if (story.replies) {
+          const replies = story.replies;
+          let countUserReply = 0;
+          for (let reply of replies) {
+            if (reply.userId === state.userId) {
+              reply.userProfileImg = userProfileImg;
+              countUserReply++;
+            }
+          }
+          if (countUserReply > 0) return true;
+        }
+      });
+
+      hasUserReplyStories.forEach((story) => {
+        story.userProfileImg = userProfileImg;
+      });
+
+      hasUserReplyStories.forEach(async (story) => {
+        await db
+          .collection("stories")
+          .doc(story.id)
+          .set(
+            {
+              replies: story.replies,
+            },
+            { merge: true }
+          );
+      });
 
       commit("changeLoadingState", false);
       commit("updateProfileImg", userProfileImg);
