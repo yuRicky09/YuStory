@@ -79,6 +79,10 @@
       .recommendedTags {
         .tag {
           margin: 0 4px 10px;
+
+          &:hover {
+            opacity: 0.8;
+          }
         }
       }
     }

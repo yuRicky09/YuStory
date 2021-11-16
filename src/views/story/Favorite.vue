@@ -5,7 +5,7 @@
         My Favorites
       </h2>
     </div>
-    <div v-if="myFavoriteStories.length > 5">
+    <div v-if="myFavoriteStories.length > 0">
       <story-intro-rect
         v-for="story in myFavoriteStories"
         :key="story.id"

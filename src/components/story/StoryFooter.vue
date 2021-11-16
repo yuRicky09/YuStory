@@ -11,14 +11,11 @@
     </div>
     <div class="other-action" v-if="currentUser">
       <div class="left-side">
-        <font-awesome-icon :icon="['far', 'heart']" />
-        <font-awesome-icon :icon="['fa', 'heart']" />
-        <a href="#" @click.prevent="moveToReplyEditor">
-          <font-awesome-icon :icon="['far', 'comment']" />
-        </a>
+        <heart-icon :currentStory="currentStory"></heart-icon>
+        <comment-icon :currentStory="currentStory"></comment-icon>
       </div>
       <div class="right-side">
-        <bookmark :story="currentStory"></bookmark>
+        <bookmark :currentStory="currentStory"></bookmark>
         <div class="backdrop" v-if="showPanel" @click="showPanel = false"></div>
         <div class="option-panel-position">
           <more-option-panel
@@ -30,7 +27,7 @@
           ></more-option-panel>
         </div>
         <font-awesome-icon
-          class="ellipsis-icon"
+          class="ellipsis-icon action-icon"
           :icon="['fa', 'ellipsis-v']"
           @click="showPanel = !showPanel"
         />
@@ -43,10 +40,12 @@
 import BaseTag from "@/components/UI/BaseTag.vue";
 import Bookmark from "@/components/UI/Bookmark.vue";
 import MoreOptionPanel from "@/components/MoreOptionPanel.vue";
+import CommentIcon from "@/components/UI/CommentIcon.vue";
+import HeartIcon from "@/components/UI/HeartIcon.vue";
 
 export default {
   name: "StoryFooter",
-  components: { BaseTag, Bookmark, MoreOptionPanel },
+  components: { BaseTag, Bookmark, MoreOptionPanel, CommentIcon, HeartIcon },
   data() {
     return {
       showPanel: false,
@@ -87,16 +86,24 @@ export default {
     justify-content: space-between;
     align-items: center;
 
-    svg {
-      width: 2.5rem;
-      height: 2.5rem;
-      margin: 3px;
-      padding: 4px;
-      cursor: pointer;
+    .left-side {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .liked {
+        color: violet;
+      }
     }
 
     .right-side {
       position: relative;
+      display: flex;
 
       .backdrop {
         background-color: transparent;

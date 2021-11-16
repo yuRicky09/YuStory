@@ -2,7 +2,7 @@
   <div class="stories-container">
     <div class="stories-header">
       <h2><font-awesome-icon :icon="['fa', 'tags']" />Tag: {{ tagName }}</h2>
-      <p class="matching-result">共有 {{ matchingStories.length }} 畢相關</p>
+      <p class="matching-result">共有 {{ matchingStories.length }} 筆相關</p>
     </div>
     <div class="stories-body">
       <main class="left-side">

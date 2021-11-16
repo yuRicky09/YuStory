@@ -89,7 +89,6 @@ export default {
           // 去除HTML tag
           const content = story.HTML.replace(/<[^>]*>/g, "");
           const storyAllText = (story.title + " " + content).toLowerCase();
-          console.log(storyAllText);
           return storyAllText.includes(searchText);
         });
       } else if (this.type === "tags") {

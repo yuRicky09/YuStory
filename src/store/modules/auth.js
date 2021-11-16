@@ -5,7 +5,6 @@ const state = function() {
   return {
     userName: null,
     userEmail: null,
-    userPassword: null,
     userId: null,
     userBio: null,
     userProfileImg: null,
@@ -46,7 +45,6 @@ const actions = {
         .set({
           name: registerData.userName,
           email: registerData.userEmail,
-          password: registerData.userPassword,
           favorites: {},
           profileImg:
             "https://firebasestorage.googleapis.com/v0/b/yustory-ded59.appspot.com/o/other%2Fdefault-avatar.png?alt=media&token=ec118c77-c2d9-46e3-a731-0657875703b7",
@@ -188,9 +186,7 @@ const actions = {
       await db
         .collection("users")
         .doc(state.userId)
-        .update({
-          [`favorites.${storyId}`]: false,
-        });
+        .update({});
 
       commit("removeFromFavorites", storyId);
     } catch (err) {
@@ -205,7 +201,6 @@ const mutations = {
   },
   setUserData(state, userData) {
     state.userEmail = userData.email;
-    state.userPassword = userData.password;
     state.userName = userData.name;
     state.userId = userData.userId;
     state.userProfileImg = userData.profileImg;
@@ -214,7 +209,6 @@ const mutations = {
   },
   clearUserData(state) {
     state.userEmail = null;
-    state.userPassword = null;
     state.userName = null;
     state.userId = null;
     state.userProfileImg = null;

@@ -4,20 +4,21 @@
       <article>
         <story-header
           :currentAuthor="currentAuthor"
-          :story="currentStory"
+          :currentStory="currentStory"
         ></story-header>
         <div ref="contentStartLine">
           <story-content :storyHTML="currentStory.HTML"></story-content>
         </div>
       </article>
       <story-footer></story-footer>
-      <reply-list :story="currentStory"></reply-list>
+      <reply-list :currentStory="currentStory"></reply-list>
       <reply-editor></reply-editor>
     </main>
     <div class="right-side" v-if="currentAuthor && currentStory">
       <aside-user-info
         v-if="currentAuthor"
         :currentAuthor="currentAuthor"
+        :currentStory="currentStory"
       ></aside-user-info>
     </div>
   </div>

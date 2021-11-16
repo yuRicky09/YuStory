@@ -86,7 +86,7 @@
       width: 30rem;
 
       @media (min-width: $bp-md) {
-        width: 40rem;
+        width: 35rem;
       }
 
       @media (min-width: $bp-lg) {
@@ -139,6 +139,8 @@
 
     > button {
       margin: 1.5rem 1rem;
+      display: flex;
+      align-items: center;
     }
 
     .action-icon {
@@ -147,7 +149,6 @@
       @media (min-width: $bp-sm) {
         display: inline-block;
       }
-      margin-right: 1rem;
     }
   }
 }

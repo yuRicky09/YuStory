@@ -46,7 +46,7 @@
                   @close-option-panel="showPanel = false"
                 ></more-option-panel>
               </div>
-              <bookmark :story="story"></bookmark>
+              <bookmark :currentStory="story"></bookmark>
               <font-awesome-icon
                 :icon="['fa', 'ellipsis-v']"
                 @click="showPanel = !showPanel"

@@ -12,12 +12,6 @@ const shuffle = function(array) {
 };
 const state = function() {
   return {
-    // storyCover: null,
-    // storyTitle: null,
-    // storyHTML: null,
-    // storyBrief: null,
-    // storyCreatedAt: null,
-    // storyTags: [],
     //將圖片的增刪緩存於storyImg陣列，當按下備份or發佈後再上傳到db與storage。
     storyImg: [],
     isLoading: false,
@@ -115,20 +109,13 @@ const actions = {
         tags: storyTags,
         brief: storyBrief,
         img: storyImg,
+        hearts: [],
         userId,
         userName,
         userProfileImg,
         createdAt,
       });
 
-      // commit("setPublishStory", {
-      //   storyTitle,
-      //   storyHTML,
-      //   storyTags,
-      //   storyBrief,
-      //   storyCover,
-      //   createdAt,
-      // });
       commit("changeLoadingState", false);
       return docRef.id;
     } catch (err) {
@@ -159,14 +146,6 @@ const actions = {
           createdAt,
         });
 
-      commit("setPublishStory", {
-        storyTitle,
-        storyHTML,
-        storyTags,
-        storyBrief,
-        storyCover,
-        createdAt,
-      });
       commit("changeLoadingState", false);
     } catch (err) {
       commit("changeLoadingState", false);
@@ -285,7 +264,6 @@ const actions = {
         HTML: content,
         id: nanoid(),
       };
-      console.log(reply);
 
       await db
         .collection("stories")
@@ -318,18 +296,6 @@ const mutations = {
       return img.imgUploadPath !== imgUploadPath;
     });
   },
-  //! 備份的話應該是需要在本地也存比較好，發佈的時候要不要存在思考看看，這邊先暫且本地也存起來。
-  // setPublishStory(
-  //   state,
-  //   { storyTitle, storyHTML, storyTags, storyBrief, storyCover, createdAt }
-  // ) {
-  //   state.storyTitle = storyTitle;
-  //   state.storyHTML = storyHTML;
-  //   state.storyTags = storyTags;
-  //   state.storyBreif = storyBrief;
-  //   state.storyCover = storyCover;
-  //   state.storyCreatedAt = createdAt;
-  // },
   setTopToHeaderDistance(state, topToHeaderDistance) {
     state.topToHeaderDistance = topToHeaderDistance;
   },

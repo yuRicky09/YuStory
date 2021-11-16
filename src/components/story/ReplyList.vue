@@ -1,15 +1,15 @@
 <template>
   <section
     class="reply-wrapper"
-    v-if="story.replies && story.replies.length > 0"
+    v-if="currentStory.replies && currentStory.replies.length > 0"
   >
     <h4 class="heading">Comment</h4>
     <ul class="reply-list">
       <reply-item
-        v-for="reply in story.replies"
+        v-for="reply in currentStory.replies"
         :key="reply.id"
         :reply="reply"
-        :authorId="story.userId"
+        :authorId="currentStory.userId"
       ></reply-item>
     </ul>
   </section>
@@ -20,7 +20,7 @@ import ReplyItem from "@/components/story/ReplyItem";
 
 export default {
   name: "ReplyList",
-  props: ["story"],
+  props: ["currentStory"],
   data() {
     return {
       showPanel: false,

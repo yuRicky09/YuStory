@@ -1,7 +1,7 @@
 <template>
-  <section class="story-header" ref="storyHeader" v-if="story">
+  <section class="story-header" ref="storyHeader" v-if="currentStory">
     <div>
-      <h2 class="story-title">{{ story.title }}</h2>
+      <h2 class="story-title">{{ currentStory.title }}</h2>
       <div class="title-content">
         <div class="user-info">
           <img
@@ -12,7 +12,7 @@
           <p>{{ currentAuthor.name }}</p>
         </div>
         <div class="created-time">
-          <span>{{ createdTime(story.createdAt.toDate()) }}</span>
+          <span>{{ createdTime(currentStory.createdAt.toDate()) }}</span>
         </div>
       </div>
     </div>
@@ -24,7 +24,7 @@ import { timeFormatMixin } from "@/mixins/timeFormatMixin";
 
 export default {
   name: "StoryHeader",
-  props: ["currentAuthor", "story"],
+  props: ["currentAuthor", "currentStory"],
   mixins: [timeFormatMixin],
   mounted() {
     const topToHeaderDistance =

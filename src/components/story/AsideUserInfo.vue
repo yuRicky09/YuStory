@@ -7,13 +7,23 @@
     <div class="user-bio">
       <p>{{ currentAuthor.bio }}</p>
     </div>
+    <div class="action-icons">
+      <heart-icon :currentStory="currentStory"></heart-icon>
+      <comment-icon :currentStory="currentStory"></comment-icon>
+      <bookmark :currentStory="currentStory"></bookmark>
+    </div>
   </section>
 </template>
 
 <script>
+import CommentIcon from "@/components/UI/CommentIcon.vue";
+import Bookmark from "@/components/UI/Bookmark.vue";
+import HeartIcon from "@/components/UI/HeartIcon.vue";
+
 export default {
   name: "AsideUserInfo",
-  props: ["currentAuthor"],
+  components: { CommentIcon, Bookmark, HeartIcon },
+  props: ["currentAuthor", "currentStory"],
   data() {
     return {
       showAsideUserInfo: false,
@@ -77,6 +87,12 @@ export default {
       font-size: 1.4rem;
       color: var(--color-bg-gray-1);
     }
+  }
+
+  .action-icons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
 }
 

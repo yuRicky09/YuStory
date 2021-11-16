@@ -2,13 +2,17 @@
   <span class="bookmark">
     <font-awesome-icon
       :icon="['far', 'bookmark']"
+      class="action-icon"
+      title="收藏"
       @click="addToFavorites"
-      v-if="!favorited && userId && userId !== story.userId"
+      v-if="!favorited && userId"
     />
     <font-awesome-icon
       :icon="['fa', 'bookmark']"
+      class="action-icon"
+      title="取消收藏"
       @click="removeFromFavorites"
-      v-if="favorited && userId && userId !== story.userId"
+      v-if="favorited && userId"
     />
   </span>
 </template>
@@ -18,7 +22,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "Bookmark",
-  props: ["story"],
+  props: ["currentStory"],
   computed: {
     ...mapState("auth", {
       userId: (state) => state.userId,
@@ -26,13 +30,13 @@ export default {
     }),
     // 判斷此故事id key值，為true則顯示已收藏mark，反之顯示未收藏。
     favorited() {
-      return this.favorites[`${this.story.id}`] ? true : false;
+      return this.favorites[`${this.currentStory.id}`] ? true : false;
     },
   },
   methods: {
     async addToFavorites() {
       try {
-        await this.$store.dispatch("auth/addToFavorites", this.story.id);
+        await this.$store.dispatch("auth/addToFavorites", this.currentStory.id);
         this.$notify({
           text: "已將此故事加入我的收藏",
           type: "success",
@@ -46,7 +50,10 @@ export default {
     },
     async removeFromFavorites() {
       try {
-        await this.$store.dispatch("auth/removeFromFavorites", this.story.id);
+        await this.$store.dispatch(
+          "auth/removeFromFavorites",
+          this.currentStory.id
+        );
         this.$notify({
           text: "已將此故事從我的收藏移除",
         });
@@ -63,12 +70,20 @@ export default {
 
 <style lang="scss" scoped>
 .bookmark {
+  display: flex;
+
   > svg {
-    width: 2.5rem;
-    height: 2.5rem;
-    margin: 3px;
-    padding: 4px;
-    cursor: pointer;
+    &:hover,
+    &:active {
+      background-color: rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 50%;
+    }
+
+    &:active {
+      background-color: rgba(0, 0, 0, 0.15);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    }
   }
 }
 </style>
