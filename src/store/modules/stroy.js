@@ -1,4 +1,4 @@
-import { storage, db, timestamp, arrayUnion } from "@/firebase/config";
+import { storage, db, timestamp } from "@/firebase/config";
 import { nanoid } from "nanoid";
 
 // 亂數排列 原理:從array最後一個元素開始，與他前面的任一位置的元素對換，下一輪則從倒數第二個位置開始，依此類推。
@@ -256,20 +256,16 @@ const actions = {
   },
   async addReply({ state, rootState }, content) {
     try {
-      const reply = {
-        userId: rootState.auth.userId,
-        userName: rootState.auth.userName,
-        userProfileImg: rootState.auth.userProfileImg,
-        createdAt: Date.now(),
-        HTML: content,
-        id: nanoid(),
-      };
-
       await db
         .collection("stories")
         .doc(state.currentStory.id)
-        .update({
-          replies: arrayUnion(reply),
+        .collection("replies")
+        .add({
+          userId: rootState.auth.userId,
+          userName: rootState.auth.userName,
+          userProfileImg: rootState.auth.userProfileImg,
+          createdAt: Date.now(),
+          HTML: content,
         });
     } catch (err) {
       console.log(err);

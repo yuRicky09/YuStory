@@ -78,6 +78,9 @@ export default {
     a {
       display: inline-block;
       margin: 0.5rem;
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 

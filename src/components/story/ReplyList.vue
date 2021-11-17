@@ -1,12 +1,9 @@
 <template>
-  <section
-    class="reply-wrapper"
-    v-if="currentStory.replies && currentStory.replies.length > 0"
-  >
+  <section class="reply-wrapper" v-if="replies && replies.length > 0">
     <h4 class="heading">Comment</h4>
     <ul class="reply-list">
       <reply-item
-        v-for="reply in currentStory.replies"
+        v-for="reply in replies"
         :key="reply.id"
         :reply="reply"
         :authorId="currentStory.userId"
@@ -16,17 +13,37 @@
 </template>
 
 <script>
+import { db } from "@/firebase/config";
 import ReplyItem from "@/components/story/ReplyItem";
 
 export default {
   name: "ReplyList",
   props: ["currentStory"],
+  components: { ReplyItem },
   data() {
     return {
+      replies: null,
       showPanel: false,
     };
   },
-  components: { ReplyItem },
+  created() {
+    // 監聽此story的子集合replies的所有增刪改，使對此文章的留言能即時更新。
+    const storyRepliesRef = db
+      .collection("stories")
+      .doc(this.currentStory.id)
+      .collection("replies")
+      .orderBy("createdAt", "asc");
+
+    storyRepliesRef.onSnapshot((snapshot) => {
+      const replies = [];
+      snapshot.docs.forEach((doc) => {
+        const reply = { ...doc.data(), id: doc.id };
+        replies.push(reply);
+      });
+
+      this.replies = replies;
+    });
+  },
 };
 </script>
 

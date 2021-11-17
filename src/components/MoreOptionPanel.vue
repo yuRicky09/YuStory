@@ -114,13 +114,12 @@ export default {
       try {
         this.panelInvisible = true;
 
-        const updatedReplies = this.currentStory.replies.filter(
-          (reply) => reply.id !== this.replyId
-        );
-        const storyRef = db.collection("stories").doc(this.currentStory.id);
-        await storyRef.update({
-          replies: updatedReplies,
-        });
+        await db
+          .collection("stories")
+          .doc(this.currentStory.id)
+          .collection("replies")
+          .doc(this.replyId)
+          .delete();
 
         this.$emit("close-option-panel");
         this.successfullyDeleted();
