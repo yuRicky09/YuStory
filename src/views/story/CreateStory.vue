@@ -23,7 +23,6 @@
         @image-removed="handleImageRemoved"
         placeholder="插入圖片後即可選擇封面"
         ref="editor"
-        @scroll="scroll"
       ></vue-editor>
     </div>
     <the-carousel
@@ -102,20 +101,5 @@ import { createStoryMixin } from "@/mixins/createStoryMixin";
 export default {
   name: "CreateStory",
   mixins: [vueEditorMixin, createStoryMixin],
-  watch: {
-    content(newValue) {
-      if (newValue) {
-        this.focusEditor();
-      }
-    },
-  },
-  methods: {
-    focusEditor() {
-      this.$refs.editor.quill.focus();
-    },
-    scroll() {
-      console.log("被滾動了");
-    },
-  },
 };
 </script>

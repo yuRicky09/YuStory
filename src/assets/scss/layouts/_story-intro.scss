@@ -1,0 +1,28 @@
+.story-wrapper {
+  .content-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    transition: all 0.3s ease-out;
+
+    @media (min-width: $bp-md) {
+      font-size: 2.2rem;
+    }
+  }
+
+  .content-brief {
+    color: var(--color-bg-gray-1);
+    display: none;
+    margin-bottom: 5px;
+
+    @media (min-width: $bp-md) {
+      display: -webkit-box;
+      font-size: 1.5rem;
+    }
+  }
+
+  .created-time {
+    font-size: 1.2rem;
+    color: var(--color-bg-gray-1);
+  }
+}

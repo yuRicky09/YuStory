@@ -78,7 +78,7 @@
                       >
                     </li>
                     <li class="user-center-link">
-                      <router-link :to="{ name: 'Favorite' }"
+                      <router-link :to="{ name: 'MyFavorites' }"
                         ><font-awesome-icon
                           :icon="['fa', 'bookmark']"
                           fixed-width
@@ -173,7 +173,7 @@
             >
           </li>
           <li class="mobile-link">
-            <router-link :to="{ name: 'Favorite' }"
+            <router-link :to="{ name: 'MyFavorites' }"
               ><font-awesome-icon :icon="['fa', 'bookmark']" fixed-width />
               <span>我的收藏</span></router-link
             >
@@ -330,7 +330,7 @@ export default {
 
     > li {
       padding: 1rem 2rem;
-      margin-right: 1rem;
+      margin: 0 1rem;
 
       &:last-child {
         margin-right: 0;

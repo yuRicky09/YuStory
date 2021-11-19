@@ -40,12 +40,29 @@ const getters = {
   recentlyStories(state) {
     return state.stories.slice(0, 10);
   },
+  recentlyStoriesForHome(_, getters) {
+    return getters.recentlyStories.slice(0, 8);
+  },
+  popularStories(state) {
+    const stories = [...state.stories];
+    stories.sort((a, b) => {
+      return b.hearts.length - a.hearts.length;
+    });
+    return stories;
+  },
+  popularStoriesForHome(_, getters) {
+    return getters.popularStories.slice(0, 8);
+  },
   recommendedTags(state) {
     let allTags = [];
     state.stories.forEach((story) => allTags.push(story.tags));
     // 去重複值
     allTags = new Set(allTags.flat());
-    return shuffle(Array.from(allTags).slice(0, 20));
+    const randomTags = shuffle(Array.from(allTags));
+    return randomTags.slice(0, 20);
+  },
+  recommendedTagsForHome(_, getters) {
+    return getters.recommendedTags.slice(0, 6);
   },
 };
 

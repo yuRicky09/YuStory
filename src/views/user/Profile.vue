@@ -42,6 +42,12 @@
           :story="story"
         ></my-story-brief>
       </ul>
+      <p
+        v-if="fiveRecordsMyStories.length === 0 && itemType === 'story'"
+        class="none"
+      >
+        尚未有任何發佈故事
+      </p>
       <ul
         v-if="fiveRecordsMyDrafts.length > 0 && itemType === 'draft'"
         class="story-list"
@@ -52,6 +58,12 @@
           :draft="draft"
         ></my-draft-brief>
       </ul>
+      <p
+        v-if="fiveRecordsMyDrafts.length === 0 && itemType === 'draft'"
+        class="none"
+      >
+        尚未有任何草稿
+      </p>
     </div>
   </div>
 </template>
@@ -190,6 +202,12 @@ export default {
       > li:last-child {
         border: none;
       }
+    }
+
+    .none {
+      margin: 2rem 0;
+      font-size: 1.6rem;
+      text-align: center;
     }
   }
 }

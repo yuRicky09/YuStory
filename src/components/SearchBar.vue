@@ -58,7 +58,7 @@ export default {
         this.$router
           .push({
             name: "Search",
-            params: { type: this.type, search: this.search },
+            query: { type: this.type, search: this.search },
           })
           .catch(() => {});
         this.search = "";
@@ -66,7 +66,7 @@ export default {
         this.$router
           .push({
             name: "Search",
-            params: { type: this.type },
+            query: { type: this.type },
           })
           .catch(() => {});
       }
@@ -92,13 +92,17 @@ export default {
     align-items: center;
 
     .search-input {
-      width: 30rem;
+      width: 20rem;
       border-radius: 2rem;
       padding: 0.5rem 1rem;
       margin: 0 1rem;
       transform: scaleX(0);
       transform-origin: right;
       transition: all 0.2s ease-out;
+
+      @media (min-width: $bp-xl) {
+        width: 30rem;
+      }
     }
 
     .my-dropdown-toggle {
@@ -140,6 +144,10 @@ export default {
   .search-icon {
     cursor: pointer;
     margin-left: 1rem;
+
+    &:hover {
+      opacity: 0.5;
+    }
   }
 }
 </style>

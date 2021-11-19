@@ -25,6 +25,17 @@
             </ul>
           </side-box>
         </div>
+        <div class="popular-stories">
+          <side-box title="熱門故事">
+            <ul class="list">
+              <li v-for="story in popularStories" :key="story.id">
+                <router-link :to="{ name: 'Story', params: { id: story.id } }">
+                  {{ story.title }}
+                </router-link>
+              </li>
+            </ul>
+          </side-box>
+        </div>
         <div class="recommendedTags">
           <side-box title="推薦Tags">
             <router-link
@@ -55,7 +66,11 @@ export default {
     stories() {
       return this.$store.state.story.stories;
     },
-    ...mapGetters("story", ["recentlyStories", "recommendedTags"]),
+    ...mapGetters("story", [
+      "recentlyStories",
+      "recommendedTags",
+      "popularStories",
+    ]),
   },
 };
 </script>

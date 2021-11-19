@@ -15,3 +15,11 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.two-line {
+  // 多行省略效果
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}

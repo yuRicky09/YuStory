@@ -24,6 +24,7 @@ export default {
     return {
       replies: null,
       showPanel: false,
+      unsubscribeStoryRepliesId: null,
     };
   },
   created() {
@@ -34,7 +35,7 @@ export default {
       .collection("replies")
       .orderBy("createdAt", "asc");
 
-    storyRepliesRef.onSnapshot((snapshot) => {
+    this.unsubscribeStoryRepliesId = storyRepliesRef.onSnapshot((snapshot) => {
       const replies = [];
       snapshot.docs.forEach((doc) => {
         const reply = { ...doc.data(), id: doc.id };
@@ -43,6 +44,9 @@ export default {
 
       this.replies = replies;
     });
+  },
+  beforeDestroy() {
+    this.unsubscribeStoryRepliesId();
   },
 };
 </script>

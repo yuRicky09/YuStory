@@ -22,7 +22,7 @@
 import StoryIntroRect from "@/components/story/StoryIntroRect.vue";
 
 export default {
-  name: "Favorite",
+  name: "MyFavorites",
   components: { StoryIntroRect },
   computed: {
     myFavoriteStories() {

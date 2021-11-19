@@ -14,8 +14,8 @@
             }"
             class="story-content"
           >
-            <h3 class="title">{{ story.title }}</h3>
-            <div class="brief">{{ story.brief }}</div>
+            <h3 class="content-title two-line">{{ story.title }}</h3>
+            <div class="content-brief two-line">{{ story.brief }}</div>
           </router-link>
           <div class="story-footer">
             <div class="left-side">
@@ -58,7 +58,7 @@
           :to="{ name: 'Story', params: { id: story.id } }"
           class="story-cover"
         >
-          <img :src="story.cover" />
+          <img :src="story.cover" alt="story-cover" />
         </router-link>
       </div>
     </base-card>
@@ -91,7 +91,7 @@ export default {
 
 <style lang="scss" scoped>
 .story-wrapper {
-  margin: 1rem;
+  margin: 2rem 1rem;
 
   a {
     display: block;
@@ -140,38 +140,8 @@ export default {
 
     .story-content {
       padding-right: 2rem;
-      &:hover .title {
+      &:hover .content-title {
         color: #117096;
-      }
-
-      .title,
-      .brief {
-        // 多行省略效果
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        overflow: hidden;
-      }
-
-      .title {
-        font-size: 1.6rem;
-        font-weight: 600;
-        margin-bottom: 0.6rem;
-
-        @media (min-width: $bp-md) {
-          font-size: 2.2rem;
-        }
-      }
-
-      .brief {
-        color: var(--color-bg-gray-1);
-        display: none;
-        margin-bottom: 5px;
-
-        @media (min-width: $bp-md) {
-          display: -webkit-box;
-          font-size: 1.5rem;
-        }
       }
     }
 
@@ -193,11 +163,6 @@ export default {
         @media (min-width: $bp-iphone-ten) {
           justify-content: flex-start;
         }
-      }
-
-      .created-time {
-        font-size: 1.2rem;
-        color: var(--color-bg-gray-1);
       }
 
       .story-tags {

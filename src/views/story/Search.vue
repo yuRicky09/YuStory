@@ -105,7 +105,7 @@ export default {
         this.$router
           .push({
             name: "Search",
-            params: { type: this.searchingType, search: this.searchingText },
+            query: { type: this.searchingType, search: this.searchingText },
           })
           .catch(() => {});
         this.searchingText = "";
@@ -113,7 +113,7 @@ export default {
         this.$router
           .push({
             name: "Search",
-            params: { type: this.searchingType },
+            query: { type: this.searchingType },
           })
           .catch(() => {});
       }

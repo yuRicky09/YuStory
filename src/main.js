@@ -4,6 +4,8 @@ import router from "./router";
 import store from "./store";
 import { auth } from "./firebase/config";
 import Notifications from "vue-notification";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 import BaseCard from "@/components/UI/BaseCard.vue";
 import BaseModal from "@/components/UI/BaseModal.vue";
@@ -20,6 +22,13 @@ Vue.component("base-modal", BaseModal);
 Vue.component("base-spinner", BaseSpinner);
 
 Vue.use(Notifications);
+AOS.init({
+  disable: "phone",
+  offset: 0,
+  duration: 400,
+  once: true,
+  easing: "ease-in-out",
+});
 
 let app;
 

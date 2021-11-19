@@ -138,9 +138,9 @@ const routes = [
     },
   },
   {
-    path: "/favorite",
-    name: "Favorite",
-    component: () => import("@/views/story/Favorite.vue"),
+    path: "/favorites/me",
+    name: "MyFavorites",
+    component: () => import("@/views/story/MyFavorites.vue"),
     meta: {
       title: "我的收藏 | YUSTORY",
       requireLogin: true,
@@ -157,14 +157,19 @@ const routes = [
     props: true,
   },
   {
-    path: "/search/:type?/:search?",
+    path: "/search",
     name: "Search",
     component: () => import("@/views/story/Search.vue"),
     meta: {
       title: "搜尋 | YUSTORY",
       requireAuth: false,
     },
-    props: true,
+    props($route) {
+      return {
+        type: $route.query.type,
+        search: $route.query.search,
+      };
+    },
   },
   {
     path: "/:pathMatch(.*)*",
