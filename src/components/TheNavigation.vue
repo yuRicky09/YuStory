@@ -14,7 +14,9 @@
       <nav>
         <ul class="menu">
           <li>
-            <router-link :to="{ name: 'Stories' }" class="regular-nav"
+            <router-link
+              :to="{ name: 'Stories', query: { page: 1 } }"
+              class="regular-nav"
               >Stories</router-link
             >
           </li>

@@ -2,7 +2,7 @@
   <div class="home">
     <welcome-info v-if="!currentUser"></welcome-info>
     <div class="home-container">
-      <div class="banner">
+      <div class="banner" v-if="currentUser">
         <div class="sub-title">
           <h2>YUSTORY</h2>
           <p>說故事，就等於道盡一切</p>

@@ -7,7 +7,7 @@
       <main class="left-side">
         <div class="story-list" v-if="stories">
           <story-intro-rect
-            v-for="story in stories"
+            v-for="story in currentPageStories"
             :story="story"
             :key="story.id"
           ></story-intro-rect>
@@ -50,6 +50,11 @@
         </div>
       </aside>
     </div>
+    <pagination
+      :totalItems="stories.length"
+      :itemPerPage="itemPerPage"
+      :page="currentPage"
+    ></pagination>
   </div>
 </template>
 
@@ -58,13 +63,27 @@ import { mapGetters } from "vuex";
 import StoryIntroRect from "@/components/story/StoryIntroRect.vue";
 import SideBox from "@/components/UI/SideBox.vue";
 import BaseTag from "@/components/UI/BaseTag.vue";
+import Pagination from "@/components/Pagination.vue";
 
 export default {
   name: "Stories",
-  components: { StoryIntroRect, SideBox, BaseTag },
+  components: { StoryIntroRect, SideBox, BaseTag, Pagination },
+  data() {
+    return {
+      itemPerPage: 7,
+    };
+  },
   computed: {
+    currentPage() {
+      return +this.$route.query.page;
+    },
     stories() {
       return this.$store.state.story.stories;
+    },
+    currentPageStories() {
+      const startIndex = (this.currentPage - 1) * this.itemPerPage;
+      const lastIndex = startIndex + this.itemPerPage;
+      return this.stories.slice(startIndex, lastIndex);
     },
     ...mapGetters("story", [
       "recentlyStories",
