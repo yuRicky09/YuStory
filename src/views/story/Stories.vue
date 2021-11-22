@@ -40,7 +40,11 @@
           <side-box title="推薦Tags">
             <router-link
               class="tag"
-              :to="{ name: 'Tags', params: { tagName: tag } }"
+              :to="{
+                name: 'Tags',
+                params: { tagName: tag },
+                query: { page: 1 },
+              }"
               v-for="tag in recommendedTags"
               :key="tag"
             >
@@ -64,26 +68,18 @@ import StoryIntroRect from "@/components/story/StoryIntroRect.vue";
 import SideBox from "@/components/UI/SideBox.vue";
 import BaseTag from "@/components/UI/BaseTag.vue";
 import Pagination from "@/components/Pagination.vue";
+import { paginationMixin } from "@/mixins/paginationMixin";
 
 export default {
   name: "Stories",
   components: { StoryIntroRect, SideBox, BaseTag, Pagination },
-  data() {
-    return {
-      itemPerPage: 7,
-    };
-  },
+  mixins: [paginationMixin],
   computed: {
-    currentPage() {
-      return +this.$route.query.page;
-    },
     stories() {
       return this.$store.state.story.stories;
     },
     currentPageStories() {
-      const startIndex = (this.currentPage - 1) * this.itemPerPage;
-      const lastIndex = startIndex + this.itemPerPage;
-      return this.stories.slice(startIndex, lastIndex);
+      return this.stories.slice(this.pageFirstIndex, this.pageLastIndex);
     },
     ...mapGetters("story", [
       "recentlyStories",

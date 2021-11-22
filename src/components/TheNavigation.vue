@@ -72,7 +72,8 @@
                       >
                     </li>
                     <li class="user-center-link">
-                      <router-link :to="{ name: 'MyStories' }"
+                      <router-link
+                        :to="{ name: 'MyStories', query: { page: 1 } }"
                         ><font-awesome-icon
                           :icon="['fa', 'book']"
                           fixed-width
@@ -80,7 +81,8 @@
                       >
                     </li>
                     <li class="user-center-link">
-                      <router-link :to="{ name: 'MyFavorites' }"
+                      <router-link
+                        :to="{ name: 'MyFavorites', query: { page: 1 } }"
                         ><font-awesome-icon
                           :icon="['fa', 'bookmark']"
                           fixed-width
@@ -157,7 +159,7 @@
             >
           </li>
           <li class="mobile-link">
-            <router-link :to="{ name: 'Stories' }"
+            <router-link :to="{ name: 'Stories', query: { page: 1 } }"
               ><font-awesome-icon :icon="['fa', 'list-ul']" fixed-width />
               <span>所有故事</span></router-link
             >
@@ -169,13 +171,13 @@
             >
           </li>
           <li class="mobile-link">
-            <router-link :to="{ name: 'MyStories' }"
+            <router-link :to="{ name: 'MyStories', query: { page: 1 } }"
               ><font-awesome-icon :icon="['fa', 'book']" fixed-width />
               <span>我的故事</span></router-link
             >
           </li>
           <li class="mobile-link">
-            <router-link :to="{ name: 'MyFavorites' }"
+            <router-link :to="{ name: 'MyFavorites', query: { page: 1 } }"
               ><font-awesome-icon :icon="['fa', 'bookmark']" fixed-width />
               <span>我的收藏</span></router-link
             >

@@ -5,13 +5,18 @@
         My Favorites
       </h2>
     </div>
-    <div v-if="myFavoriteStories.length > 0">
+    <template v-if="myFavoriteStories.length > 0">
       <story-intro-rect
-        v-for="story in myFavoriteStories"
+        v-for="story in currentPageFavoriteStories"
         :key="story.id"
         :story="story"
       ></story-intro-rect>
-    </div>
+      <pagination
+        :totalItems="myFavoriteStories.length"
+        :page="currentPage"
+        :itemPerPage="itemPerPage"
+      ></pagination>
+    </template>
     <div v-else class="story-empty">
       <p>尚未有任何收藏</p>
     </div>
@@ -20,13 +25,22 @@
 
 <script>
 import StoryIntroRect from "@/components/story/StoryIntroRect.vue";
+import Pagination from "@/components/Pagination.vue";
+import { paginationMixin } from "@/mixins/paginationMixin";
 
 export default {
   name: "MyFavorites",
-  components: { StoryIntroRect },
+  components: { StoryIntroRect, Pagination },
+  mixins: [paginationMixin],
   computed: {
     myFavoriteStories() {
       return this.$store.getters["auth/myFavoriteStories"];
+    },
+    currentPageFavoriteStories() {
+      return this.myFavoriteStories.slice(
+        this.pageFirstIndex,
+        this.pageLastIndex
+      );
     },
   },
 };

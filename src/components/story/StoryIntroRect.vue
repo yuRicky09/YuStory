@@ -24,7 +24,11 @@
               </div>
               <div class="story-tags">
                 <router-link
-                  :to="{ name: 'Tags', params: { tagName: tag } }"
+                  :to="{
+                    name: 'Tags',
+                    params: { tagName: tag },
+                    query: { page: 1 },
+                  }"
                   v-for="tag in story.tags"
                   :key="tag"
                 >
@@ -58,7 +62,7 @@
           :to="{ name: 'Story', params: { id: story.id } }"
           class="story-cover"
         >
-          <img :src="story.cover" alt="story-cover" />
+          <img v-show="story.cover" :src="story.cover" alt="story-cover" />
         </router-link>
       </div>
     </base-card>

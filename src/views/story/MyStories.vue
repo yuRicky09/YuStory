@@ -20,20 +20,30 @@
         </select>
       </div>
     </div>
-    <div v-if="myStories.length > 0 && itemType === 'story'">
+    <template v-if="myStories.length > 0 && itemType === 'story'">
       <story-intro-rect
-        v-for="story in myStories"
+        v-for="story in currentPageMyStories"
         :key="story.id"
         :story="story"
       ></story-intro-rect>
-    </div>
-    <div v-else-if="myDrafts.length > 0 && itemType === 'draft'">
+      <pagination
+        :page="currentPage"
+        :totalItems="myStories.length"
+        :itemPerPage="itemPerPage"
+      ></pagination>
+    </template>
+    <template v-else-if="myDrafts.length > 0 && itemType === 'draft'">
       <my-draft-brief
-        v-for="draft in myDrafts"
+        v-for="draft in currentPageMyDrafts"
         :key="draft.id"
         :draft="draft"
       ></my-draft-brief>
-    </div>
+      <pagination
+        :page="currentPage"
+        :totalItems="myDrafts.length"
+        :itemPerPage="itemPerPage"
+      ></pagination>
+    </template>
     <div v-else class="story-empty">
       <p>尚未發佈任何故事</p>
     </div>
@@ -44,10 +54,13 @@
 import StoryIntroRect from "@/components/story/StoryIntroRect.vue";
 import SelectStoryTab from "@/components/story/SelectStoryTab.vue";
 import MyDraftBrief from "@/components/story/MyDraftBrief.vue";
+import Pagination from "@/components/Pagination.vue";
+import { paginationMixin } from "@/mixins/paginationMixin";
 
 export default {
   name: "MyStorise",
-  components: { StoryIntroRect, SelectStoryTab, MyDraftBrief },
+  components: { StoryIntroRect, SelectStoryTab, MyDraftBrief, Pagination },
+  mixins: [paginationMixin],
   data() {
     return {
       selected: "",
@@ -63,6 +76,9 @@ export default {
         return stories.reverse();
       }
     },
+    currentPageMyStories() {
+      return this.myStories.slice(this.pageFirstIndex, this.pageLastIndex);
+    },
     myDrafts() {
       const drafts = [...this.$store.state.story.drafts];
       if (this.selected === "" || this.selected === "desc") {
@@ -70,6 +86,9 @@ export default {
       } else {
         return drafts.reverse();
       }
+    },
+    currentPageMyDrafts() {
+      return this.myDrafts.slice(this.pageFirstIndex, this.pageLastIndex);
     },
   },
   methods: {

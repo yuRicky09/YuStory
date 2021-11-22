@@ -8,7 +8,7 @@
       <main class="left-side">
         <div class="story-list" v-if="matchingStories.length > 0">
           <story-intro-rect
-            v-for="story in matchingStories"
+            v-for="story in currentPageMatchingStories"
             :story="story"
             :key="story.id"
           ></story-intro-rect>
@@ -31,7 +31,11 @@
           <side-box title="推薦Tags">
             <router-link
               class="tag"
-              :to="{ name: 'Tags', params: { tagName: tag } }"
+              :to="{
+                name: 'Tags',
+                params: { tagName: tag },
+                query: { page: 1 },
+              }"
               v-for="tag in recommendedTags"
               :key="tag"
             >
@@ -41,6 +45,11 @@
         </div>
       </aside>
     </div>
+    <pagination
+      :page="currentPage"
+      :totalItems="matchingStories.length"
+      :itemPerPage="itemPerPage"
+    ></pagination>
   </div>
 </template>
 
@@ -50,10 +59,13 @@ import SideBox from "@/components/UI/SideBox.vue";
 import BaseTag from "@/components/UI/BaseTag.vue";
 import { db } from "@/firebase/config";
 import { mapGetters } from "vuex";
+import Pagination from "@/components/Pagination.vue";
+import { paginationMixin } from "@/mixins/paginationMixin";
 
 export default {
   name: "Tags",
-  components: { StoryIntroRect, SideBox, BaseTag },
+  components: { StoryIntroRect, SideBox, BaseTag, Pagination },
+  mixins: [paginationMixin],
   props: ["tagName"],
   data() {
     return {
@@ -63,6 +75,12 @@ export default {
   },
   computed: {
     ...mapGetters("story", ["recommendedTags", "recentlyStories"]),
+    currentPageMatchingStories() {
+      return this.matchingStories.slice(
+        this.pageFirstIndex,
+        this.pageLastIndex
+      );
+    },
   },
   methods: {
     async findMatchingStories(tagName) {

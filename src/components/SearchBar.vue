@@ -58,7 +58,7 @@ export default {
         this.$router
           .push({
             name: "Search",
-            query: { type: this.type, search: this.search },
+            query: { type: this.type, search: this.search, page: 1 },
           })
           .catch(() => {});
         this.search = "";
@@ -66,7 +66,7 @@ export default {
         this.$router
           .push({
             name: "Search",
-            query: { type: this.type },
+            query: { type: this.type, page: 1 },
           })
           .catch(() => {});
       }

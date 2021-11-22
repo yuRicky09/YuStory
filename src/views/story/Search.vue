@@ -40,13 +40,20 @@
         搜尋 <span>{{ search }}</span> 共有 {{ matchingStories.length }} 筆相關
       </p>
     </div>
-    <div class="matching-stories" v-if="matchingStories.length > 0">
-      <story-intro-rect
-        v-for="story in matchingStories"
-        :key="story.id"
-        :story="story"
-      ></story-intro-rect>
-    </div>
+    <template v-if="currentPageMatchStories.length > 0">
+      <div class="matching-stories">
+        <story-intro-rect
+          v-for="story in currentPageMatchStories"
+          :key="story.id"
+          :story="story"
+        ></story-intro-rect>
+      </div>
+      <pagination
+        :totalItems="matchingStories.length"
+        :itemPerPage="itemPerPage"
+        :page="currentPage"
+      ></pagination>
+    </template>
     <div class="no-result" v-else>
       <p>查無結果</p>
     </div>
@@ -55,11 +62,14 @@
 
 <script>
 import StoryIntroRect from "@/components/story/StoryIntroRect.vue";
+import Pagination from "@/components/Pagination.vue";
+import { paginationMixin } from "@/mixins/paginationMixin";
 
 export default {
   name: "Search",
   props: ["search", "type"],
-  components: { StoryIntroRect },
+  components: { StoryIntroRect, Pagination },
+  mixins: [paginationMixin],
   data() {
     return {
       matchingStories: null,
@@ -70,6 +80,12 @@ export default {
   computed: {
     storires() {
       return this.$store.state.story.stories;
+    },
+    currentPageMatchStories() {
+      return this.matchingStories.slice(
+        this.pageFirstIndex,
+        this.pageLastIndex
+      );
     },
   },
   created() {
@@ -105,7 +121,11 @@ export default {
         this.$router
           .push({
             name: "Search",
-            query: { type: this.searchingType, search: this.searchingText },
+            query: {
+              type: this.searchingType,
+              search: this.searchingText,
+              page: 1,
+            },
           })
           .catch(() => {});
         this.searchingText = "";
@@ -113,7 +133,7 @@ export default {
         this.$router
           .push({
             name: "Search",
-            query: { type: this.searchingType },
+            query: { type: this.searchingType, page: 1 },
           })
           .catch(() => {});
       }

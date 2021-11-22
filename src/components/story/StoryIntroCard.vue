@@ -3,7 +3,7 @@
     <router-link :to="{ name: 'Story', params: { id: story.id } }">
       <div class="story">
         <div class="story-cover">
-          <img :src="story.cover" alt="story-cover" />
+          <img v-show="story.cover" :src="story.cover" alt="story-cover" />
         </div>
         <div class="story-body">
           <div class="author">

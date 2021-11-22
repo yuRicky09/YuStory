@@ -9,13 +9,20 @@
         &laquo;
       </button>
     </li>
-    <li class="page-item" v-for="index in totalPages" :key="index">
+    <li
+      class="page-item"
+      v-for="(btnText, index) in visiblePageBtns"
+      :key="index"
+    >
       <button
         class="pageBtn"
-        :class="{ active: currentPage === index }"
-        @click="changeCurrentPage(index)"
+        :class="{
+          active: currentPage === btnText,
+          ellipsis: btnText === '...',
+        }"
+        @click="changeCurrentPage(btnText)"
       >
-        {{ index }}
+        {{ btnText }}
       </button>
     </li>
     <li class="page-item">
@@ -33,7 +40,7 @@
 <script>
 export default {
   name: "PageNation",
-  props: ["totalItems", "itemPerPage", "page"],
+  props: ["totalItems", "page", "itemPerPage"],
   data() {
     return {
       currentPage: this.page,
@@ -43,26 +50,73 @@ export default {
     totalPages() {
       return Math.ceil(this.totalItems / this.itemPerPage);
     },
+    visiblePageBtns() {
+      if (this.totalPages <= 9) {
+        return this.totalPages;
+      } else if (this.currentPage <= 3) {
+        return [1, 2, 3, 4, "...", this.totalPages];
+      } else if (this.currentPage + 3 > this.totalPages) {
+        return [
+          1,
+          "...",
+          this.totalPages - 3,
+          this.totalPages - 2,
+          this.totalPages - 1,
+          this.totalPages,
+        ];
+      } else {
+        return [
+          1,
+          "...",
+          this.currentPage - 2,
+          this.currentPage - 1,
+          this.currentPage,
+          this.currentPage + 1,
+          this.currentPage + 2,
+          "...",
+          this.totalPages,
+        ];
+      }
+    },
   },
   methods: {
-    changeCurrentPage(index) {
-      this.currentPage = index;
-      this.goToselectedPage();
+    changeCurrentPage(btnText) {
+      if (btnText === "...") return;
+      this.currentPage = btnText;
+      this.goToSelectedPage();
     },
     toPrePage() {
-      this.currentPage === 1 ? (this.currentPage = 1) : this.currentPage--;
-      this.goToselectedPage();
+      if (this.currentPage === 1) return;
+      this.currentPage--;
+      this.goToSelectedPage();
     },
     toNextPage() {
-      this.currentPage === this.totalPage
-        ? (this.currentPage = this.totalPage)
-        : this.currentPage++;
-      this.goToselectedPage();
+      if (this.currentPage === this.totalPages) return;
+      this.currentPage++;
+      this.goToSelectedPage();
     },
-    goToselectedPage() {
-      this.$router
-        .push({ name: "Stories", query: { page: this.currentPage } })
-        .catch(() => {});
+    goToSelectedPage() {
+      if (this.$route.name === "Search") {
+        this.$router
+          .push({
+            name: this.$route.name,
+            query: {
+              page: this.currentPage,
+              type: this.$route.query.type,
+              search: this.$route.query.search,
+            },
+          })
+          .catch(() => {});
+      } else {
+        this.$router
+          .push({
+            name: this.$route.name,
+            query: {
+              page: this.currentPage,
+            },
+          })
+          .catch(() => {});
+      }
     },
   },
 };
@@ -111,6 +165,18 @@ export default {
     background-color: var(--color-bg-dark-3);
     color: #fff;
     border: 1px solid var(--color-bg-dark-3);
+  }
+
+  .pageBtn.ellipsis {
+    cursor: text;
+    color: #ccc;
+    border: none;
+
+    &:hover {
+      background: unset;
+      color: #ccc;
+      border: unset;
+    }
   }
 }
 </style>

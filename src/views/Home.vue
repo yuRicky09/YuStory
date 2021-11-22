@@ -40,7 +40,11 @@
           </div>
           <div class="list">
             <router-link
-              :to="{ name: 'Tags', params: { tagName: tag } }"
+              :to="{
+                name: 'Tags',
+                params: { tagName: tag },
+                query: { page: 1 },
+              }"
               v-for="tag in recommendedTagsForHome"
               :key="tag"
             >
