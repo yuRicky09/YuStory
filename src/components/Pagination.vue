@@ -125,6 +125,7 @@ export default {
 <style lang="scss" scoped>
 .pagination {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   margin-top: 3rem;

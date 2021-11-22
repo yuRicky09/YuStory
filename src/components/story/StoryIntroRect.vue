@@ -4,7 +4,16 @@
       <div class="story">
         <div class="story-info">
           <div class="author">
-            <img :src="story.userProfileImg" alt="user-avatar" />
+            <router-link
+              class="to-author-link"
+              :to="{
+                name: 'Users',
+                params: { userId: story.userId },
+                query: { page: 1 },
+              }"
+            >
+              <img :src="story.userProfileImg" alt="user-avatar" />
+            </router-link>
             <span>{{ story.userName }}</span>
           </div>
           <router-link
@@ -122,6 +131,7 @@ export default {
   .story-info {
     flex: 1;
     padding: 0 0.7rem;
+
     .author {
       display: flex;
       align-items: center;

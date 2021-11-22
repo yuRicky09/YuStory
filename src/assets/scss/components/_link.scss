@@ -1,0 +1,7 @@
+.to-author-link {
+  transition: all 0.2s ease-out;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

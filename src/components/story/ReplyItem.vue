@@ -1,6 +1,15 @@
 <template>
   <li class="reply-item">
-    <img class="user-avatar" :src="reply.userProfileImg" alt="user-avatar" />
+    <router-link
+      class="to-author-link"
+      :to="{
+        name: 'Users',
+        params: { userId: reply.userId },
+        query: { page: 1 },
+      }"
+    >
+      <img class="user-avatar" :src="reply.userProfileImg" alt="user-avatar" />
+    </router-link>
     <div class="reply-info">
       <span class="reply-name">{{ reply.userName }}</span>
       <span class="reply-time">{{ createdTime(reply.createdAt) }}</span>

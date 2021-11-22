@@ -4,11 +4,20 @@
       <h2 class="story-title">{{ currentStory.title }}</h2>
       <div class="title-content">
         <div class="user-info">
-          <img
-            class="user-avatar"
-            :src="currentAuthor.profileImg"
-            alt="user-avatar"
-          />
+          <router-link
+            class="to-author-link"
+            :to="{
+              name: 'Users',
+              params: { userId: currentStory.userId },
+              query: { page: 1 },
+            }"
+          >
+            <img
+              class="user-avatar"
+              :src="currentAuthor.profileImg"
+              alt="user-avatar"
+            />
+          </router-link>
           <p>{{ currentAuthor.name }}</p>
         </div>
         <div class="created-time">

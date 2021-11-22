@@ -262,7 +262,7 @@ const actions = {
         .doc(userId)
         .get();
 
-      const currentAuthor = res.data();
+      const currentAuthor = { ...res.data(), id: userId };
       commit("setCurrentAuthor", currentAuthor);
       commit("changeLoadingState", false);
     } catch (err) {

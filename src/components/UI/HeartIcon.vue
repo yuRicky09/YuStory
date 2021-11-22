@@ -70,20 +70,20 @@ export default {
 
   &:hover svg,
   &:hover span {
-    background-color: rgba(249, 24, 128, 0.1);
-    box-shadow: 0 0 10px rgba(249, 24, 128, 0.1);
-    color: rgb(249, 24, 128);
+    background-color: rgba(255, 64, 96, 0.1);
+    box-shadow: 0 0 10px rgba(255, 64, 96, 0.1);
+    color: rgb(255, 64, 96);
     border-radius: 50%;
   }
 
   &:active svg,
   &:active span {
-    background-color: rgba(249, 24, 128, 0.15);
-    box-shadow: 0 0 10px rgba(249, 24, 128, 0.15);
+    background-color: rgba(255, 64, 96, 0.15);
+    box-shadow: 0 0 10px rgba(255, 64, 96, 0.15);
   }
 
   .liked {
-    color: rgb(249, 24, 128);
+    color: rgb(255, 64, 96);
   }
 }
 </style>

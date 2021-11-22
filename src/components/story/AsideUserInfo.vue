@@ -1,7 +1,16 @@
 <template>
   <section class="asideUserInfo" :class="{ show: showAsideUserInfo }">
     <div class="user-info">
-      <img :src="currentAuthor.profileImg" alt="user-avatar" />
+      <router-link
+        class="to-author-link"
+        :to="{
+          name: 'Users',
+          params: { userId: currentAuthor.id },
+          query: { page: 1 },
+        }"
+      >
+        <img :src="currentAuthor.profileImg" alt="user-avatar" />
+      </router-link>
       <h4>{{ currentAuthor.name }}</h4>
     </div>
     <div class="user-bio">

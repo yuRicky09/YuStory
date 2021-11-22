@@ -37,16 +37,26 @@
                 alt="user-avatar"
               />
               <span>{{ userName }}</span>
+
               <!-- user center interface -->
               <div class="user-center" v-show="userCenterIsOpen" @click.stop="">
                 <div class="user-center-header">
-                  <div>
-                    <img
-                      class="user-avatar-img-big"
-                      v-if="userProfileImg"
-                      :src="userProfileImg"
-                      alt="user-avatar"
-                    />
+                  <div class="user-center-link" @click="closeUserCenter">
+                    <router-link
+                      class="to-author-link"
+                      :to="{
+                        name: 'Users',
+                        params: { userId: currentUser.uid },
+                        query: { page: 1 },
+                      }"
+                    >
+                      <img
+                        class="user-avatar-img-big"
+                        v-if="userProfileImg"
+                        :src="userProfileImg"
+                        alt="user-avatar"
+                      />
+                    </router-link>
                   </div>
                   <div class="user-info">
                     <span>{{ userName }}</span>
@@ -126,14 +136,23 @@
       ></div>
       <transition name="fade-right">
         <ul class="mobile-menu" v-show="menuIsOpen" @click="closeMenu($event)">
-          <div class="mobile-menu-header">
+          <div class="mobile-menu-header" v-if="currentUser">
             <div>
-              <img
-                class="mobile-user-avatar"
-                v-if="userProfileImg"
-                :src="userProfileImg"
-                alt="user-avatar"
-              />
+              <router-link
+                class="mobile-link to-author-link"
+                :to="{
+                  name: 'Users',
+                  params: { userId: currentUser.uid },
+                  query: { page: 1 },
+                }"
+              >
+                <img
+                  class="mobile-user-avatar"
+                  v-if="userProfileImg"
+                  :src="userProfileImg"
+                  alt="user-avatar"
+                />
+              </router-link>
             </div>
             <div class="mobile-user-info">
               <span>{{ userName }}</span>
@@ -236,6 +255,7 @@ export default {
       userName: (state) => state.userName,
       userEmail: (state) => state.userEmail,
       userProfileImg: (state) => state.userProfileImg,
+      userId: (state) => state.userId,
     }),
   },
   methods: {

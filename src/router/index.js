@@ -16,6 +16,16 @@ const routes = [
     },
   },
   {
+    path: "/users/:userId",
+    name: "Users",
+    component: () => import("@/views/user/Users.vue"),
+    meta: {
+      title: "用戶 | YUSTORY",
+      requireAuth: false,
+    },
+    props: true,
+  },
+  {
     path: "/login",
     name: "Login",
     component: () => import("@/views/auth/Login.vue"),

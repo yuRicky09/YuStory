@@ -19,7 +19,7 @@
             >
           </li>
           <li>
-            <router-link :to="{ name: 'Stories' }"
+            <router-link :to="{ name: 'Stories', query: { page: 1 } }"
               ><font-awesome-icon
                 :icon="['fa', 'list-ul']"
                 fixed-width
