@@ -2,7 +2,7 @@
   <div class="story-footer">
     <div class="tags">
       <router-link
-        :to="{ name: 'Tags', params: { tagName: tag } }"
+        :to="{ name: 'Tags', params: { tagName: tag }, query: { page: 1 } }"
         v-for="tag in currentStory.tags"
         :key="tag"
       >
