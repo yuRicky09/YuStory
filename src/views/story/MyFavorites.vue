@@ -65,7 +65,7 @@ export default {
   .story-empty {
     background-image: (
       linear-gradient(to left bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
-      url("~@/assets/img/favorites-bg.jpg")
+      url("~@/assets/img/my-favorite-bg.jpg")
     );
   }
 }

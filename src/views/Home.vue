@@ -5,7 +5,7 @@
       <div class="banner" v-if="currentUser">
         <div class="sub-title">
           <h2>YUSTORY</h2>
-          <p>說故事，就等於道盡一切</p>
+          <p>Share Your Memories Easily</p>
         </div>
         <router-link class="write-story-link" :to="{ name: 'CreateStory' }">
           <span>

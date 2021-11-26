@@ -99,7 +99,7 @@ export default {
 
         // 在story頁面刪除文章的話，跳轉到所有文章頁面
         if (this.$route.name === "Story") {
-          this.$router.replace({ name: "Stories" });
+          this.$router.replace({ name: "Stories", query: { page: 1 } });
         } else {
           this.$emit("close-option-panel");
           this.successfullyDeleted();

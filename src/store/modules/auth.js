@@ -181,12 +181,18 @@ const actions = {
         .collectionGroup("replies")
         .where("userId", "==", state.userId)
         .get();
+
+      // console.log(isUserReply);
+      // const data = await isUserReply.get();
+      // console.log(data);
       isUserReply.forEach(async (reply) => {
         try {
+          console.log("reply", reply);
           await reply.ref.update({
             userProfileImg: userProfileImg,
           });
         } catch (err) {
+          console.log(err);
           throw new Error(err.message);
         }
       });

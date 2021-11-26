@@ -18,6 +18,17 @@ html {
   box-sizing: border-box;
 }
 
+body::after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: -100;
+  content: url("~@/assets/img/my-favorite-bg.jpg")
+    url("~@/assets/img/my-story-bg.jpg") url("~@/assets/img/register-bg.jpg")
+    url("~@/assets/img/home-cover.jpg");
+}
+
 input,
 textarea {
   width: 100%;

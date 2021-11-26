@@ -31,11 +31,12 @@ export default {
 .welcome-box {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 10rem);
   font-size: 1.6rem;
+  margin-bottom: 1.5rem;
 
   @media (min-width: $bp-md) {
     flex-direction: row;
+    min-height: calc(100vh - 10rem);
   }
   .welcome-img {
     flex-basis: 50%;

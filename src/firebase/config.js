@@ -23,7 +23,7 @@ const arrayUnion = firebase.firestore.FieldValue.arrayUnion;
 const arrayRemove = firebase.firestore.FieldValue.arrayRemove;
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-// 當用戶有多個google帳號時，登入都會訊問要使用的google帳號
+// 當用戶有多個 google 帳號時，登入都會訊問要使用的 google 帳號
 googleProvider.setCustomParameters({
   prompt: "select_account",
 });
