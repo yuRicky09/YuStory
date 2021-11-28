@@ -92,7 +92,6 @@ export default {
     align-items: center;
 
     .search-input {
-      width: 20rem;
       border-radius: 2rem;
       padding: 0.5rem 1rem;
       margin: 0 1rem;
@@ -101,7 +100,7 @@ export default {
       transition: all 0.2s ease-out;
 
       @media (min-width: $bp-xl) {
-        width: 30rem;
+        min-width: 30rem;
       }
     }
 

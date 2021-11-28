@@ -13,13 +13,12 @@
         @select-option-one="selectOptionOne"
         @select-option-two="selectOptionTwo"
       ></select-tab>
-      <div class="sort-controller">
-        <select v-model="sort" class="sort-type">
-          <option value="" disabled>排序方式</option>
-          <option value="desc">新到舊</option>
-          <option value="asc">舊到新</option>
-        </select>
-      </div>
+      <dropdown
+        :options="options"
+        :selected="selectedOption"
+        @updateOption="handleSelected"
+        class="my-dropdown-toggle"
+      ></dropdown>
     </div>
     <template v-if="myStories.length > 0 && selectedType === '故事'">
       <story-intro-rect
@@ -46,7 +45,7 @@
       ></pagination>
     </template>
     <div v-else class="story-empty">
-      <p>尚未發佈任何故事</p>
+      <p>尚未有任何故事或草稿</p>
     </div>
   </div>
 </template>
@@ -57,21 +56,26 @@ import MyDraftBrief from "@/components/story/MyDraftBrief.vue";
 import Pagination from "@/components/UI/Pagination.vue";
 import { paginationMixin } from "@/mixins/paginationMixin";
 import SelectTab from "@/components/UI/SelectTab.vue";
+import dropdown from "vue-dropdowns";
 
 export default {
   name: "MyStorise",
-  components: { StoryIntroRect, MyDraftBrief, Pagination, SelectTab },
+  components: { StoryIntroRect, MyDraftBrief, Pagination, SelectTab, dropdown },
   mixins: [paginationMixin],
   data() {
     return {
-      sort: "",
+      sort: "desc",
       selectedType: "故事",
+      options: [{ name: "新到舊" }, { name: "舊到新" }],
+      selectedOption: {
+        name: "新到舊",
+      },
     };
   },
   computed: {
     myStories() {
       const stories = [...this.$store.getters["story/myStories"]];
-      if (this.sort === "" || this.sort === "desc") {
+      if (this.sort === "desc") {
         return stories;
       } else {
         return stories.reverse();
@@ -82,7 +86,7 @@ export default {
     },
     myDrafts() {
       const drafts = [...this.$store.state.story.drafts];
-      if (this.sort === "" || this.sort === "desc") {
+      if (this.sort === "desc") {
         return drafts;
       } else {
         return drafts.reverse();
@@ -98,6 +102,14 @@ export default {
     },
     selectOptionTwo() {
       this.selectedType = "草稿";
+    },
+    handleSelected(option) {
+      const { name } = option;
+      if (name === "新到舊") {
+        this.sort = "desc";
+      } else if (name === "舊到新") {
+        this.sort = "asc";
+      }
     },
   },
 };
@@ -131,7 +143,7 @@ export default {
       }
     }
 
-    a.button {
+    a.btn {
       font-size: 1.4rem;
       padding: 0.8rem 1rem;
       @media (min-width: $bp-md) {
@@ -145,12 +157,33 @@ export default {
     align-items: center;
     border-bottom: 2px solid var(--color-border);
 
-    .sort-controller {
-      margin: 0 2rem;
-      font-size: 1.4rem;
-      select {
-        outline: none;
-        padding: 0.8rem;
+    .my-dropdown-toggle.btn-group {
+      display: none;
+      border-radius: 5px;
+      min-width: 10rem;
+      border-bottom: none;
+      margin: 0;
+      font-size: 1.6rem;
+
+      @media (min-width: $bp-lg) {
+        display: inline-block;
+      }
+      /deep/ .dropdown-toggle {
+        min-width: inherit;
+        color: #000;
+        padding: 8px 15px;
+        margin: 0;
+        background: none;
+      }
+
+      /deep/ .dropdown-menu {
+        min-width: inherit;
+
+        a {
+          &:hover {
+            color: #117096;
+          }
+        }
       }
     }
   }

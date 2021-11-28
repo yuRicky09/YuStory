@@ -37,8 +37,6 @@ export default {
 
 <style lang="scss" scoped>
 .select-type-area {
-  margin-top: 1rem;
-
   span {
     display: inline-block;
     font-size: 1.4rem;

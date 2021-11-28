@@ -17,6 +17,9 @@
           </span>
         </router-link>
       </div>
+      <div class="message" v-if="currentUser">
+        <p>Welcome Back {{ userName }}</p>
+      </div>
       <div class="recommend">
         <section class="recently-stories">
           <div class="title">
@@ -235,6 +238,25 @@ export default {
     }
   }
 
+  .message {
+    display: none;
+    text-align: center;
+    margin: 2rem;
+
+    @media (min-width: $bp-lg) {
+      display: block;
+    }
+
+    > p {
+      display: inline-block;
+      font-size: 2.5rem;
+      font-weight: 600;
+      padding: 2rem 2.5rem;
+      color: #fff;
+      background-color: var(--color-bg-dark-1);
+    }
+  }
+
   .recommend > section {
     margin: 4.5rem 0;
   }
@@ -332,6 +354,14 @@ export default {
       &:hover {
         opacity: 0.8;
       }
+    }
+  }
+
+  .tags {
+    margin: 5rem 0 !important;
+
+    @media (min-width: $bp-md) {
+      margin: 10rem 0 !important;
     }
   }
 }

@@ -37,6 +37,7 @@ export default {
   @media (min-width: $bp-md) {
     flex-direction: row;
     min-height: calc(100vh - 10rem);
+    margin-bottom: 5rem;
   }
   .welcome-img {
     flex-basis: 50%;
