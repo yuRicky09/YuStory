@@ -50,6 +50,9 @@ const getters = {
     });
     return stories;
   },
+  popularStoriesTen(_, getters) {
+    return getters.popularStories.slice(0, 10);
+  },
   popularStoriesForHome(_, getters) {
     return getters.popularStories.slice(0, 8);
   },

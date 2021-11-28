@@ -25,7 +25,7 @@
 
 <script>
 import moment from "moment";
-import MoreOptionPanel from "@/components/MoreOptionPanel.vue";
+import MoreOptionPanel from "@/components/UI/MoreOptionPanel.vue";
 
 export default {
   name: "MyDraftBrief",

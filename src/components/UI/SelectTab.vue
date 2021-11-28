@@ -1,30 +1,35 @@
 <template>
   <div class="select-type-area">
-    <span @click="selectStory" :class="{ active: itemType === 'story' }"
-      >Stories</span
+    <span
+      @click="selectOptionOne"
+      :class="{ active: itemType === 'optionOne' }"
+      >{{ optionOne }}</span
     >
-    <span @click="selectDraft" :class="{ active: itemType === 'draft' }"
-      >Drafts</span
+    <span
+      @click="selectOptionTwo"
+      :class="{ active: itemType === 'optionTwo' }"
+      >{{ optionTwo }}</span
     >
   </div>
 </template>
 
 <script>
 export default {
-  name: "SelectStoryTab",
+  name: "SelectTab",
+  props: ["optionOne", "optionTwo"],
   data() {
     return {
-      itemType: "story",
+      itemType: "optionOne",
     };
   },
   methods: {
-    selectStory() {
-      this.itemType = "story";
-      this.$emit("select-story");
+    selectOptionOne() {
+      this.itemType = "optionOne";
+      this.$emit("select-option-one");
     },
-    selectDraft() {
-      this.itemType = "draft";
-      this.$emit("select-draft");
+    selectOptionTwo() {
+      this.itemType = "optionTwo";
+      this.$emit("select-option-two");
     },
   },
 };

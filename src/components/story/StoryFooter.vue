@@ -39,7 +39,7 @@
 <script>
 import BaseTag from "@/components/UI/BaseTag.vue";
 import Bookmark from "@/components/UI/Bookmark.vue";
-import MoreOptionPanel from "@/components/MoreOptionPanel.vue";
+import MoreOptionPanel from "@/components/UI/MoreOptionPanel.vue";
 import CommentIcon from "@/components/UI/CommentIcon.vue";
 import HeartIcon from "@/components/UI/HeartIcon.vue";
 

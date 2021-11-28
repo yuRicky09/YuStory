@@ -1,5 +1,5 @@
 <div align="center" id="top"> 
-  <img src="@/../src/assets/img/logo_transparent.png" alt="YUSTORY" />
+  <img src="@/../src/assets/img/readme-header.png" alt="YUSTORY" />
 </div>
 
 <div align="center">
@@ -40,18 +40,18 @@
 ## :sparkles: Features
 
 **撰寫文章:**
-:heavy_check_mark: 隨時儲存文章備份
-:heavy_check_mark: 即時預覽文章發佈時排版狀況
-:heavy_check_mark: 可自訂文章封面
+:heavy_check_mark: 隨時儲存文章備份 <br>
+:heavy_check_mark: 即時預覽文章發佈時排版狀況 <br>
+:heavy_check_mark: 可自訂文章封面 <br>
 
 **個人帳戶:**
-:heavy_check_mark: 可自訂個人頭貼與帳戶封面
-:heavy_check_mark: 查看自己的收藏文章等
+:heavy_check_mark: 可自訂個人頭貼與帳戶封面 <br>
+:heavy_check_mark: 查看自己的收藏文章等 <br>
 
 **其他:**
-:heavy_check_mark: 依照內容、標籤、作者三大分類查找相關文章
-:heavy_check_mark: 可任意收藏、點讚、留言自己喜歡的文章
-:heavy_check_mark: RWD 響應式設計(手機下不支援撰寫文章)
+:heavy_check_mark: 依照內容、標籤、作者三大分類查找相關文章 <br>
+:heavy_check_mark: 可任意收藏、點讚、留言自己喜歡的文章 <br>
+:heavy_check_mark: RWD 響應式設計(手機下不支援撰寫文章) <br>
 
 ## :rocket: Technologies
 
@@ -61,6 +61,7 @@
 
 - [Vuex](https://vuex.vuejs.org/guide/) 網站的全域狀態管理
 - [Vue-Router](https://router.vuejs.org/) 建構 Single Page Application
+- [vee-validate](https://vee-validate.logaretm.com/v3) 協助表單驗證
 - [vue2-editor](https://www.vue2editor.com/) 使用 Vue.js 和 Quill.js 建構的文字編輯器，發佈文章時必要的核心套件
 - [vue-awesome-swiper](https://www.npmjs.com/package/vue-awesome-swiper) 使用戶可藉由幻燈片方式挑選文章封面
 - [vue-notification](http://vue-notification.yev.io/) 創建可自訂義的提示訊息框

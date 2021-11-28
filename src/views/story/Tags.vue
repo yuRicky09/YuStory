@@ -59,7 +59,7 @@ import SideBox from "@/components/UI/SideBox.vue";
 import BaseTag from "@/components/UI/BaseTag.vue";
 import { db } from "@/firebase/config";
 import { mapGetters } from "vuex";
-import Pagination from "@/components/Pagination.vue";
+import Pagination from "@/components/UI/Pagination.vue";
 import { paginationMixin } from "@/mixins/paginationMixin";
 
 export default {

@@ -26,7 +26,7 @@
 
 <script>
 import { timeFormatMixin } from "@/mixins/timeFormatMixin";
-import MoreOptionPanel from "@/components/MoreOptionPanel.vue";
+import MoreOptionPanel from "@/components/UI/MoreOptionPanel.vue";
 
 export default {
   name: "MyStoryBrief",

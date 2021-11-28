@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import MoreOptionPanel from "@/components/MoreOptionPanel.vue";
+import MoreOptionPanel from "@/components/UI/MoreOptionPanel.vue";
 import { timeFormatMixin } from "@/mixins/timeFormatMixin";
 
 export default {

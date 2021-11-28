@@ -15,6 +15,15 @@
     }
   }
 
+  .select-area {
+    font-size: 1.4rem;
+    border-bottom: 2px solid var(--color-border);
+
+    @media (min-width: $bp-md) {
+      font-size: 1.6rem;
+    }
+  }
+
   .stories-body {
     display: flex;
     justify-content: center;

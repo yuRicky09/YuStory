@@ -28,12 +28,14 @@
         <h4>近期故事</h4>
         <router-link :to="{ name: 'MyStories' }" class="btn">更多</router-link>
       </div>
-      <select-story-tab
-        @select-story="changeToStory"
-        @select-draft="changeToDraft"
-      ></select-story-tab>
+      <select-tab
+        optionOne="故事"
+        optionTwo="草稿"
+        @select-option-one="selectOptionOne"
+        @select-option-two="selectOptionTwo"
+      ></select-tab>
       <ul
-        v-if="fiveRecordsMyStories.length > 0 && itemType === 'story'"
+        v-if="fiveRecordsMyStories.length > 0 && selectedType === '故事'"
         class="story-list"
       >
         <my-story-brief
@@ -43,13 +45,13 @@
         ></my-story-brief>
       </ul>
       <p
-        v-if="fiveRecordsMyStories.length === 0 && itemType === 'story'"
+        v-if="fiveRecordsMyStories.length === 0 && selectedType === '故事'"
         class="none"
       >
         尚未有任何發佈故事
       </p>
       <ul
-        v-if="fiveRecordsMyDrafts.length > 0 && itemType === 'draft'"
+        v-if="fiveRecordsMyDrafts.length > 0 && selectedType === '草稿'"
         class="story-list"
       >
         <my-draft-brief
@@ -59,7 +61,7 @@
         ></my-draft-brief>
       </ul>
       <p
-        v-if="fiveRecordsMyDrafts.length === 0 && itemType === 'draft'"
+        v-if="fiveRecordsMyDrafts.length === 0 && selectedType === '草稿'"
         class="none"
       >
         尚未有任何草稿
@@ -72,14 +74,14 @@
 import { mapState, mapGetters } from "vuex";
 import MyStoryBrief from "@/components/story/MyStoryBrief.vue";
 import MyDraftBrief from "@/components/story/MyDraftBrief.vue";
-import SelectStoryTab from "@/components/story/SelectStoryTab.vue";
+import SelectTab from "@/components/UI/SelectTab.vue";
 
 export default {
   name: "Profile",
-  components: { MyStoryBrief, MyDraftBrief, SelectStoryTab },
+  components: { MyStoryBrief, MyDraftBrief, SelectTab },
   data() {
     return {
-      itemType: "story",
+      selectedType: "故事",
     };
   },
   computed: {
@@ -92,11 +94,11 @@ export default {
     ...mapGetters("story", ["fiveRecordsMyStories", "fiveRecordsMyDrafts"]),
   },
   methods: {
-    changeToStory() {
-      this.itemType = "story";
+    selectOptionOne() {
+      this.selectedType = "故事";
     },
-    changeToDraft() {
-      this.itemType = "draft";
+    selectOptionTwo() {
+      this.selectedType = "草稿";
     },
   },
 };

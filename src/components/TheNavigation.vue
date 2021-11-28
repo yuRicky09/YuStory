@@ -236,7 +236,7 @@
 
 <script>
 import { mapState } from "vuex";
-import SearchBar from "@/components/SearchBar.vue";
+import SearchBar from "@/components/UI/SearchBar.vue";
 
 export default {
   name: "TheNavigation",

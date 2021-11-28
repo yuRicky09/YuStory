@@ -80,7 +80,7 @@
 
 <script>
 import BaseTag from "@/components/UI/BaseTag.vue";
-import MoreOptionPanel from "@/components/MoreOptionPanel.vue";
+import MoreOptionPanel from "@/components/UI/MoreOptionPanel.vue";
 import { timeFormatMixin } from "@/mixins/timeFormatMixin";
 import Bookmark from "@/components/UI/Bookmark.vue";
 

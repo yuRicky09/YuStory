@@ -25,7 +25,7 @@
 
 <script>
 import StoryIntroRect from "@/components/story/StoryIntroRect.vue";
-import Pagination from "@/components/Pagination.vue";
+import Pagination from "@/components/UI/Pagination.vue";
 import { paginationMixin } from "@/mixins/paginationMixin";
 
 export default {

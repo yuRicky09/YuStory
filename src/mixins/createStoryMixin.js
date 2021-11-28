@@ -1,5 +1,5 @@
 import BaseTag from "@/components/UI/BaseTag.vue";
-import TheCarousel from "@/components/TheCarousel";
+import TheCarousel from "@/components/UI/TheCarousel";
 import StoryPreview from "@/components/story/StoryPreview.vue";
 
 // 創建story跟編輯story需要的data,method極為相似，可複用的東西全拉到createStoryMixin。

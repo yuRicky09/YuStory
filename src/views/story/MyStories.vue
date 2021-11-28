@@ -7,20 +7,21 @@
       >
     </div>
     <div class="select-action-area">
-      <select-story-tab
-        class="tab"
-        @select-story="changeToStory"
-        @select-draft="changeToDraft"
-      ></select-story-tab>
+      <select-tab
+        optionOne="故事"
+        optionTwo="草稿"
+        @select-option-one="selectOptionOne"
+        @select-option-two="selectOptionTwo"
+      ></select-tab>
       <div class="sort-controller">
-        <select v-model="selected" class="sort-type">
+        <select v-model="sort" class="sort-type">
           <option value="" disabled>排序方式</option>
           <option value="desc">新到舊</option>
           <option value="asc">舊到新</option>
         </select>
       </div>
     </div>
-    <template v-if="myStories.length > 0 && itemType === 'story'">
+    <template v-if="myStories.length > 0 && selectedType === '故事'">
       <story-intro-rect
         v-for="story in currentPageMyStories"
         :key="story.id"
@@ -32,7 +33,7 @@
         :itemPerPage="itemPerPage"
       ></pagination>
     </template>
-    <template v-else-if="myDrafts.length > 0 && itemType === 'draft'">
+    <template v-else-if="myDrafts.length > 0 && selectedType === '草稿'">
       <my-draft-brief
         v-for="draft in currentPageMyDrafts"
         :key="draft.id"
@@ -52,25 +53,25 @@
 
 <script>
 import StoryIntroRect from "@/components/story/StoryIntroRect.vue";
-import SelectStoryTab from "@/components/story/SelectStoryTab.vue";
 import MyDraftBrief from "@/components/story/MyDraftBrief.vue";
-import Pagination from "@/components/Pagination.vue";
+import Pagination from "@/components/UI/Pagination.vue";
 import { paginationMixin } from "@/mixins/paginationMixin";
+import SelectTab from "@/components/UI/SelectTab.vue";
 
 export default {
   name: "MyStorise",
-  components: { StoryIntroRect, SelectStoryTab, MyDraftBrief, Pagination },
+  components: { StoryIntroRect, MyDraftBrief, Pagination, SelectTab },
   mixins: [paginationMixin],
   data() {
     return {
-      selected: "",
-      itemType: "story",
+      sort: "",
+      selectedType: "故事",
     };
   },
   computed: {
     myStories() {
       const stories = [...this.$store.getters["story/myStories"]];
-      if (this.selected === "" || this.selected === "desc") {
+      if (this.sort === "" || this.sort === "desc") {
         return stories;
       } else {
         return stories.reverse();
@@ -81,7 +82,7 @@ export default {
     },
     myDrafts() {
       const drafts = [...this.$store.state.story.drafts];
-      if (this.selected === "" || this.selected === "desc") {
+      if (this.sort === "" || this.sort === "desc") {
         return drafts;
       } else {
         return drafts.reverse();
@@ -92,11 +93,11 @@ export default {
     },
   },
   methods: {
-    changeToStory() {
-      this.itemType = "story";
+    selectOptionOne() {
+      this.selectedType = "故事";
     },
-    changeToDraft() {
-      this.itemType = "draft";
+    selectOptionTwo() {
+      this.selectedType = "草稿";
     },
   },
 };
@@ -143,10 +144,6 @@ export default {
     display: flex;
     align-items: center;
     border-bottom: 2px solid var(--color-border);
-
-    .tab {
-      margin: 0 1rem;
-    }
 
     .sort-controller {
       margin: 0 2rem;
