@@ -23,7 +23,6 @@ Vue.component("base-spinner", BaseSpinner);
 
 Vue.use(Notifications);
 AOS.init({
-  disable: "phone",
   offset: 0,
   duration: 400,
   once: true,
