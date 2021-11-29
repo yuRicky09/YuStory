@@ -8,6 +8,8 @@
   <a href="https://yustory-ded59.firebaseapp.com/">Demo</a>
 </div>
 
+&#xa0;
+
 <p align="center">
   <img alt="Github top language" src="https://img.shields.io/github/languages/top/yuRicky09/YuStory?color=56BEB8">
 
@@ -31,8 +33,8 @@
 
 ## :dart: About
 
-**YUSTORY**部落格的發想是源自於[Traversy Media](https://www.youtube.com/watch?v=ISv22NNL-aE&t=869s&ab_channel=TraversyMedia)頻道發佈的「Vue.js & Firebase Project - FireBlogs」此教學影片。由於剛好在學習 Vue.js 與 Firebase，且也想製作一個可分享自己日本生活趣聞的網站，便決定以此影片為基礎，開發出功能更加完善的部落格網站當作自己的 side project。
-如有興趣也歡迎到[YUSTORY](https://yustory-ded59.firebaseapp.com/)參觀整個網站架構，體驗發文流程。
+**YUSTORY**部落格的發想是源自於<a href="https://www.youtube.com/watch?v=ISv22NNL-aE&t=869s&ab_channel=TraversyMedia" target="_blank">Traversy Media</a>頻道發佈的「Vue.js & Firebase Project - FireBlogs」此教學影片。由於剛好在學習 Vue.js 與 Firebase，且也想製作一個可分享自己日本生活趣聞的網站，便決定以此影片為基礎，開發出功能更加完善的部落格網站當作自己的 side project。
+如有興趣也歡迎到<a href="https://yustory-ded59.firebaseapp.com/" target="_blank">YUSTORY</a>參觀整個網站架構，體驗發文流程。
 
 ## :sparkles: Features
 
@@ -139,7 +141,7 @@
 
 ---
 
-更多細節歡迎參觀:[YUSTORY](https://yustory-ded59.firebaseapp.com/)
+更多細節歡迎參觀:<a href="https://yustory-ded59.firebaseapp.com/" target="_blank">YUSTORY</a>
 
 Made by <a href="https://github.com/yuRicky09" 
 target="_blank">yuRicky09</a>
