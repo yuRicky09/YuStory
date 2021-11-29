@@ -10,8 +10,8 @@
         <span>刪除故事</span>
       </li>
     </template>
-    <li v-if="type === 'story' && authorId !== userId">
-      <router-link to="#">檢舉故事</router-link>
+    <li v-if="type === 'story' && authorId !== userId" @click="showReportModal">
+      <span>檢舉故事</span>
     </li>
     <template v-if="type === 'draft' && authorId === userId">
       <li>
@@ -31,8 +31,8 @@
       >
         <span>刪除留言</span>
       </li>
-      <li v-if="userId !== replyUserId">
-        <router-link to="#">檢舉留言</router-link>
+      <li v-if="userId !== replyUserId" @click="showReportModal">
+        <span>檢舉留言</span>
       </li>
     </template>
     <base-modal
@@ -49,19 +49,27 @@
         </button>
       </template>
     </base-modal>
+    <report-modal
+      v-if="showReport"
+      @close-report-modal="showReport = false"
+      @report="report"
+    ></report-modal>
   </ul>
 </template>
 
 <script>
 import { db } from "@/firebase/config";
+import ReportModal from "@/components/UI/ReportModal.vue";
 
 export default {
   name: "MoreOptionPenel",
   props: ["authorId", "storyId", "type", "replyUserId", "replyId"],
+  components: { ReportModal },
   data() {
     return {
       show: false,
       panelInvisible: false,
+      showReport: false,
     };
   },
   computed: {
@@ -148,6 +156,16 @@ export default {
     showModal() {
       this.panelInvisible = true;
       this.show = true;
+    },
+    showReportModal() {
+      this.panelInvisible = true;
+      this.showReport = true;
+    },
+    report(reasone) {
+      this.$notify({
+        text: `已收到檢舉，將會依照${reasone}此理由查證是否有違規之舉。`,
+      });
+      this.showReport = false;
     },
   },
 };

@@ -1,0 +1,14 @@
+.my-dropdown-toggle.btn-group {
+  .dropdown-toggle {
+    color: #000 !important;
+    font-weight: normal !important;
+  }
+
+  .dropdown-menu {
+    a {
+      &:hover {
+        color: #117096;
+      }
+    }
+  }
+}

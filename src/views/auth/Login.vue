@@ -14,10 +14,6 @@
                 <font-awesome-icon :icon="['fab', 'google']" class="icon" />
                 <span>使用Google帳戶登入</span>
               </div>
-              <div class="icon-box">
-                <font-awesome-icon :icon="['fab', 'github']" class="icon" />
-                <span>使用Github帳戶登入</span>
-              </div>
               <h2>登入 YUSTORY</h2>
             </div>
             <ValidationProvider
