@@ -136,6 +136,38 @@ const actions = {
           bio: userNewInfo.userBio,
         });
 
+      // 同步更新用戶發佈之故事名稱
+      const storiesRef = await db
+        .collection("stories")
+        .where("userId", "==", state.userId)
+        .get();
+
+      storiesRef.docs.forEach(async (story) => {
+        try {
+          story.ref.update({
+            userName: userNewInfo.userName,
+          });
+        } catch (err) {
+          throw new Error(err.message);
+        }
+      });
+
+      // 更新用戶之留言名稱
+      const isUserReplyRef = await db
+        .collectionGroup("replies")
+        .where("userId", "==", state.userId)
+        .get();
+
+      isUserReplyRef.docs.forEach(async (reply) => {
+        try {
+          await reply.ref.update({
+            userName: userNewInfo.userName,
+          });
+        } catch (err) {
+          throw new Error(err.message);
+        }
+      });
+
       commit("updateUserInfo", userNewInfo);
       commit("changeLoadingState", false);
     } catch (err) {
@@ -177,22 +209,17 @@ const actions = {
       });
 
       // 更新用戶的所有留言頭貼
-      const isUserReply = await db
+      const isUserReplyRef = await db
         .collectionGroup("replies")
         .where("userId", "==", state.userId)
         .get();
 
-      // console.log(isUserReply);
-      // const data = await isUserReply.get();
-      // console.log(data);
-      isUserReply.forEach(async (reply) => {
+      isUserReplyRef.docs.forEach(async (reply) => {
         try {
-          console.log("reply", reply);
           await reply.ref.update({
             userProfileImg: userProfileImg,
           });
         } catch (err) {
-          console.log(err);
           throw new Error(err.message);
         }
       });

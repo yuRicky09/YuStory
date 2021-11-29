@@ -8,16 +8,14 @@
   <a href="https://yustory-ded59.web.app/">Demo</a>
 </div>
 
----
-
 <p align="center">
   <img alt="Github top language" src="https://img.shields.io/github/languages/top/yuRicky09/YuStory?color=56BEB8">
 
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/yuRicky09/YuStory?color=lightgrey">
 
-  <img alt="blog" src="https://img.shields.io/badge/YUSTORY-BLOG-blue">
-
   <img alt="Github stars" src="https://img.shields.io/github/stars/yuRicky09/YuStory?color=yellow" />
+
+  <img alt="blog" src="https://img.shields.io/badge/YUSTORY-BLOG-blue">
 </p>
 
 <p align="center">
@@ -39,16 +37,16 @@
 
 ## :sparkles: Features
 
-**撰寫文章:**
+**撰寫文章:** <br>
 :heavy_check_mark: 隨時儲存文章備份 <br>
 :heavy_check_mark: 即時預覽文章發佈時排版狀況 <br>
 :heavy_check_mark: 可自訂文章封面 <br>
 
-**個人帳戶:**
+**個人帳戶:** <br>
 :heavy_check_mark: 可自訂個人頭貼與帳戶封面 <br>
 :heavy_check_mark: 查看自己的收藏文章等 <br>
 
-**其他:**
+**其他:** <br>
 :heavy_check_mark: 依照內容、標籤、作者三大分類查找相關文章 <br>
 :heavy_check_mark: 可任意收藏、點讚、留言自己喜歡的文章 <br>
 :heavy_check_mark: RWD 響應式設計(手機下不支援撰寫文章) <br>
