@@ -63,7 +63,7 @@
 - [vee-validate](https://vee-validate.logaretm.com/v3) 協助表單驗證
 - [vue2-editor](https://www.vue2editor.com/) 使用 Vue.js 和 Quill.js 建構的文字編輯器，發佈故事時必要的核心套件
 - [vue-awesome-swiper](https://www.npmjs.com/package/vue-awesome-swiper) 使用戶可藉由幻燈片方式挑選故事封面
-- [vue-notification](http://vue-notification.yev.io/) 創建可自訂義的提示訊息框
+- [vue-notification](http://vue-notification.yev.io/) 創建可自定義的提示訊息框
 - [vue-advanced-cropper](https://norserium.github.io/vue-advanced-cropper/) 使用戶上傳頭貼時可裁切圖片
 - [portal-vue](https://portal-vue.linusb.org/) 使 DOM 元素可渲染於 document 任一處(類似 Vue3 Teleport 功能)
 - [vue-dropdowns](https://github.com/mikerodham/vue-dropdowns) 下拉選單
@@ -88,19 +88,19 @@
 
 #### 首頁(登入):
 
-<img alt="home" src="https://firebasestorage.googleapis.com/v0/b/yustory-ded59.appspot.com/o/other%2Fhome.gif?alt=media&token=e9776a60-77c5-4ea2-b4e5-1c075f685390">
+<img alt="home" src="https://firebasestorage.googleapis.com/v0/b/yustory-ded59.appspot.com/o/other%2Fhome.gif?alt=media&token=266004ac-8f0d-469f-af9e-245d0ca8a6b5">
 
 ---
 
 #### 故事列表:
 
-<img alt="home" src="https://firebasestorage.googleapis.com/v0/b/yustory-ded59.appspot.com/o/other%2Fstories.gif?alt=media&token=b0044161-62ce-4b93-891d-0a8a5337b96a">
+<img alt="home" src="https://firebasestorage.googleapis.com/v0/b/yustory-ded59.appspot.com/o/other%2Fstories.gif?alt=media&token=2174dd59-bebc-4497-a6a3-d3ebc4a17c0e">
 
 ---
 
 #### 故事詳情:
 
-<img alt="story-detail" src="https://firebasestorage.googleapis.com/v0/b/yustory-ded59.appspot.com/o/other%2Fdetail.gif?alt=media&token=aefd29d6-8f99-40f0-8732-953283245ced">
+<img alt="story-detail" src="https://firebasestorage.googleapis.com/v0/b/yustory-ded59.appspot.com/o/other%2Fdetail.gif?alt=media&token=f80ec7bf-8073-4db2-a97c-e072e137bb69">
 
 ---
 
@@ -123,7 +123,7 @@
 5. 可於任何時候備份故事
 6. 可於任何時候預覽故事發佈時排版狀況
 7. 按下發佈故事後跳轉到故事詳情頁
-   <img alt="blog" src="https://firebasestorage.googleapis.com/v0/b/yustory-ded59.appspot.com/o/other%2Freadme-usage.gif?alt=media&token=206f2ed7-65a8-4b6a-bbdc-c33fa200756a">
+   <img alt="blog" src="https://firebasestorage.googleapis.com/v0/b/yustory-ded59.appspot.com/o/other%2Fusage.gif?alt=media&token=7897fb34-6cad-4b4f-94a7-d1dbfd80cbc8">
 
 ## :books: Learn
 
