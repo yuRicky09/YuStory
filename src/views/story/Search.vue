@@ -111,7 +111,8 @@ export default {
         this.matchingStories = this.storires.filter((story) => {
           const { tags } = story;
           for (let tag of tags) {
-            if (tag.includes(searchText)) return true;
+            const tagLC = tag.toLowerCase();
+            if (tagLC.includes(searchText)) return true;
           }
         });
       }

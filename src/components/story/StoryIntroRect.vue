@@ -235,10 +235,6 @@ export default {
       display: block;
     }
 
-    @media (min-width: $bp-md) {
-      align-self: stretch;
-    }
-
     img {
       display: block;
       object-fit: cover;

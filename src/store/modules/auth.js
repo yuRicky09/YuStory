@@ -114,6 +114,7 @@ const actions = {
           email: email,
           name: displayName,
           profileImg: photoURL,
+          favorites: {},
         });
       commit("changeLoadingState", false);
     } catch (err) {

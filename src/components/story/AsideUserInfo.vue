@@ -16,7 +16,7 @@
     <div class="user-bio">
       <p>{{ currentAuthor.bio }}</p>
     </div>
-    <div class="action-icons">
+    <div class="action-icons" v-if="currentUser">
       <heart-icon :currentStory="currentStory"></heart-icon>
       <comment-icon :currentStory="currentStory"></comment-icon>
       <bookmark :currentStory="currentStory"></bookmark>
@@ -41,6 +41,9 @@ export default {
   computed: {
     topToHeaderDistance() {
       return this.$store.state.story.topToHeaderDistance;
+    },
+    currentUser() {
+      return this.$store.state.auth.currentUser;
     },
   },
   methods: {

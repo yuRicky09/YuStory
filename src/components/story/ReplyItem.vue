@@ -30,6 +30,7 @@
       class="more-option-icon"
       :icon="['fa', 'ellipsis-v']"
       @click="showPanel = true"
+      v-if="currentUser"
     ></font-awesome-icon>
   </li>
 </template>
@@ -47,6 +48,11 @@ export default {
     return {
       showPanel: false,
     };
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.currentUser;
+    },
   },
 };
 </script>
