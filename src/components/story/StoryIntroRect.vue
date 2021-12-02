@@ -13,8 +13,8 @@
               }"
             >
               <img :src="story.userProfileImg" alt="user-avatar" />
+              <span>{{ story.userName }}</span>
             </router-link>
-            <span>{{ story.userName }}</span>
           </div>
           <router-link
             :to="{

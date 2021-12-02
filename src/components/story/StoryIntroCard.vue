@@ -2,7 +2,12 @@
   <div class="story-wrapper">
     <div class="story">
       <div class="story-cover">
-        <img v-if="story.cover" :src="story.cover" alt="story-cover" />
+        <router-link
+          class="to-story-link"
+          :to="{ name: 'Story', params: { id: story.id } }"
+        >
+          <img v-if="story.cover" :src="story.cover" alt="story-cover" />
+        </router-link>
       </div>
       <div class="story-body">
         <div class="author">
@@ -15,8 +20,8 @@
             }"
           >
             <img :src="story.userProfileImg" alt="user-avatar" />
+            <span>{{ story.userName }}</span>
           </router-link>
-          <span>{{ story.userName }}</span>
         </div>
         <router-link
           class="to-story-link"
@@ -56,13 +61,21 @@ export default {
   .story {
     .story-cover {
       height: 16rem;
+      overflow: hidden;
 
-      > img {
+      .to-story-link {
+        &:hover img {
+          transform: scale(1.05);
+        }
+      }
+
+      img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         object-position: center center;
         display: block;
+        transition: transform 0.3s ease-out;
       }
     }
 
