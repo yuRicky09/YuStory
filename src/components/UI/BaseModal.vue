@@ -29,7 +29,7 @@ export default {
 
 <style lang="scss" scoped>
 .backdrop {
-  z-index: 200;
+  z-index: var(--z-index-200);
 }
 
 .message-box {
@@ -37,7 +37,7 @@ export default {
   top: 30vh;
   left: 10%;
   width: 80%;
-  z-index: 1000;
+  z-index: var(--z-index-max);
 
   @media (min-width: $bp-lg) {
     left: 20%;
@@ -53,7 +53,7 @@ export default {
     text-align: center;
 
     h2 {
-      background-color: var(--color-bg-dark-3);
+      background-color: var(--color-dark-3);
       color: #fff;
       padding: 1.5rem 0;
       font-size: 1.8rem;

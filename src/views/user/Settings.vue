@@ -92,7 +92,7 @@ export default {
             padding: 1.5rem;
             padding-left: 2.5rem;
             margin-right: 0;
-            border: 1px solid var(--color-bg-gray-1);
+            border: 1px solid var(--color-gray-1);
           }
         }
 

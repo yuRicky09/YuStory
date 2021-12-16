@@ -135,7 +135,7 @@ export default {
   }
 
   .page-item button {
-    color: var(--color-bg-dark-1);
+    color: var(--color-dark-1);
     cursor: pointer;
     border-radius: 4px;
     border: 1px solid var(--color-border);
@@ -157,15 +157,15 @@ export default {
   }
 
   .pageBtn.active {
-    background-color: var(--color-bg-dark-3);
+    background-color: var(--color-dark-3);
     color: #fff;
-    border: 1px solid var(--color-bg-dark-3);
+    border: 1px solid var(--color-dark-3);
   }
 
   .pageBtn:hover {
-    background-color: var(--color-bg-dark-3);
+    background-color: var(--color-dark-3);
     color: #fff;
-    border: 1px solid var(--color-bg-dark-3);
+    border: 1px solid var(--color-dark-3);
   }
 
   .pageBtn.ellipsis {

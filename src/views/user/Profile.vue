@@ -116,7 +116,7 @@ export default {
 
   .profile-title {
     padding: 1.5rem;
-    border-bottom: 1px solid var(--color-bg-gray-1);
+    border-bottom: 1px solid var(--color-gray-1);
     font-size: 2rem;
   }
 

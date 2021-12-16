@@ -48,7 +48,7 @@
       }
 
       &:focus {
-        box-shadow: 0 1px 0 0 var(--color-bg-dark-2);
+        box-shadow: 0 1px 0 0 var(--color-dark-2);
       }
     }
   }
@@ -109,7 +109,7 @@
         width: 14rem;
         padding: 1rem;
         background-color: #fff;
-        box-shadow: 0 2px 5px var(--color-layout);
+        box-shadow: 0 2px 5px var(--color-shadow);
         border-radius: 5px;
 
         &::before {
@@ -121,7 +121,7 @@
           width: 1rem;
           height: 1rem;
           background: #fff;
-          box-shadow: 0 2px 5px var(--color-layout);
+          box-shadow: 0 2px 5px var(--color-shadow);
           z-index: -10;
         }
       }

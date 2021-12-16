@@ -54,7 +54,7 @@ export default {
   .welcome-content {
     flex-basis: 50%;
     padding: 2rem 0;
-    background-color: var(--color-bg-dark-2);
+    background-color: var(--color-dark-2);
     color: #fff;
 
     div {
@@ -129,7 +129,7 @@ export default {
           height: 100%;
           color: #fff;
           transition: all 0.3s ease-out;
-          z-index: 10;
+          z-index: var(--z-index-10);
 
           @media (min-width: $bp-md) {
             font-size: 2.2rem;
@@ -143,7 +143,7 @@ export default {
         }
 
         &:hover span {
-          color: var(--color-bg-dark-2);
+          color: var(--color-dark-2);
         }
 
         span::before,

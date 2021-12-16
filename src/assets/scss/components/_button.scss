@@ -8,7 +8,7 @@ button {
   padding: 8px 15px;
   border-radius: 25px;
   color: #fff;
-  background-color: var(--color-bg-dark-2);
+  background-color: var(--color-dark-2);
   cursor: pointer;
   transition: all 0.3s ease;
 
@@ -34,7 +34,7 @@ button {
 
 .btn.delete,
 .btn.report {
-  background-color: #e74c4cef;
+  background-color: var(--color-error);
 }
 
 .btn.block {

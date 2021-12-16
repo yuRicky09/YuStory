@@ -84,7 +84,7 @@ export default {
       width: 12rem;
       height: 12rem;
       border-radius: 5px;
-      box-shadow: 0 5px 10px var(--color-layout);
+      box-shadow: 0 5px 10px var(--color-shadow);
     }
 
     h4 {
@@ -97,7 +97,7 @@ export default {
 
     p {
       font-size: 1.4rem;
-      color: var(--color-bg-gray-1);
+      color: var(--color-gray-1);
     }
   }
 

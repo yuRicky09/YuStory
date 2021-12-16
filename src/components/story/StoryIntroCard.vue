@@ -55,7 +55,7 @@ export default {
   width: 26rem;
   border-radius: 5px;
   overflow: hidden;
-  box-shadow: 0 0 8px var(--color-layout);
+  box-shadow: 0 0 8px var(--color-shadow);
   position: relative;
 
   .story {
@@ -85,7 +85,7 @@ export default {
 
       .to-story-link {
         &:hover {
-          color: #117096;
+          color: var(--color-link-hover);
         }
       }
 
@@ -128,7 +128,7 @@ export default {
     right: 0.5rem;
     bottom: 0.5rem;
     font-size: 1.2rem;
-    color: var(--color-bg-gray-1);
+    color: var(--color-gray-1);
   }
 }
 </style>

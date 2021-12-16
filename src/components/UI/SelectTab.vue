@@ -55,7 +55,7 @@ export default {
   }
 
   span.active {
-    background-color: var(--color-bg-dark-2);
+    background-color: var(--color-dark-2);
     color: #fff;
   }
 }

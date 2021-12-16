@@ -120,7 +120,7 @@ export default {
     }
 
     &:hover .story-cover {
-      box-shadow: 0 5px 10px var(--color-layout);
+      box-shadow: 0 5px 10px var(--color-shadow);
 
       img {
         transform: scale(1.05);
@@ -155,7 +155,7 @@ export default {
     .story-content {
       padding-right: 2rem;
       &:hover .content-title {
-        color: #117096;
+        color: var(--color-link-hover);
       }
     }
 
@@ -217,7 +217,7 @@ export default {
 
         .option-panel-position {
           position: absolute;
-          z-index: 1000;
+          z-index: var(--z-index-max);
           transform: translateY(-100%);
           right: -3.4rem;
           top: -1rem;

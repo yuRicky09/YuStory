@@ -54,7 +54,7 @@ export default {
 footer {
   display: flex;
   flex-direction: column;
-  background-color: var(--color-bg-dark-2);
+  background-color: var(--color-dark-2);
   color: #fff;
 
   @media (min-width: $bp-md) {
@@ -72,7 +72,7 @@ footer {
     align-items: flex-start;
     font-size: 1.6rem;
     padding: 1rem 0;
-    border-bottom: 1px solid var(--color-bg-gray-1);
+    border-bottom: 1px solid var(--color-gray-1);
 
     @media (min-width: $bp-md) {
       justify-content: space-evenly;

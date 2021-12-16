@@ -42,9 +42,9 @@ export default {
   max-width: 100rem;
   padding: 4rem 6rem;
   margin: auto;
-  z-index: 1000;
+  z-index: var(--z-index-max);
   border-radius: 10px;
-  box-shadow: 0 5px 10px var(--color-layout);
+  box-shadow: 0 5px 10px var(--color-shadow);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -55,7 +55,7 @@ export default {
   }
 
   h3 {
-    background-color: var(--color-bg-dark-1);
+    background-color: var(--color-dark-1);
     color: #fff;
     font-size: 1.6rem;
     padding: 1rem 2rem;

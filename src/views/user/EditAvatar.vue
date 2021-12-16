@@ -117,7 +117,7 @@ export default {
 
   .avatar-title {
     padding: 1.5rem;
-    border-bottom: 1px solid var(--color-bg-gray-1);
+    border-bottom: 1px solid var(--color-gray-1);
     font-size: 2rem;
   }
 
@@ -143,7 +143,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: var(--color-bg-white-1);
+      background-color: var(--color-gray-3);
       color: #fff;
     }
 

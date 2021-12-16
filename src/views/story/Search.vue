@@ -216,7 +216,7 @@ export default {
     }
 
     .type.active {
-      background-color: var(--color-bg-dark-2);
+      background-color: var(--color-dark-2);
       color: #fff;
 
       &:hover {
@@ -245,7 +245,7 @@ export default {
       align-self: stretch;
       border: none;
       color: #fff;
-      background-color: var(--color-bg-dark-2);
+      background-color: var(--color-dark-2);
       cursor: pointer;
       font-size: 1.6rem;
 

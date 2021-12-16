@@ -8,7 +8,7 @@
 </template>
 
 <script>
-//! 要讓存取的HTML格式能套用當初vue editor編輯器內撰寫的格式的話，必須要引入vue editor，並在插入HTML的容器添上class ql-editor後即可套用。
+//! 要讓存取的HTML格式能套用當初vue editor編輯器內撰寫的格式的話，必須要引入vue editor，並在插入HTML的容器添上class ql-editor後即可套用，但編輯器不需顯示 用v-show隱藏。
 import { VueEditor } from "vue2-editor";
 
 export default {

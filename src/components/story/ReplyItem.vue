@@ -11,7 +11,16 @@
       <img class="user-avatar" :src="reply.userProfileImg" alt="user-avatar" />
     </router-link>
     <div class="reply-info">
-      <span class="reply-name">{{ reply.userName }}</span>
+      <router-link
+        class="to-author-link"
+        :to="{
+          name: 'Users',
+          params: { userId: reply.userId },
+          query: { page: 1 },
+        }"
+      >
+        <span class="reply-name">{{ reply.userName }}</span>
+      </router-link>
       <span class="reply-time">{{ createdTime(reply.createdAt) }}</span>
       <p v-html="reply.HTML"></p>
     </div>
@@ -78,9 +87,8 @@ export default {
     padding: 0 4rem 0 0;
     flex: 1;
 
-    > span {
+    span {
       display: inline-block;
-      margin-right: 0.5rem;
       font-size: 1.3rem;
     }
 
@@ -89,7 +97,8 @@ export default {
     }
 
     .reply-time {
-      color: var(--color-bg-gray-1);
+      margin: 0 5px;
+      color: var(--color-gray-1);
     }
   }
 
@@ -110,7 +119,7 @@ export default {
 
   .option-panel-position {
     position: absolute;
-    z-index: 1000;
+    z-index: var(--z-index-max);
     transform: translateY(-100%);
     right: -2.6rem;
     top: 0.5rem;

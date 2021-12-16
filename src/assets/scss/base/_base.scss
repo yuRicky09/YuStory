@@ -24,6 +24,7 @@ body::after {
   height: 0;
   overflow: hidden;
   z-index: -100;
+  // 讓background-image使用的圖片預先載入
   content: url("~@/assets/img/my-favorite-bg.jpg")
     url("~@/assets/img/my-story-bg.jpg") url("~@/assets/img/register-bg.jpg")
     url("~@/assets/img/home-cover.jpg");
@@ -50,7 +51,7 @@ textarea:focus {
 
 ::placeholder {
   font-size: 14px;
-  color: var(--color-bg-gray-1);
+  color: var(--color-gray-1);
 }
 
 img {

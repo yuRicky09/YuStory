@@ -18,7 +18,7 @@
         align-self: flex-end;
 
         a {
-          color: #0089ac;
+          color: var(--color-link-hover);
           font-weight: 700;
 
           &:hover {
@@ -37,11 +37,11 @@
     margin: 2rem 0;
 
     input.error {
-      border: 2px solid #e74c4cef;
+      border: 2px solid var(--color-error);
     }
 
     small {
-      color: #e74c4cef;
+      color: var(--color-error);
       display: inline-block;
       width: 100%;
       min-height: 1.2rem;

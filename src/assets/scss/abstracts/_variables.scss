@@ -1,13 +1,19 @@
 :root {
-  --color-bg-dark-1: #191919;
-  --color-bg-dark-2: #303030;
-  --color-bg-dark-3: #1f2937;
-  --color-bg-gray-1: #757575;
-  --color-bg-gray-2: #d5d5d5;
-  --color-bg-white-1: #ada4a4;
-  --color-layout: rgba(0, 0, 0, 0.25);
+  --color-dark-1: #191919;
+  --color-dark-2: #303030;
+  --color-dark-3: #1f2937;
+  --color-gray-1: #757575;
+  --color-gray-2: #d5d5d5;
+  --color-gray-3: #ada4a4;
+  --color-shadow: rgba(0, 0, 0, 0.25);
   --color-border: rgba(0, 0, 0, 0.05);
   --color-error: #e74c4cef;
+  --color-link-hover: #117096;
+  --z-index-10: 10;
+  --z-index-20: 20;
+  --z-index-100: 100;
+  --z-index-200: 200;
+  --z-index-max: 1000;
 }
 
 $bp-iphone-sm: 21em; //334px

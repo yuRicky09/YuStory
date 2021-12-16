@@ -16,12 +16,12 @@ export default {
 
 <style lang="scss" scoped>
 .sidebox {
-  box-shadow: 0 10px 20px var(--color-layout);
+  box-shadow: 0 10px 20px var(--color-shadow);
 
   .sidebox-header {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    background-color: var(--color-bg-dark-3);
+    background-color: var(--color-dark-3);
     padding: 1rem 2rem;
     font-size: 1.6rem;
     text-align: center;

@@ -60,7 +60,7 @@ export default {
   .heading {
     color: #fff;
     font-size: 2rem;
-    background-color: var(--color-bg-dark-2);
+    background-color: var(--color-dark-2);
     padding: 1rem 2rem;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;

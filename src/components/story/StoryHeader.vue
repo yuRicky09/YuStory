@@ -18,7 +18,16 @@
               alt="user-avatar"
             />
           </router-link>
-          <p>{{ currentAuthor.name }}</p>
+          <router-link
+            class="to-author-link"
+            :to="{
+              name: 'Users',
+              params: { userId: currentStory.userId },
+              query: { page: 1 },
+            }"
+          >
+            <p>{{ currentAuthor.name }}</p>
+          </router-link>
         </div>
         <div class="created-time">
           <span>{{ createdTime(currentStory.createdAt.toDate()) }}</span>
@@ -36,6 +45,7 @@ export default {
   props: ["currentAuthor", "currentStory"],
   mixins: [timeFormatMixin],
   mounted() {
+    // 獲取頁面頂段到story header底部之可滾動距離，當滾動到story header底部後顯示側邊作者資訊欄位
     const topToHeaderDistance =
       this.$refs.storyHeader.offsetHeight + this.$refs.storyHeader.offsetTop;
     this.$store.commit("story/setTopToHeaderDistance", topToHeaderDistance);
@@ -87,7 +97,7 @@ export default {
     .created-time {
       text-align: end;
       font-size: 1.4rem;
-      color: var(--color-bg-gray-1);
+      color: var(--color-gray-1);
     }
   }
 }

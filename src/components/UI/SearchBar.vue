@@ -134,7 +134,7 @@ export default {
 
       a {
         &:hover {
-          color: #117096;
+          color: var(--color-link-hover);
         }
       }
     }

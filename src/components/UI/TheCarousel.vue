@@ -88,7 +88,7 @@ export default {
     .button-next {
       position: absolute;
       top: 50%;
-      z-index: 10;
+      z-index: var(--z-index-10);
       background-color: #222;
       padding: 0.5rem;
       opacity: 0.6;

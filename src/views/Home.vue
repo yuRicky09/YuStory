@@ -127,7 +127,7 @@ export default {
     background-repeat: no-repeat;
     min-height: 25rem;
     color: #fff;
-    box-shadow: 0 10px 10px var(--color-layout);
+    box-shadow: 0 10px 10px var(--color-shadow);
 
     @media (min-width: $bp-md) {
       min-height: 30rem;
@@ -191,7 +191,7 @@ export default {
         height: 100%;
         color: #fff;
         transition: all 0.3s ease-out;
-        z-index: 10;
+        z-index: var(--z-index-10);
 
         @media (min-width: $bp-md) {
           font-size: 2.2rem;
@@ -205,7 +205,7 @@ export default {
       }
 
       &:hover span {
-        color: var(--color-bg-dark-2);
+        color: var(--color-dark-2);
       }
 
       span::before,
@@ -253,7 +253,7 @@ export default {
       font-weight: 600;
       padding: 2rem 2.5rem;
       color: #fff;
-      background-color: var(--color-bg-dark-1);
+      background-color: var(--color-dark-1);
     }
   }
 
@@ -283,7 +283,7 @@ export default {
 
       h3 {
         font-size: 2rem;
-        color: var(--color-bg-dark-3);
+        color: var(--color-dark-3);
 
         @media (min-width: $bp-md) {
           font-size: 2.5rem;

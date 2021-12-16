@@ -390,7 +390,7 @@ export default {
       padding: 1rem 1.5rem;
       border-radius: 3px;
       color: #fff;
-      background-color: var(--color-bg-dark-3);
+      background-color: var(--color-dark-3);
 
       &:hover {
         opacity: 0.8;
@@ -430,7 +430,7 @@ export default {
       top: 150%;
       right: 0;
       width: 28rem;
-      z-index: 1000;
+      z-index: var(--z-index-max);
 
       .user-center-header {
         display: flex;
@@ -438,7 +438,7 @@ export default {
         justify-content: center;
         align-items: center;
         padding: 2rem 1rem;
-        border-bottom: 1px solid var(--color-bg-gray-1);
+        border-bottom: 1px solid var(--color-gray-1);
         cursor: initial;
 
         .user-info {
@@ -478,14 +478,14 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 20;
+    z-index: var(--z-index-20);
   }
 }
 
 .nav-box.sticky {
   position: fixed;
   width: 100%;
-  z-index: 100;
+  z-index: var(--z-index-100);
   height: 8rem;
   background-color: rgba(255, 255, 255, 0.8);
 }
@@ -499,7 +499,7 @@ export default {
   padding: 1.5rem 0;
   cursor: pointer;
   position: relative;
-  z-index: 20;
+  z-index: var(--z-index-20);
 
   @media (min-width: $bp-md) {
     display: none;
@@ -508,7 +508,7 @@ export default {
     width: 3rem;
     height: 3px;
     position: relative;
-    background-color: var(--color-bg-dark-1);
+    background-color: var(--color-dark-1);
     transition: all 0.5s ease-in;
 
     &::before,
@@ -517,7 +517,7 @@ export default {
       position: absolute;
       width: 3rem;
       height: 3px;
-      background-color: var(--color-bg-dark-1);
+      background-color: var(--color-dark-1);
       transition: all 0.5s ease-in;
     }
 
@@ -545,12 +545,12 @@ export default {
 
 .mobile-menu {
   position: fixed;
-  z-index: 120;
+  z-index: var(--z-index-200);
   top: 0;
   left: 0;
   height: 100%;
   width: 25rem;
-  background-color: var(--color-bg-dark-2);
+  background-color: var(--color-dark-2);
   display: flex;
   flex-direction: column;
 

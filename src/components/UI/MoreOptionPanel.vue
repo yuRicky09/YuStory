@@ -177,7 +177,7 @@ export default {
   width: 10rem;
   background: #fff;
   border-radius: 5px;
-  box-shadow: 0 5px 10px var(--color-layout);
+  box-shadow: 0 5px 10px var(--color-shadow);
   transition: all 0.2s ease-out;
 
   &::before {

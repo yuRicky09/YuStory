@@ -195,7 +195,7 @@ export default {
   font-size: 1.6rem;
 
   .user-home {
-    box-shadow: 0 3px 10px var(--color-layout);
+    box-shadow: 0 3px 10px var(--color-shadow);
 
     .user-cover {
       background-color: #555;

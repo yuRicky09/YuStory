@@ -14,7 +14,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 5px 10px 20px var(--color-layout);
+  box-shadow: 5px 10px 20px var(--color-shadow);
 
   @media (min-width: $bp-sm) {
     height: 40rem;

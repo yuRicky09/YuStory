@@ -44,6 +44,7 @@
                   type="password"
                   id="password"
                   placeholder="請輸入密碼"
+                  autocomplete="off"
                   v-model.trim="password"
                   :class="{ error: failed }"
                 />
@@ -167,7 +168,7 @@ export default {
   display: block;
   font-size: 1.5rem;
   font-weight: 700;
-  color: #5dade2;
+  color: var(--color-link-hover);
   text-align: end;
   padding: 1rem;
 }

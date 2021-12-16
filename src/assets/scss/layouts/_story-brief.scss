@@ -19,7 +19,7 @@
 
       p {
         margin: 0.5rem 0;
-        color: var(--color-bg-gray-1);
+        color: var(--color-gray-1);
         width: 13rem;
 
         @media (min-width: $bp-md) {
@@ -29,7 +29,7 @@
       }
 
       &:hover h5 {
-        color: #117096;
+        color: var(--color-link-hover);
       }
     }
     > span {
@@ -57,6 +57,6 @@
     right: -2.8rem;
     top: 0rem;
     transform: translateY(-100%);
-    z-index: 1000;
+    z-index: var(--z-index-max);
   }
 }

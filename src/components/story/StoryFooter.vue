@@ -2,8 +2,8 @@
   <div class="story-footer">
     <div class="tags">
       <router-link
-        :to="{ name: 'Tags', params: { tagName: tag }, query: { page: 1 } }"
         v-for="tag in currentStory.tags"
+        :to="{ name: 'Tags', params: { tagName: tag }, query: { page: 1 } }"
         :key="tag"
       >
         <base-tag :tagName="tag" :rect="true"></base-tag>
@@ -99,9 +99,6 @@ export default {
         justify-content: center;
         align-items: center;
       }
-      .liked {
-        color: violet;
-      }
     }
 
     .right-side {
@@ -114,7 +111,7 @@ export default {
 
       .option-panel-position {
         position: absolute;
-        z-index: 1000;
+        z-index: var(--z-index-max);
         transform: translateY(-100%);
         right: -3.4rem;
         top: -1rem;

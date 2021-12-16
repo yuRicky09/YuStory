@@ -4,6 +4,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--color-layout);
-  z-index: 100;
+  background-color: var(--color-shadow);
+  z-index: var(--z-index-100);
 }
