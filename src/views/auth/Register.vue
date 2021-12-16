@@ -57,6 +57,7 @@
                   type="password"
                   id="password"
                   placeholder="密碼須至少6碼"
+                  autocomplete="off"
                   v-model.trim="password"
                   :class="{ error: failed }"
                 />
@@ -73,6 +74,7 @@
                 <input
                   type="password"
                   id="comfirmPassword"
+                  autocomplete="off"
                   v-model.trim="confirmation"
                   :class="{ error: failed }"
                 />

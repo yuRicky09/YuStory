@@ -106,11 +106,7 @@ export default {
           this.$router.replace({ name: "Home" });
         }, 2000);
       } catch (err) {
-        if (
-          err.message ===
-          "There is no user record corresponding to this identifier. The user may have been deleted."
-        )
-          this.errorMsg = "帳號密碼錯誤，請重新輸入一次";
+        this.errorMsg = "帳號密碼錯誤，請重新輸入一次";
       }
     },
     async signInWithGoogle() {
