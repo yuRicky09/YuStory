@@ -1,5 +1,6 @@
 .auth-wrapper {
   padding: 12rem 0;
+  // 為了能順利解析@別名， 加上~前綴使webpack將請求作為模組處理
   background-image: linear-gradient(
       to right bottom,
       rgba(0, 0, 0, 0.3),
