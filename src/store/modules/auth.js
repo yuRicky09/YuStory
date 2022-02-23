@@ -261,7 +261,7 @@ const actions = {
 };
 
 const mutations = {
-  getCurrentUser(state, user) {
+  setCurrentUser(state, user) {
     state.currentUser = user;
   },
   setUserData(state, userData) {

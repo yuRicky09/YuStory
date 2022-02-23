@@ -1,7 +1,7 @@
 <template>
   <li class="reply-item">
     <router-link
-      class="to-author-link"
+      class="link-hover"
       :to="{
         name: 'Users',
         params: { userId: reply.userId },
@@ -12,7 +12,7 @@
     </router-link>
     <div class="reply-info">
       <router-link
-        class="to-author-link"
+        class="link-hover"
         :to="{
           name: 'Users',
           params: { userId: reply.userId },

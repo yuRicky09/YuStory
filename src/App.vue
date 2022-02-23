@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TheNavigation from "@/components/TheNavigation.vue";
+import TheNavigation from "@/components/navigation/TheNavigation.vue";
 import TheFooter from "@/components/TheFooter.vue";
 import { auth } from "@/firebase/config";
 import { PortalTarget } from "portal-vue";
@@ -34,7 +34,7 @@ export default {
   created() {
     // 有任何auth state change都將觸發(包括註冊 null => new user)
     auth.onAuthStateChanged((user) => {
-      this.$store.commit("auth/getCurrentUser", user);
+      this.$store.commit("auth/setCurrentUser", user);
       if (user) {
         // 獲取現在user的資料與草稿
         this.$store.dispatch("auth/getUserData", user.uid);

@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 /dist
-.firebase/*
+.firebase/
 
 # local env files
 .env.local
@@ -22,4 +22,4 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-memo.txt
+memo.md

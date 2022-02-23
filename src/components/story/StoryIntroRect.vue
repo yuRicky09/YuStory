@@ -5,7 +5,7 @@
         <div class="story-info">
           <div class="author">
             <router-link
-              class="to-author-link"
+              class="link-hover"
               :to="{
                 name: 'Users',
                 params: { userId: story.userId },

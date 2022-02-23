@@ -5,7 +5,7 @@
       <div class="title-content">
         <div class="user-info">
           <router-link
-            class="to-author-link"
+            class="link-hover"
             :to="{
               name: 'Users',
               params: { userId: currentStory.userId },
@@ -19,7 +19,7 @@
             />
           </router-link>
           <router-link
-            class="to-author-link"
+            class="link-hover"
             :to="{
               name: 'Users',
               params: { userId: currentStory.userId },

@@ -224,20 +224,24 @@ const actions = {
     }
   },
   async getAllDrafts({ commit }, userId) {
-    const draftsRef = db
-      .collection("drafts")
-      .where("userId", "==", userId)
-      .orderBy("createdAt", "desc");
+    try {
+      const draftsRef = db
+        .collection("drafts")
+        .where("userId", "==", userId)
+        .orderBy("createdAt", "desc");
 
-    const unsubscribeDraftsId = draftsRef.onSnapshot((snap) => {
-      const drafts = [];
-      snap.docs.forEach((doc) => {
-        const draft = { ...doc.data(), id: doc.id };
-        drafts.push(draft);
+      const unsubscribeDraftsId = draftsRef.onSnapshot((snap) => {
+        const drafts = [];
+        snap.docs.forEach((doc) => {
+          const draft = { ...doc.data(), id: doc.id };
+          drafts.push(draft);
+        });
+        commit("setAllDrafts", drafts);
       });
-      commit("setAllDrafts", drafts);
-    });
-    commit("setUnsubscribeDraftsId", unsubscribeDraftsId);
+      commit("setUnsubscribeDraftsId", unsubscribeDraftsId);
+    } catch (err) {
+      console.log(err.message);
+    }
   },
   async getCurrentStory({ commit }, storyId) {
     try {

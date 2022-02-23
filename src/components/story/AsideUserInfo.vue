@@ -2,7 +2,7 @@
   <section class="asideUserInfo" :class="{ show: showAsideUserInfo }">
     <div class="user-info">
       <router-link
-        class="to-author-link"
+        class="link-hover"
         :to="{
           name: 'Users',
           params: { userId: currentAuthor.id },
