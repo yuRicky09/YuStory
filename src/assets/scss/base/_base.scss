@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
 html {
   font-size: 62.5%;
 }
@@ -16,6 +18,12 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: "Quicksand", sans-serif;
+  line-height: 1.5;
+  font-size: inherit;
 }
 
 body::after {
@@ -56,4 +64,9 @@ textarea:focus {
 
 img {
   max-width: 100%;
+}
+
+button {
+  outline: none;
+  background-color: #fff;
 }

@@ -1,0 +1,32 @@
+.action-icon {
+  width: 2.5rem !important;
+  height: 2.5rem;
+  margin: 3px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-shadow);
+  z-index: var(--z-index-100);
+}
+
+.my-dropdown-toggle.btn-group {
+  .dropdown-toggle {
+    color: #000 !important;
+    font-weight: normal !important;
+  }
+
+  .dropdown-menu {
+    a {
+      &:hover {
+        color: var(--color-link-hover);
+      }
+    }
+  }
+}

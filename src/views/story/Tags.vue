@@ -114,6 +114,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/views/_stories";
 .matching-result {
   margin: 1rem;
 

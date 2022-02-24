@@ -47,6 +47,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/components/_story-empty";
 .container {
   max-width: 102rem;
   margin: auto;

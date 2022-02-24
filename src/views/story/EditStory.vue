@@ -167,4 +167,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/views/_create-story";
+</style>

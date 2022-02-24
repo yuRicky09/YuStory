@@ -51,6 +51,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/components/_story-intro";
 .story-wrapper {
   width: 26rem;
   border-radius: 5px;

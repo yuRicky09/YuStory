@@ -103,3 +103,7 @@ export default {
   mixins: [vueEditorMixin, createStoryMixin],
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/views/_create-story";
+</style>

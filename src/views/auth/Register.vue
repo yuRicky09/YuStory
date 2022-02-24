@@ -151,6 +151,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/views/_auth.scss";
 .link-to-login {
   margin-bottom: 1rem;
 }

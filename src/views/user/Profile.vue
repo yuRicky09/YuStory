@@ -26,7 +26,9 @@
     <div class="stories">
       <div class="header">
         <h4>近期故事</h4>
-        <router-link :to="{ name: 'MyStories' }" class="btn">更多</router-link>
+        <router-link :to="{ name: 'MyStories', query: { page: 1 } }" class="btn"
+          >更多</router-link
+        >
       </div>
       <select-tab
         optionOne="故事"

@@ -125,6 +125,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/views/_auth.scss";
 .icon-box {
   align-self: center;
   cursor: pointer;

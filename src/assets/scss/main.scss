@@ -1,15 +1,5 @@
-@import "../../../node_modules/modern-normalize/modern-normalize.css";
+@import "base";
 
-@import "base/typography";
-@import "base/base";
-@import "base/animation";
-@import "base/transition";
-
-@import "components/action-icon";
-@import "components/backdrop";
 @import "components/button";
 @import "components/form";
 @import "components/link";
-@import "components/dropdown";
-
-@import "layouts";

@@ -103,6 +103,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/components/_story-intro";
 .story-wrapper {
   margin: 2rem 1rem;
 
