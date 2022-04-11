@@ -6,6 +6,10 @@
   <h1>YUSTORY</h1>
   <p>Share your Memories Easily with YUSTORY</p>
   <a href="https://yustory-ded59.firebaseapp.com/">Demo</a>
+  <div>
+  <span>測試帳號:testtest@gmail.com</span>
+  <span>測試帳號:111111</span>
+  </div>
 </div>
 
 &#xa0;

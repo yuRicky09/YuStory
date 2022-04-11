@@ -100,7 +100,7 @@ export default {
 }
 
 .nav-box.sticky + .hold-space {
-  padding-top: 105px;
+  padding-top: 10rem;
 }
 
 ::selection {

@@ -80,8 +80,8 @@ export default {
   components: { ValidationProvider, ValidationObserver },
   data() {
     return {
-      email: null,
-      password: null,
+      email: "testtest@gmail.com",
+      password: "111111",
       show: false,
       errorMsg: null,
     };
