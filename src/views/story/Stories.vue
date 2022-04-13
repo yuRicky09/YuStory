@@ -3,25 +3,23 @@
     <div class="stories-header">
       <h2>Stories</h2>
     </div>
-    <select-tab
-      class="select-area"
-      optionOne="最新"
-      optionTwo="熱門"
-      @select-option-one="selectOptionOne"
-      @select-option-two="selectOptionTwo"
-    ></select-tab>
+    <div class="select-area">
+      <base-tab
+        text="最新"
+        @set-selected-tab="setSelectedTab"
+        :class="{ active: selectedTab === '最新' }"
+      ></base-tab>
+      <base-tab
+        text="熱門"
+        @set-selected-tab="setSelectedTab"
+        :class="{ active: selectedTab === '熱門' }"
+      ></base-tab>
+    </div>
     <div class="stories-body">
       <main class="left-side">
-        <div class="story-list" v-if="stories && selectedType === '最新'">
+        <div class="story-list">
           <story-intro-rect
-            v-for="story in currentPageStories"
-            :story="story"
-            :key="story.id"
-          ></story-intro-rect>
-        </div>
-        <div class="story-list" v-if="stories && selectedType === '熱門'">
-          <story-intro-rect
-            v-for="story in popularStories"
+            v-for="story in filteredStories"
             :story="story"
             :key="story.id"
           ></story-intro-rect>
@@ -62,7 +60,7 @@
               v-for="tag in recommendedTags"
               :key="tag"
             >
-              <base-tag :tagName="tag" :big="true"></base-tag>
+              <base-tag :tagName="tag" tagClass="big"></base-tag>
             </router-link>
           </side-box>
         </div>
@@ -83,29 +81,34 @@ import SideBox from "@/components/UI/SideBox.vue";
 import BaseTag from "@/components/UI/BaseTag.vue";
 import Pagination from "@/components/UI/Pagination.vue";
 import { paginationMixin } from "@/mixins/paginationMixin";
-import SelectTab from "@/components/UI/SelectTab.vue";
+import BaseTab from "@/components/UI/BaseTab.vue";
 
 export default {
   name: "Stories",
-  components: { StoryIntroRect, SideBox, BaseTag, Pagination, SelectTab },
+  components: {
+    StoryIntroRect,
+    SideBox,
+    BaseTag,
+    Pagination,
+    BaseTab,
+  },
   mixins: [paginationMixin],
   data() {
     return {
-      selectedType: "最新",
+      selectedTab: "最新",
     };
   },
   computed: {
     stories() {
       return this.$store.state.story.stories;
     },
-    currentPageStories() {
-      return this.stories.slice(this.pageFirstIndex, this.pageLastIndex);
-    },
-    popularStories() {
-      return this.$store.getters["story/popularStories"];
-    },
-    currentPagePopStories() {
-      return this.popularStories.slice(this.pageFirstIndex, this.pageLastIndex);
+    filteredStories() {
+      if (this.selectedTab === "最新") {
+        return this.stories.slice(this.itemFirstIndex, this.itemLastIndex);
+      } else {
+        const popularStories = this.$store.getters["story/popularStories"];
+        return popularStories.slice(this.itemFirstIndex, this.itemLastIndex);
+      }
     },
     ...mapGetters("story", [
       "recentlyStories",
@@ -114,11 +117,8 @@ export default {
     ]),
   },
   methods: {
-    selectOptionOne() {
-      this.selectedType = "最新";
-    },
-    selectOptionTwo() {
-      this.selectedType = "熱門";
+    setSelectedTab(tab) {
+      this.selectedTab = tab;
     },
   },
 };

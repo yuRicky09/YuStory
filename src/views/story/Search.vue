@@ -83,8 +83,8 @@ export default {
     },
     currentPageMatchStories() {
       return this.matchingStories.slice(
-        this.pageFirstIndex,
-        this.pageLastIndex
+        this.itemFirstIndex,
+        this.itemLastIndex
       );
     },
   },

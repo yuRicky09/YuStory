@@ -30,44 +30,26 @@
           >更多</router-link
         >
       </div>
-      <select-tab
-        optionOne="故事"
-        optionTwo="草稿"
-        @select-option-one="selectOptionOne"
-        @select-option-two="selectOptionTwo"
-      ></select-tab>
-      <ul
-        v-if="fiveRecordsMyStories.length > 0 && selectedType === '故事'"
-        class="story-list"
-      >
-        <my-story-brief
-          v-for="story in fiveRecordsMyStories"
-          :key="story.id"
-          :story="story"
-        ></my-story-brief>
+      <base-tab
+        text="故事"
+        @set-selected-tab="setSelectedTab"
+        :class="{ active: selectedTab === '故事' }"
+      ></base-tab>
+      <base-tab
+        text="草稿"
+        @set-selected-tab="setSelectedTab"
+        :class="{ active: selectedTab === '草稿' }"
+      ></base-tab>
+      <ul v-if="filteredItems.length > 0" class="story-list">
+        <component
+          :is="selectedTab === '故事' ? 'my-story-brief' : 'my-draft-brief'"
+          v-for="item in filteredItems"
+          :key="item.id"
+          :story="selectedTab === '故事' ? item : null"
+          :draft="selectedTab === '草稿' ? item : null"
+        ></component>
       </ul>
-      <p
-        v-if="fiveRecordsMyStories.length === 0 && selectedType === '故事'"
-        class="none"
-      >
-        尚未有任何發佈故事
-      </p>
-      <ul
-        v-if="fiveRecordsMyDrafts.length > 0 && selectedType === '草稿'"
-        class="story-list"
-      >
-        <my-draft-brief
-          v-for="draft in fiveRecordsMyDrafts"
-          :key="draft.id"
-          :draft="draft"
-        ></my-draft-brief>
-      </ul>
-      <p
-        v-if="fiveRecordsMyDrafts.length === 0 && selectedType === '草稿'"
-        class="none"
-      >
-        尚未有任何草稿
-      </p>
+      <p v-else class="none">尚未有任何發佈{{ selectedTab }}</p>
     </div>
   </div>
 </template>
@@ -76,14 +58,14 @@
 import { mapState, mapGetters } from "vuex";
 import MyStoryBrief from "@/components/story/MyStoryBrief.vue";
 import MyDraftBrief from "@/components/story/MyDraftBrief.vue";
-import SelectTab from "@/components/UI/SelectTab.vue";
+import BaseTab from "@/components/UI/BaseTab.vue";
 
 export default {
   name: "Profile",
-  components: { MyStoryBrief, MyDraftBrief, SelectTab },
+  components: { MyStoryBrief, MyDraftBrief, BaseTab },
   data() {
     return {
-      selectedType: "故事",
+      selectedTab: "故事",
     };
   },
   computed: {
@@ -94,13 +76,15 @@ export default {
       userBio: (state) => state.userBio,
     }),
     ...mapGetters("story", ["fiveRecordsMyStories", "fiveRecordsMyDrafts"]),
+    filteredItems() {
+      return this.selectedTab === "故事"
+        ? this.fiveRecordsMyStories
+        : this.fiveRecordsMyDrafts;
+    },
   },
   methods: {
-    selectOptionOne() {
-      this.selectedType = "故事";
-    },
-    selectOptionTwo() {
-      this.selectedType = "草稿";
+    setSelectedTab(tab) {
+      this.selectedTab = tab;
     },
   },
 };

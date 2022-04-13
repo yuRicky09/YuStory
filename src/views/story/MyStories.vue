@@ -7,12 +7,16 @@
       >
     </div>
     <div class="select-action-area">
-      <select-tab
-        optionOne="故事"
-        optionTwo="草稿"
-        @select-option-one="selectOptionOne"
-        @select-option-two="selectOptionTwo"
-      ></select-tab>
+      <base-tab
+        text="故事"
+        @set-selected-tab="setSelectedTab"
+        :class="{ active: selectedTab === '故事' }"
+      ></base-tab>
+      <base-tab
+        text="草稿"
+        @set-selected-tab="setSelectedTab"
+        :class="{ active: selectedTab === '草稿' }"
+      ></base-tab>
       <dropdown
         :options="options"
         :selected="selectedOption"
@@ -20,27 +24,19 @@
         class="my-dropdown-toggle"
       ></dropdown>
     </div>
-    <template v-if="myStories.length > 0 && selectedType === '故事'">
-      <story-intro-rect
-        v-for="story in currentPageMyStories"
-        :key="story.id"
-        :story="story"
-      ></story-intro-rect>
+    <template v-if="filteredItems.length > 0">
+      <component
+        :is="selectedTab === '故事' ? 'story-intro-rect' : 'my-draft-brief'"
+        v-for="item in filteredItems"
+        :key="item.id"
+        :story="selectedTab === '故事' ? item : null"
+        :draft="selectedTab === '草稿' ? item : null"
+      ></component>
       <pagination
         :page="currentPage"
-        :totalItems="myStories.length"
-        :itemPerPage="itemPerPage"
-      ></pagination>
-    </template>
-    <template v-else-if="myDrafts.length > 0 && selectedType === '草稿'">
-      <my-draft-brief
-        v-for="draft in currentPageMyDrafts"
-        :key="draft.id"
-        :draft="draft"
-      ></my-draft-brief>
-      <pagination
-        :page="currentPage"
-        :totalItems="myDrafts.length"
+        :totalItems="
+          selectedTab === '故事' ? myStories.length : myDrafts.length
+        "
         :itemPerPage="itemPerPage"
       ></pagination>
     </template>
@@ -55,17 +51,23 @@ import StoryIntroRect from "@/components/story/StoryIntroRect.vue";
 import MyDraftBrief from "@/components/story/MyDraftBrief.vue";
 import Pagination from "@/components/UI/Pagination.vue";
 import { paginationMixin } from "@/mixins/paginationMixin";
-import SelectTab from "@/components/UI/SelectTab.vue";
+import BaseTab from "@/components/UI/BaseTab.vue";
 import dropdown from "vue-dropdowns";
 
 export default {
   name: "MyStorise",
-  components: { StoryIntroRect, MyDraftBrief, Pagination, SelectTab, dropdown },
+  components: {
+    StoryIntroRect,
+    MyDraftBrief,
+    Pagination,
+    BaseTab,
+    dropdown,
+  },
   mixins: [paginationMixin],
   data() {
     return {
       sort: "desc",
-      selectedType: "故事",
+      selectedTab: "故事",
       options: [{ name: "新到舊" }, { name: "舊到新" }],
       selectedOption: {
         name: "新到舊",
@@ -81,9 +83,6 @@ export default {
         return stories.reverse();
       }
     },
-    currentPageMyStories() {
-      return this.myStories.slice(this.pageFirstIndex, this.pageLastIndex);
-    },
     myDrafts() {
       const drafts = [...this.$store.state.story.drafts];
       if (this.sort === "desc") {
@@ -92,16 +91,17 @@ export default {
         return drafts.reverse();
       }
     },
-    currentPageMyDrafts() {
-      return this.myDrafts.slice(this.pageFirstIndex, this.pageLastIndex);
+    filteredItems() {
+      if (this.selectedTab === "故事") {
+        return this.myStories.slice(this.itemFirstIndex, this.itemLastIndex);
+      } else {
+        return this.myDrafts.slice(this.itemFirstIndex, this.itemLastIndex);
+      }
     },
   },
   methods: {
-    selectOptionOne() {
-      this.selectedType = "故事";
-    },
-    selectOptionTwo() {
-      this.selectedType = "草稿";
+    setSelectedTab(tab) {
+      this.selectedTab = tab;
     },
     handleSelected(option) {
       const { name } = option;

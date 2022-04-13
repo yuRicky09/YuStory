@@ -39,7 +39,7 @@
               v-for="tag in recommendedTags"
               :key="tag"
             >
-              <base-tag :tagName="tag" :big="true"></base-tag>
+              <base-tag :tagName="tag" tagClass="big"></base-tag>
             </router-link>
           </side-box>
         </div>
@@ -77,8 +77,8 @@ export default {
     ...mapGetters("story", ["recommendedTags", "recentlyStories"]),
     currentPageMatchingStories() {
       return this.matchingStories.slice(
-        this.pageFirstIndex,
-        this.pageLastIndex
+        this.itemFirstIndex,
+        this.itemLastIndex
       );
     },
   },

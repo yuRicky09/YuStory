@@ -1,5 +1,5 @@
 <template>
-  <span class="tag" :class="{ big: big, rect: rect, home: home }">
+  <span class="tag" :class="[tagClass]">
     <slot></slot>
     {{ tagName }}
   </span>
@@ -8,7 +8,7 @@
 <script>
 export default {
   name: "BaseTag",
-  props: ["tagName", "big", "rect", "home"],
+  props: ["tagName", "tagClass"],
 };
 </script>
 

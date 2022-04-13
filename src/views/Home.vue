@@ -51,7 +51,7 @@
               v-for="tag in recommendedTagsForHome"
               :key="tag"
             >
-              <base-tag :tagName="tag" :home="true"></base-tag>
+              <base-tag :tagName="tag" tagClass="home"></base-tag>
             </router-link>
           </div>
         </section>

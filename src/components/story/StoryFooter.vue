@@ -6,7 +6,7 @@
         :to="{ name: 'Tags', params: { tagName: tag }, query: { page: 1 } }"
         :key="tag"
       >
-        <base-tag :tagName="tag" :rect="true"></base-tag>
+        <base-tag :tagName="tag" tagClass="rect"></base-tag>
       </router-link>
     </div>
     <div class="other-action" v-if="currentUser">

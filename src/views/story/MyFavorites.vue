@@ -38,8 +38,8 @@ export default {
     },
     currentPageFavoriteStories() {
       return this.myFavoriteStories.slice(
-        this.pageFirstIndex,
-        this.pageLastIndex
+        this.itemFirstIndex,
+        this.itemLastIndex
       );
     },
   },

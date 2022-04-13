@@ -12,7 +12,7 @@ const routes = [
     component: Home,
     meta: {
       title: "YUSTORY",
-      requireAuth: false,
+      public: true,
     },
   },
   {
@@ -21,7 +21,7 @@ const routes = [
     component: () => import("@/views/user/Users.vue"),
     meta: {
       title: "用戶 | YUSTORY",
-      requireAuth: false,
+      public: true,
     },
     props: true,
   },
@@ -124,7 +124,7 @@ const routes = [
     name: "Story",
     component: () => import("@/views/story/Story.vue"),
     meta: {
-      requireAuth: false,
+      public: true,
       title: "STORY | YUSTORY",
     },
     props: true,
@@ -135,7 +135,7 @@ const routes = [
     component: () => import("@/views/story/Stories.vue"),
     meta: {
       title: "STORIES | YUSTORY",
-      requireAuth: false,
+      public: true,
     },
   },
   {
@@ -162,7 +162,7 @@ const routes = [
     component: () => import("@/views/story/Tags.vue"),
     meta: {
       title: "TAGS | YUSTORY",
-      requireAuth: false,
+      public: true,
     },
     props: true,
   },
@@ -172,7 +172,7 @@ const routes = [
     component: () => import("@/views/story/Search.vue"),
     meta: {
       title: "搜尋 | YUSTORY",
-      requireAuth: false,
+      public: true,
     },
     props($route) {
       return {
@@ -187,7 +187,7 @@ const routes = [
     component: () => import("@/views/NotFound.vue"),
     meta: {
       title: "Not Found | YUSTORY",
-      requireAuth: false,
+      public: true,
     },
   },
 ];
@@ -207,7 +207,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, _, next) => {
   const user = auth.currentUser;
-  if (!to.meta.requireAuth && to.meta.requireAuth !== undefined) {
+  if (to.meta.public) {
     next();
   } else if (to.meta.requireLogin) {
     user ? next() : next({ name: "Login" });

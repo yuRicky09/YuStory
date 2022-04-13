@@ -106,7 +106,7 @@ export default {
       return hearts;
     },
     currentPageStories() {
-      return this.stories.slice(this.pageFirstIndex, this.pageLastIndex);
+      return this.stories.slice(this.itemFirstIndex, this.itemLastIndex);
     },
     currentUserId() {
       return this.$store.state.auth.userId;

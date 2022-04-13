@@ -8,11 +8,11 @@ export const paginationMixin = {
     currentPage() {
       return +this.$route.query.page;
     },
-    pageFirstIndex() {
+    itemFirstIndex() {
       return (this.currentPage - 1) * this.itemPerPage;
     },
-    pageLastIndex() {
-      return this.pageFirstIndex + this.itemPerPage;
+    itemLastIndex() {
+      return this.itemFirstIndex + this.itemPerPage;
     },
   },
 };
