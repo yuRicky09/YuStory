@@ -10,10 +10,13 @@
         <span>刪除故事</span>
       </li>
     </template>
-    <li v-if="type === 'story' && authorId !== userId" @click="showReportModal">
+    <li
+      v-else-if="type === 'story' && authorId !== userId"
+      @click="showReportModal"
+    >
       <span>檢舉故事</span>
     </li>
-    <template v-if="type === 'draft' && authorId === userId">
+    <template v-else-if="type === 'draft' && authorId === userId">
       <li>
         <router-link :to="{ name: 'EditDraft', params: { draftId: storyId } }"
           >編輯草稿</router-link
@@ -24,7 +27,7 @@
       </li>
     </template>
     <!-- 作者可任意刪除自己文章下的任意留言， 回文者只能刪除自己的回文 -->
-    <template v-if="type === 'reply'">
+    <template v-else-if="type === 'reply'">
       <li
         v-if="userId === authorId || userId === replyUserId"
         @click="deleteReply"

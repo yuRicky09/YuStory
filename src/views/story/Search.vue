@@ -102,7 +102,7 @@ export default {
         );
       } else if (this.type === "story") {
         this.matchingStories = this.storires.filter((story) => {
-          // 去除HTML tag
+          // 去除HTML tag   [^>]表示選取非>符號 *表示0or多個
           const content = story.HTML.replace(/<[^>]*>/g, "");
           const storyAllText = (story.title + " " + content).toLowerCase();
           return storyAllText.includes(searchText);

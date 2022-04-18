@@ -48,10 +48,10 @@
             <div class="other-action" v-if="currentUser">
               <div
                 class="backdrop"
-                v-if="showPanel"
+                v-show="showPanel"
                 @click="showPanel = false"
               ></div>
-              <div class="option-panel-position" v-if="showPanel">
+              <div class="option-panel-position" v-show="showPanel">
                 <more-option-panel
                   :authorId="story.userId"
                   :storyId="story.id"

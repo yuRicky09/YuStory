@@ -6,7 +6,7 @@
         :icon="['far', 'comment']"
         title="留言"
       />
-      <span v-if="currentStory.replies">{{ currentStory.replies.length }}</span>
+      <span v-if="replyNum">{{ replyNum }}</span>
     </a>
   </div>
 </template>
@@ -14,7 +14,11 @@
 <script>
 export default {
   name: "CommentIcon",
-  props: ["currentStory"],
+  computed: {
+    replyNum() {
+      return this.$store.state.story.replyNum;
+    },
+  },
   methods: {
     moveToReplyEditor() {
       document.querySelector("#reply").scrollIntoView({ behavior: "smooth" });

@@ -12,7 +12,7 @@
       class="action-icon"
       title="取消收藏"
       @click="removeFromFavorites"
-      v-if="favorited && userId"
+      v-else-if="favorited && userId"
     />
   </span>
 </template>

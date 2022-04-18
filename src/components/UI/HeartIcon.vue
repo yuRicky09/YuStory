@@ -12,7 +12,7 @@
       class="action-icon liked"
       title="取消喜歡"
       @click="unlike"
-      v-if="liked && userId"
+      v-else-if="liked && userId"
     />
     <span v-if="currentStory.hearts.length > 0">
       {{ currentStory.hearts.length }}

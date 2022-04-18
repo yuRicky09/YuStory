@@ -251,7 +251,9 @@ const actions = {
       await db
         .collection("users")
         .doc(state.userId)
-        .update({});
+        .update({
+          [`favorites.${storyId}`]: false,
+        });
 
       commit("removeFromFavorites", storyId);
     } catch (err) {

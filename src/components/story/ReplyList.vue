@@ -43,6 +43,7 @@ export default {
       });
 
       this.replies = replies;
+      this.$store.commit("story/setReplyNum", this.replies.length);
     });
   },
   beforeDestroy() {

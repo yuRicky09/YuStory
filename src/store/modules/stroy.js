@@ -18,6 +18,7 @@ const state = function() {
     topToHeaderDistance: null,
     stories: [],
     drafts: [],
+    replyNum: 0,
     currentStory: null,
     currentAuthor: null,
     unsubscribeStoriesId: null,
@@ -330,6 +331,9 @@ const mutations = {
   },
   setCurrentAuthor(state, currentAuthor) {
     state.currentAuthor = currentAuthor;
+  },
+  setReplyNum(state, num) {
+    state.replyNum = num;
   },
   clearCurrentStory(state) {
     state.currentStory = null;

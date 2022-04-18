@@ -12,7 +12,7 @@
     <div class="other-action" v-if="currentUser">
       <div class="left-side">
         <heart-icon :currentStory="currentStory"></heart-icon>
-        <comment-icon :currentStory="currentStory"></comment-icon>
+        <comment-icon></comment-icon>
       </div>
       <div class="right-side">
         <bookmark :currentStory="currentStory"></bookmark>
